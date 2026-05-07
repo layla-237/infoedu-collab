@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eliceu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1f1f1f;
+    }
+
+    .container {
+      width: 100%;
+      min-height: 100vh;
+      background: #ffffff;
+    }
+
+    header {
+      width: 100%;
+      height: 72px;
+      background: #9661b8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .menu {
+      font-size: 32px;
+      line-height: 1;
+      color: #ffffff;
+      font-weight: 900;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      padding: 6px 4px;
+    }
+
+    .logo {
+      font-size: 38px;
+      font-weight: 900;
+      color: #ffe34d;
+      letter-spacing: -1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .main-layout {
+      width: 100%;
+      min-height: 1040px;
+      padding: 48px 72px 40px;
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 58px;
+      align-items: start;
+    }
+
+    .image-wall {
+      display: grid;
+      grid-template-columns: repeat(3, 92px);
+      gap: 12px;
+      align-content: start;
+    }
+
+    .image-wall img {
+      width: 92px;
+      height: 66px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+    }
+
+    .content-area {
+      min-width: 0;
+    }
+
+    .hero-section {
+      min-height: 790px;
+    }
+
+    h1 {
+      font-size: clamp(58px, 5.7vw, 92px);
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -1px;
+      white-space: nowrap;
+      margin-bottom: 50px;
+    }
+
+    .subtitle {
+      font-size: clamp(22px, 1.9vw, 31px);
+      font-weight: 800;
+      margin-bottom: 95px;
+      line-height: 1.25;
+    }
+
+    .cta,
+    .profile-btn {
+      width: 520px;
+      height: 72px;
+      font-size: 29px;
+      margin-left: 0;
+      display: block;
+
+    }
+
+    .cta {
+      width: 420px;
+      height: 72px;
+      font-size: 32px;
+      margin-bottom: 140px;
+    }
+
+    .divider {
+      width: min(720px, 100%);
+      height: 1px;
+      background: #d8d8d8;
+      margin: 0 0 60px;
+    }
+
+    .stats {
+      width: 720px;
+      height: 310px;
+      position: relative;
+      margin-top: 0;
+    }
+
+    .triangle-purple {
+      position: absolute;
+      left: 150px;
+      top: 45px;
+      width: 200px;
+      height: 230px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .triangle-purple path {
+      fill: #eee3f4;
+      stroke: #eee3f4;
+      stroke-width: 1.2;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .circle {
+      position: absolute;
+      z-index: 2;
+      width: 150px;
+      height: 90px;
+      border-radius: 50%;
+      background: #eee3f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .c1 { left: 5px; top: 45px; }
+    .c2 { left: 345px; top: 45px; }
+    .c3 {
+      left: 177px;
+      top: 125px;
+      width: 150px;
+      height: auto;
+      background: transparent;
+      font-size: 19px;
+      z-index: 3;
+    }
+    .c4 { left: 179px; top: 215px; }
+
+    .profile-section {
+      padding-top: 150px;
+      min-height: 310px;
+    }
+
+    .profile-content h2 {
+      font-size: clamp(44px, 4vw, 66px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -3px;
+      margin-bottom: 50px;
+    }
+
+    .profile-content ul {
+      margin-left: 28px;
+      margin-bottom: 55px;
+    }
+
+    .profile-content li {
+      font-size: clamp(22px, 1.8vw, 31px);
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .profile-btn {
+      width: 520px;
+      height: 72px;
+      font-size: 29px;
+    }
+
+    footer {
+      margin-top: 0;
+      background: #786286;
+      min-height: 230px;
+      padding: 28px 72px 26px;
+      color: #f7f1ff;
+    }
+
+    .footer-logo {
+      font-size: 28px;
+      font-weight: 900;
+      color: #ffe34d;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1.25fr;
+      gap: 68px;
+      align-items: start;
+    }
+
+    footer h3 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 14px;
+      color: #ffffff;
+    }
+
+    footer a {
+      display: block;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    footer a::before {
+      content: '›';
+      margin-right: 8px;
+      font-size: 18px;
+      line-height: 0;
+    }
+
+    .footer-text {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.45;
+      max-width: 330px;
+    }
+
+    .cta,
+    .profile-btn {
+      background: #9661b8 !important;
+      color: #ffffff !important;
+      border: none !important;
+      border-radius: 16px !important;
+      font-weight: 900 !important;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+    }
+
+    .cta {
+      width: 420px !important;
+      height: 72px !important;
+      font-size: 32px !important;
+      margin-bottom: 90px !important;
+    }
+
+    .profile-btn {
+      width: 520px !important;
+      height: 72px !important;
+      font-size: 29px !important;
+      display: block;
+      margin-left: 0;
+    }
+
+    @media (max-width: 1200px) {
+      .main-layout {
+        grid-template-columns: 250px 1fr;
+        gap: 36px;
+        padding-left: 42px;
+        padding-right: 42px;
+      }
+
+      .image-wall {
+        grid-template-columns: repeat(3, 72px);
+      }
+
+      .image-wall img {
+        width: 72px;
+        height: 52px;
+      }
+
+      h1 {
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 800px) {
+      header {
+        padding: 0 18px;
+      }
+
+      .main-layout {
+        grid-template-columns: 1fr;
+        padding: 28px 20px 70px;
+      }
+
+      .image-wall {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .image-wall img {
+        width: 100%;
+        height: 90px;
+      }
+
+      h1 {
+        font-size: 44px;
+        white-space: normal;
+      }
+
+      .cta,
+      .profile-btn {
+        width: 100%;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-area">
+        <button class="menu" type="button" onclick="document.body.classList.toggle('menu-open')" aria-label="Deschide meniul">☰</button>
+        <div class="logo">Ǝliceu</div>
+      </div>
+
+      <nav>
+        <a href="#">Înregistrare</a>
+        <a href="#">Autentificare</a>
+      </nav>
+    </header>
+
+    <main class="main-layout">
+      <div class="image-wall">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Sava_National_College.jpg?width=500" alt="Colegiul Național Sfântul Sava">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar%2C_Bucuresti.JPG?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_Na%C8%9Bional_%E2%80%9EGheorghe_Laz%C4%83r%E2%80%9D.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gheorghe_Lazar_-_High_School.jpg?width=500" alt="Colegiul Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Buc_Panorama_Colegiul_Na%C8%9Bional_Gheorghe_Laz%C4%83r.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Sava_National_College.jpg?width=500" alt="Colegiul Național Sfântul Sava">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar%2C_Bucuresti.JPG?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_Na%C8%9Bional_%E2%80%9EGheorghe_Laz%C4%83r%E2%80%9D.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gheorghe_Lazar_-_High_School.jpg?width=500" alt="Colegiul Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Buc_Panorama_Colegiul_Na%C8%9Bional_Gheorghe_Laz%C4%83r.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Sava_National_College.jpg?width=500" alt="Colegiul Național Sfântul Sava">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar%2C_Bucuresti.JPG?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_Na%C8%9Bional_%E2%80%9EGheorghe_Laz%C4%83r%E2%80%9D.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gheorghe_Lazar_-_High_School.jpg?width=500" alt="Colegiul Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Buc_Panorama_Colegiul_Na%C8%9Bional_Gheorghe_Laz%C4%83r.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Sava_National_College.jpg?width=500" alt="Colegiul Național Sfântul Sava">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar%2C_Bucuresti.JPG?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_Na%C8%9Bional_%E2%80%9EGheorghe_Laz%C4%83r%E2%80%9D.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gheorghe_Lazar_-_High_School.jpg?width=500" alt="Colegiul Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Buc_Panorama_Colegiul_Na%C8%9Bional_Gheorghe_Laz%C4%83r.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Sava_National_College.jpg?width=500" alt="Colegiul Național Sfântul Sava">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar%2C_Bucuresti.JPG?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_Na%C8%9Bional_%E2%80%9EGheorghe_Laz%C4%83r%E2%80%9D.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gheorghe_Lazar_-_High_School.jpg?width=500" alt="Colegiul Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Buc_Panorama_Colegiul_Na%C8%9Bional_Gheorghe_Laz%C4%83r.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Sava_National_College.jpg?width=500" alt="Colegiul Național Sfântul Sava">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar%2C_Bucuresti.JPG?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_Na%C8%9Bional_%E2%80%9EGheorghe_Laz%C4%83r%E2%80%9D.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gheorghe_Lazar_-_High_School.jpg?width=500" alt="Colegiul Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Buc_Panorama_Colegiul_Na%C8%9Bional_Gheorghe_Laz%C4%83r.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Sava_National_College.jpg?width=500" alt="Colegiul Național Sfântul Sava">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar%2C_Bucuresti.JPG?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_Na%C8%9Bional_%E2%80%9EGheorghe_Laz%C4%83r%E2%80%9D.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gheorghe_Lazar_-_High_School.jpg?width=500" alt="Colegiul Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Buc_Panorama_Colegiul_Na%C8%9Bional_Gheorghe_Laz%C4%83r.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Sava_National_College.jpg?width=500" alt="Colegiul Național Sfântul Sava">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar%2C_Bucuresti.JPG?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_Na%C8%9Bional_%E2%80%9EGheorghe_Laz%C4%83r%E2%80%9D.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gheorghe_Lazar_-_High_School.jpg?width=500" alt="Colegiul Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Buc_Panorama_Colegiul_Na%C8%9Bional_Gheorghe_Laz%C4%83r.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Sava_National_College.jpg?width=500" alt="Colegiul Național Sfântul Sava">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar%2C_Bucuresti.JPG?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_National_Gheorghe_Lazar.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Colegiul_Na%C8%9Bional_%E2%80%9EGheorghe_Laz%C4%83r%E2%80%9D.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gheorghe_Lazar_-_High_School.jpg?width=500" alt="Colegiul Gheorghe Lazăr">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Buc_Panorama_Colegiul_Na%C8%9Bional_Gheorghe_Laz%C4%83r.jpg?width=500" alt="Colegiul Național Gheorghe Lazăr">
+      </div>
+
+      <div class="content-area">
+        <section class="hero-section">
+          <h1>Găsește liceul potrivit pentru tine.</h1>
+          <p class="subtitle">Compară licee, vezi mediile și formează-ți lista 🎓</p>
+          <button class="cta">Vezi licee</button>
+
+          <div class="divider"></div>
+
+          <div class="stats">
+            <svg class="triangle-purple" viewBox="0 0 420 230" aria-hidden="true">
+              <path d="M0 0 L420 0 L210 230 Z"></path>
+            </svg>
+            <div class="circle c1">70+ licee<br>din București</div>
+            <div class="circle c2">450+<br>specializări</div>
+            <div class="circle c3">Alege<br>informat</div>
+            <div class="circle c4">200+<br>de clase</div>
+          </div>
+        </section>
+
+        <section class="profile-section">
+          <div class="profile-content">
+            <h2>Ce profil ți se potrivește?</h2>
+
+            <ul>
+              <li>Real → matematică, informatică, științe</li>
+              <li>Uman → limbi, istorie</li>
+              <li>Economic → business, contabilitate</li>
+              <li>Vocațional → arte, sport, gătit</li>
+            </ul>
+
+            <button class="profile-btn">Citește despre fiecare</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-logo">Ǝliceu</div>
+
+      <div class="footer-grid">
+        <div>
+          <h3>Navigare</h3>
+          <a href="#">Toate Liceele</a>
+          <a href="#">Favorite</a>
+          <a href="#">Comparare</a>
+          <a href="#">Înregistrare</a>
+          <a href="#">Autentificare</a>
+        </div>
+
+        <div>
+          <h3>Resurse</h3>
+          <a href="#">Informații despre profiluri</a>
+          <a href="#">Test de îndrumare</a>
+          <a href="#">Evenimente</a>
+        </div>
+
+        <div>
+          <h3>Legal</h3>
+          <a href="#">Termeni și condiții</a>
+          <a href="#">Cookies</a>
+        </div>
+
+        <div>
+          <h3>Despre Eliceu</h3>
+          <p class="footer-text">
+            Eliceu te ajută să găsești liceul potrivit pentru tine. Compară opțiuni, vezi profiluri și ia o decizie informată.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
