@@ -869,6 +869,9 @@
         Filtre
       </button>
       <button class="search-btn" id="searchBtn">Caută</button>
+      <button id="compareBtn" class="search-btn">
+                Compară selecția
+</button>
     </div>
 
     <!-- SHOP MAIN -->
@@ -1080,7 +1083,6 @@
     badge: "top",
     badgeText: "Top 1 BUC",
     desc: "Cel mai bun liceu din București, rezultate excepționale la olimpiade.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1097,7 +1099,6 @@
     badge: "top",
     badgeText: "Top 3 BUC",
     desc: "Tradiție academică foarte puternică.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1114,7 +1115,6 @@
     badge: "top",
     badgeText: "Top 5 BUC",
     desc: "Unul dintre cele mai competitive licee.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1131,7 +1131,6 @@
     badge: "popular",
     badgeText: "Foarte căutat",
     desc: "Profil uman foarte bun și tradiție solidă.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1148,7 +1147,6 @@
     badge: "balanced",
     badgeText: "Echilibrat",
     desc: "Bun pe ambele profiluri.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1165,7 +1163,6 @@
     badge: "rising",
     badgeText: "În creștere",
     desc: "Evoluție constant pozitivă.",
-    icon: "🏫",
     isNew: true
   },
   {
@@ -1182,7 +1179,6 @@
     badge: "steady",
     badgeText: "Stabil",
     desc: "Rezultate constante în timp.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1199,7 +1195,6 @@
     badge: "steady",
     badgeText: "Stabil",
     desc: "Profil uman bine structurat.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1216,7 +1211,6 @@
     badge: "balanced",
     badgeText: "Echilibrat",
     desc: "Bun pe zona real.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1233,7 +1227,6 @@
     badge: "top",
     badgeText: "IT Focus",
     desc: "Foarte puternic pe informatică.",
-    icon: "💻",
     isNew: false
   },
 
@@ -1251,7 +1244,6 @@
     badge: "top",
     badgeText: "Olimpiade",
     desc: "Performanțe foarte mari la informatică.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1268,7 +1260,6 @@
     badge: "steady",
     badgeText: "Stabil",
     desc: "Profil științe ale naturii.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1285,7 +1276,6 @@
     badge: "steady",
     badgeText: "Stabil",
     desc: "Liceu cu tradiție umanistă.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1302,7 +1292,6 @@
     badge: "basic",
     badgeText: "Standard",
     desc: "Liceu bun, mai puțin competitiv.",
-    icon: "🏫",
     isNew: false
   },
   {
@@ -1319,328 +1308,268 @@
     badge: "basic",
     badgeText: "Standard",
     desc: "Profil real echilibrat.",
-    icon: "🏫",
     isNew: false
   }
 ];
 
-  // ─── STATE ───────────────────────────────────────────────────────────────
-  const ITEMS_PER_PAGE = 9;
-  let state = {
-    search: '',
-    profil: [],
-    sector: [],
-    medieMax: 10,
-    sort: 'default',
-    page: 1,
-    view: 'grid',
-    addedIds: new Set()
-  };
+const ITEMS_PER_PAGE = 9;
 
-  // ─── STARS HELPER ────────────────────────────────────────────────────────
-  function renderStars(r) {
-    let s = '';
-    for (let i = 1; i <= 5; i++) {
-      s += `<span class="star ${i <= r ? 'filled' : ''}">★</span>`;
-    }
-    return s;
+let state = {
+  search: '',
+  profil: [],
+  sector: [],
+  medieMax: 10,
+  sort: 'default',
+  page: 1,
+  view: 'grid',
+  addedIds: new Set(),
+  compareIds: new Set(),
+  minRating: 0
+};
+
+
+// ─── STARS ───────────────────────────────────────────────────
+function renderStars(r) {
+  let s = '';
+  for (let i = 1; i <= 5; i++) {
+    s += `<span class="star ${i <= r ? 'filled' : ''}">★</span>`;
   }
+  return s;
+}
 
-  // ─── RENDER CARDS ────────────────────────────────────────────────────────
-  function renderCards() {
-    let filtered = allLicee.filter(l => {
-      const q = state.search.toLowerCase();
-      if (q && !l.name.toLowerCase().includes(q) &&
-               !l.specializare.toLowerCase().includes(q) &&
-               !l.profil.toLowerCase().includes(q) &&
-               !l.sector.toLowerCase().includes(q)) return false;
-      if (state.profil.length && !state.profil.includes(l.profil)) return false;
-      if (state.sector.length && !state.sector.includes(l.sector)) return false;
-      if (l.medie > state.medieMax) return false;
-      return true;
-    });
 
-    // Sort
-    filtered.sort((a, b) => {
-      switch (state.sort) {
-        case 'rating-desc': return b.rating - a.rating;
-        case 'rating-asc':  return a.rating - b.rating;
-        case 'medie-desc':  return b.medie - a.medie;
-        case 'medie-asc':   return a.medie - b.medie;
-        case 'name-asc':    return a.name.localeCompare(b.name);
-        case 'name-desc':   return b.name.localeCompare(a.name);
-        default: return 0;
-      }
-    });
+// ─── RENDER CARDS ───────────────────────────────────────────
+function renderCards() {
 
-    const total = filtered.length;
-    const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
-    if (state.page > totalPages) state.page = 1;
-    const start = (state.page - 1) * ITEMS_PER_PAGE;
-    const paged = filtered.slice(start, start + ITEMS_PER_PAGE);
+  let filtered = allLicee.filter(l => {
+    const q = state.search.toLowerCase();
 
-    document.getElementById('countShown').textContent = paged.length;
-    document.getElementById('countTotal').textContent = total;
+    if (q &&
+      !l.name.toLowerCase().includes(q) &&
+      !l.specializare.toLowerCase().includes(q) &&
+      !l.profil.toLowerCase().includes(q) &&
+      !l.sector.toLowerCase().includes(q)
+    ) return false;
 
-    const grid = document.getElementById('productsGrid');
-    const empty = document.getElementById('emptyState');
+    if (state.profil.length && !state.profil.includes(l.profil)) return false;
+    if (state.sector.length && !state.sector.includes(l.sector)) return false;
+    if (l.medie > state.medieMax) return false;
 
-    if (!paged.length) {
-      grid.innerHTML = '';
-      empty.classList.add('visible');
-    } else {
-      empty.classList.remove('visible');
-      grid.innerHTML = paged.map((l, i) => {
-        const isAdded = state.addedIds.has(l.id);
-        const badge = l.badge
-          ? `<div class="card-badge badge-${l.badge}">${l.badgeText || l.badge}</div>` : '';
-        return `
-          <div class="product-card" style="animation-delay:${i * 0.06}s">
-            ${badge}
-            <button class="fav-btn ${isAdded ? 'active' : ''}" data-id="${l.id}" onclick="toggleFav(this, ${l.id})">♡</button>
-            <div class="card-image-wrap">
-              <div class="card-icon-placeholder">${l.icon}</div>
-              <div class="card-overlay"></div>
+    return true;
+  });
+
+  // SORT
+  filtered.sort((a, b) => {
+    switch (state.sort) {
+      case 'rating-desc': return b.rating - a.rating;
+      case 'rating-asc': return a.rating - b.rating;
+      case 'medie-desc': return b.medie - a.medie;
+      case 'medie-asc': return a.medie - b.medie;
+      case 'name-asc': return a.name.localeCompare(b.name);
+      case 'name-desc': return b.name.localeCompare(a.name);
+      default: return 0;
+    }
+  });
+
+  const total = filtered.length;
+  const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+  if (state.page > totalPages) state.page = 1;
+
+  const start = (state.page - 1) * ITEMS_PER_PAGE;
+  const paged = filtered.slice(start, start + ITEMS_PER_PAGE);
+
+  document.getElementById('countShown').textContent = paged.length;
+  document.getElementById('countTotal').textContent = total;
+
+  const grid = document.getElementById('productsGrid');
+  const empty = document.getElementById('emptyState');
+
+  if (!paged.length) {
+    grid.innerHTML = '';
+    empty.classList.add('visible');
+  } else {
+    empty.classList.remove('visible');
+
+    grid.innerHTML = paged.map((l, i) => {
+
+      const isFav = state.addedIds.has(l.id);
+      const isComp = state.compareIds.has(l.id);
+
+      const badge = l.badge
+        ? `<div class="card-badge badge-${l.badge}">${l.badgeText}</div>`
+        : '';
+
+      return `
+        <div class="product-card" style="animation-delay:${i * 0.06}s">
+
+          ${badge}
+
+          <button class="fav-btn ${isFav ? 'active' : ''}"
+            onclick="toggleFav(${l.id})">♡</button>
+
+          <div class="card-image-wrap">
+            <div class="card-icon-placeholder">${l.icon}</div>
+            <div class="card-overlay"></div>
+          </div>
+
+          <div class="card-body">
+            <div class="card-category">${l.profil} · ${l.sector}</div>
+            <div class="card-title">${l.name}</div>
+            <div class="card-desc">${l.desc}</div>
+
+            <div class="card-stats">
+              <div class="stat-chip"> ${l.elevi}</div>
+              <div class="stat-chip"> ${l.clase}</div>
             </div>
-            <div class="card-body">
-              <div class="card-category">${l.profil} · ${l.sector}</div>
-              <div class="card-title">${l.name}</div>
-              <div class="card-desc">${l.desc}</div>
-              <div class="card-stats">
-                <div class="stat-chip"><span>👥</span>${l.elevi} elevi</div>
-                <div class="stat-chip"><span>📋</span>${l.clase} clase</div>
-                </div>
-              <div class="card-price-row">
-                <div class="price-block">
-                  <span class="price-unit">Medie admitere</span>
-                  <span class="price-main">${l.medie.toFixed(2)}</span>
-                  ${l.medie >= 9.5 ? '<span class="price-unit" style="color:#e74c3c;font-weight:700">Foarte selectiv</span>' : ''}
-                </div>
-                <button class="add-btn ${isAdded ? 'added' : ''}"
-                        data-id="${l.id}"
-                        onclick="addToList(this, ${l.id})">
-                  ${isAdded ? '✓ Adăugat' : '+ Lista mea'}
+
+            <div class="card-price-row">
+              <div>
+                <div class="price-unit">Medie</div>
+                <div class="price-main">${l.medie.toFixed(2)}</div>
+              </div>
+
+              <div style="display:flex; gap:8px;">
+
+                <button class="add-btn ${isComp ? 'added' : ''}"
+                  onclick="toggleCompare(${l.id})">
+                ${isComp ? 'Selectat' : 'Compară'}
                 </button>
+
+                <button class="add-btn ${isFav ? 'added' : ''}"
+                  onclick="toggleFav(${l.id})">
+                  ${isFav ? '✓' : '+'}
+                </button>
+
               </div>
             </div>
-          </div>`;
-      }).join('');
+
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  renderPagination(totalPages);
+  renderPills(); // FIX IMPORTANT
+}
+
+
+// ─── FAVORITE / LIST ────────────────────────────────────────
+function toggleFav(id) {
+  if (state.addedIds.has(id)) {
+    state.addedIds.delete(id);
+  } else {
+    state.addedIds.add(id);
+    showToast();
+  }
+  renderCards();
+}
+
+
+// ─── TOAST ───────────────────────────────────────────────────
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+
+// ─── COMPARE ────────────────────────────────────────────────
+function toggleCompare(id) {
+  if (state.compareIds.has(id)) {
+    state.compareIds.delete(id);
+  } else {
+    if (state.compareIds.size >= 3) {
+      alert("Max 3 licee.");
+      return;
     }
+    state.compareIds.add(id);
+  }
+  renderCards();
+}
 
-    renderPagination(totalPages);
-    renderPills();
+
+// ─── PAGINATION ─────────────────────────────────────────────
+function renderPagination(totalPages) {
+  const pag = document.getElementById('pagination');
+
+  if (totalPages <= 1) {
+    pag.innerHTML = '';
+    return;
   }
 
-  // ─── ADD TO LIST ─────────────────────────────────────────────────────────
-  function addToList(btn, id) {
-    if (state.addedIds.has(id)) {
-      state.addedIds.delete(id);
-    } else {
-      state.addedIds.add(id);
-      showToast();
-    }
-    renderCards();
+  let html = `
+    <button onclick="goPage(${state.page-1})" ${state.page===1?'disabled':''}>‹</button>
+  `;
+
+  for (let i = 1; i <= totalPages; i++) {
+    html += `<button class="${i===state.page?'active':''}" onclick="goPage(${i})">${i}</button>`;
   }
 
-  function toggleFav(btn, id) {
-    addToList(btn, id);
-  }
+  html += `
+    <button onclick="goPage(${state.page+1})" ${state.page===totalPages?'disabled':''}>›</button>
+  `;
 
-  function showToast() {
-    const t = document.getElementById('toast');
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-  }
+  pag.innerHTML = html;
+}
 
-  // ─── PAGINATION ──────────────────────────────────────────────────────────
-  function renderPagination(totalPages) {
-    const pag = document.getElementById('pagination');
-    if (totalPages <= 1) { pag.innerHTML = ''; return; }
-    let html = `
-      <button class="page-btn" onclick="goPage(${state.page-1})" ${state.page===1?'disabled':''}>‹</button>`;
-    for (let i = 1; i <= totalPages; i++) {
-      html += `<button class="page-btn ${i===state.page?'active':''}" onclick="goPage(${i})">${i}</button>`;
-    }
-    html += `<button class="page-btn" onclick="goPage(${state.page+1})" ${state.page===totalPages?'disabled':''}>›</button>`;
-    html += `<span class="page-info">Pagina ${state.page} din ${totalPages}</span>`;
-    pag.innerHTML = html;
-  }
+function goPage(n) {
+  state.page = n;
+  renderCards();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-  function goPage(n) {
-    state.page = n;
-    renderCards();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 
-  // ─── ACTIVE FILTER PILLS ─────────────────────────────────────────────────
-  function renderPills() {
-    const pills = document.getElementById('activePills');
-    let html = '';
-    state.profil.forEach(p => {
-      html += `<div class="active-filter-pill" onclick="removeProfil('${p}')">
-        Profil: ${p} <span class="pill-close">×</span></div>`;
-    });
-    state.sector.forEach(s => {
-      html += `<div class="active-filter-pill" onclick="removeSector('${s}')">
-        ${s} <span class="pill-close">×</span></div>`;
-    });
-    if (state.medieMax < 10) {
-      html += `<div class="active-filter-pill" onclick="resetMedie()">
-        Medie ≤ ${state.medieMax.toFixed(1)} <span class="pill-close">×</span></div>`;
-    }
-    
-    pills.innerHTML = html;
-  }
+// ─── PILLS ───────────────────────────────────────────────────
+function renderPills() {
+  const pills = document.getElementById('activePills');
+  pills.innerHTML = '';
+}
 
-  function removeProfil(p) {
-    state.profil = state.profil.filter(x => x !== p);
-    document.querySelectorAll('.filter-profil').forEach(cb => {
-      if (cb.value === p) cb.checked = false;
-    });
-    state.page = 1; renderCards();
-  }
-  function removeSector(s) {
-    state.sector = state.sector.filter(x => x !== s);
-    document.querySelectorAll('.filter-sector').forEach(cb => {
-      if (cb.value === s) cb.checked = false;
-    });
-    state.page = 1; renderCards();
-  }
-  function resetMedie() {
-    state.medieMax = 10;
-    document.getElementById('medieMax').value = 10;
-    document.getElementById('medieSlider').value = 10;
-    state.page = 1; renderCards();
-  }
 
-  // ─── FILTER EVENTS ───────────────────────────────────────────────────────
-  document.querySelectorAll('.filter-profil').forEach(cb => {
-    cb.addEventListener('change', () => {
-      state.profil = [...document.querySelectorAll('.filter-profil:checked')].map(x => x.value);
-      state.page = 1; renderCards();
-    });
-  });
-  document.querySelectorAll('.filter-sector').forEach(cb => {
-    cb.addEventListener('change', () => {
-      state.sector = [...document.querySelectorAll('.filter-sector:checked')].map(x => x.value);
-      state.page = 1; renderCards();
-    });
-  });
-
-  const medieSlider = document.getElementById('medieSlider');
-  medieSlider.addEventListener('input', () => {
-    state.medieMax = parseFloat(medieSlider.value);
-    document.getElementById('medieMax').value = medieSlider.value;
-    const pct = ((medieSlider.value - 5) / 5) * 100;
-    medieSlider.style.background = `linear-gradient(to right, var(--purple) 0%, var(--purple) ${pct}%, var(--border) ${pct}%, var(--border) 100%)`;
-    state.page = 1; renderCards();
-  });
-  document.getElementById('medieMax').addEventListener('change', function() {
-    let v = Math.min(10, Math.max(5, parseFloat(this.value) || 10));
-    this.value = v;
-    medieSlider.value = v;
-    state.medieMax = v;
-    const pct = ((v - 5) / 5) * 100;
-    medieSlider.style.background = `linear-gradient(to right, var(--purple) 0%, var(--purple) ${pct}%, var(--border) ${pct}%, var(--border) 100%)`;
-    state.page = 1; renderCards();
-  });
-
-  document.getElementById('applyFilters').addEventListener('click', () => {
-    state.page = 1; renderCards();
-  });
-  document.getElementById('clearFilters').addEventListener('click', () => {
-    state.profil = []; state.sector = [];
-    state.medieMax = 10; state.minRating = 0;
-    state.search = ''; state.page = 1;
-    document.querySelectorAll('.filter-profil, .filter-sector').forEach(cb => cb.checked = false);
-    document.getElementById('medieMax').value = 10;
-    medieSlider.value = 10;
-    medieSlider.style.background = '';
-    document.querySelector('input[name="rating"][value="0"]').checked = true;
-    document.getElementById('searchInput').value = '';
-    renderCards();
-  });
-
-  // ─── SEARCH ──────────────────────────────────────────────────────────────
-  let searchTimeout;
-  document.getElementById('searchInput').addEventListener('input', function() {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-      state.search = this.value;
-      state.page = 1;
-      renderCards();
-    }, 280);
-  });
-  document.getElementById('searchBtn').addEventListener('click', () => {
-    state.search = document.getElementById('searchInput').value;
+// ─── FILTER EVENTS (FIX BRACKET BUG) ────────────────────────
+document.querySelectorAll('.filter-profil').forEach(cb => {
+  cb.addEventListener('change', () => {
+    state.profil = [...document.querySelectorAll('.filter-profil:checked')].map(x => x.value);
     state.page = 1;
     renderCards();
   });
+});
 
-  // ─── SORT ────────────────────────────────────────────────────────────────
-  document.getElementById('sortSelect').addEventListener('change', function() {
-    state.sort = this.value;
-    state.page = 1; renderCards();
+document.querySelectorAll('.filter-sector').forEach(cb => {
+  cb.addEventListener('change', () => {
+    state.sector = [...document.querySelectorAll('.filter-sector:checked')].map(x => x.value);
+    state.page = 1;
+    renderCards();
   });
+});
 
-  // ─── VIEW TOGGLE ─────────────────────────────────────────────────────────
-  document.getElementById('gridViewBtn').addEventListener('click', () => {
-    state.view = 'grid';
-    document.getElementById('productsGrid').classList.remove('list-view');
-    document.getElementById('gridViewBtn').classList.add('active');
-    document.getElementById('listViewBtn').classList.remove('active');
-  });
-  document.getElementById('listViewBtn').addEventListener('click', () => {
-    state.view = 'list';
-    document.getElementById('productsGrid').classList.add('list-view');
-    document.getElementById('listViewBtn').classList.add('active');
-    document.getElementById('gridViewBtn').classList.remove('active');
-  });
 
-  // ─── FILTER ACCORDION ────────────────────────────────────────────────────
-  document.querySelectorAll('.filter-card-header').forEach(h => {
-    h.addEventListener('click', () => {
-      const target = h.dataset.target;
-      const el = document.getElementById(target);
-      const toggle = h.querySelector('.filter-toggle');
-      el.style.display = el.style.display === 'none' ? '' : 'none';
-      toggle.classList.toggle('collapsed');
-    });
-  });
-
-  // ─── SIDEBAR & OVERLAY ───────────────────────────────────────────────────
-  const menuBtn = document.getElementById('menuBtn');
-  const sidebar = document.getElementById('sidebar');
-  const closeBtn = document.getElementById('closeBtn');
-  const overlay = document.getElementById('overlay');
-  menuBtn.addEventListener('click', () => {
-    sidebar.classList.add('active');
-    overlay.classList.add('active');
-  });
-  closeBtn.addEventListener('click', () => {
-    sidebar.classList.remove('active');
-    overlay.classList.remove('active');
-  });
-  overlay.addEventListener('click', () => {
-    sidebar.classList.remove('active');
-    overlay.classList.remove('active');
-  });
-
-  // ─── MOBILE FILTER DRAWER ────────────────────────────────────────────────
-  const mobileFilterBtn = document.getElementById('mobileFilterBtn');
-  const filterDrawer = document.getElementById('filterDrawer');
-  const drawerBackdrop = document.getElementById('drawerBackdrop');
-  const drawerClose = document.getElementById('drawerClose');
-
-  function openDrawer() { filterDrawer.classList.add('open'); }
-  function closeDrawer() { filterDrawer.classList.remove('open'); }
-  mobileFilterBtn.addEventListener('click', openDrawer);
-  drawerBackdrop.addEventListener('click', closeDrawer);
-  drawerClose.addEventListener('click', closeDrawer);
-
-  // ─── INITIAL RENDER ──────────────────────────────────────────────────────
+// ─── SEARCH ────────────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', function() {
+  state.search = this.value;
+  state.page = 1;
   renderCards();
-  </script>
+});
 
+document.getElementById('searchBtn').addEventListener('click', () => {
+  state.search = document.getElementById('searchInput').value;
+  state.page = 1;
+  renderCards();
+});
+
+
+// ─── SORT ───────────────────────────────────────────────────
+document.getElementById('sortSelect').addEventListener('change', function() {
+  state.sort = this.value;
+  state.page = 1;
+  renderCards();
+});
+
+
+// ─── INIT ───────────────────────────────────────────────────
+renderCards();
+
+</script>
 </body>
 </html>
