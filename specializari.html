@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Specializări - Eliceu</title>
+  <title>Eliceu</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-
   <style>
-    * {
+	* {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    body {
+   body {
       font-family: 'Inter', sans-serif;
-      background: #f7f2fb;
-      color: #17121f;
+      background: #ffffff;
+      color: #1f1f1f;
     }
 
     header {
@@ -70,275 +69,185 @@
       font-weight: 900;
     }
 
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -320px;
-      width: 320px;
-      height: 100vh;
-      background: linear-gradient(180deg, #8c63b3 0%, #6f4796 100%);
-      z-index: 2000;
-      padding: 110px 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      transition: 0.35s;
-      box-shadow: 6px 0 30px rgba(0,0,0,0.18);
-    }
 
-    .sidebar.active {
-      left: 0;
-    }
-
-    .sidebar a {
-      text-decoration: none;
-      color: #ffffff;
-      font-size: 22px;
-      font-weight: 900;
-      transition: 0.2s;
-    }
-
-    .sidebar a:hover {
-      color: #ffe34d;
-      transform: translateX(8px);
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 28px;
-      right: 28px;
-      background: transparent;
+      button {
+      background: #9661b8;
+      color: white;
       border: none;
-      font-size: 34px;
-      cursor: pointer;
-      color: #ffffff;
-      font-weight: 900;
-    }
-
-    main {
-      padding: 105px 70px 80px;
-    }
-
-    .hero-specializare {
-      min-height: 430px;
-      border-radius: 28px;
-      overflow: hidden;
-      background:
-        linear-gradient(90deg, rgba(25, 10, 42, 0.95), rgba(80, 23, 126, 0.65)),
-        url("profil-real.jpg");
-      background-size: cover;
-      background-position: center;
-      color: white;
-      padding: 70px;
-      display: flex;
-      align-items: center;
-    }
-
-    /*.hero-text {
-      max-width: 520px;
-    }*/
-
-    .breadcrumb {
-      font-size: 14px;
-      font-weight: 700;
-      opacity: 0.8;
-      margin-bottom: 65px;
-    }
-
-
-    .section-title {
-      margin-top: 42px;
-      margin-bottom: 24px;
-      font-size: 28px;
-      font-weight: 900;
-      position: relative;
-    }
-
-    .section-title::after {
-      content: "";
-      display: block;
-      width: 44px;
-      height: 4px;
-      background: #9661b8;
-      border-radius: 999px;
-      margin-top: 10px;
-    }
-
-    .subjects {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 26px;
-      margin-bottom: 34px;
-    }
-
-    .subject-card {
-      background: white;
-      border-radius: 16px;
-      padding: 30px 24px;
-      min-height: 220px;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
-    }
-
-    .icon {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #b765e4, #7c3fc0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 27px;
-      color: white;
-      margin-bottom: 22px;
-    }
-
-    .subject-card h3 {
+      padding: 18px 35px;
+      border-radius: 14px;
       font-size: 20px;
-      font-weight: 900;
-      margin-bottom: 12px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    .subject-card p {
-      font-size: 15px;
-      line-height: 1.55;
-      font-weight: 500;
-    }
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.25fr;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-      overflow: hidden;
-      margin-top: 30px;
-    }
-
-    .fit-box,
-    .careers-box {
-      padding: 36px;
-    }
-
-    .fit-box {
-      border-right: 1px solid #eadff1;
-    }
-
-    .fit-box h2,
-    .careers-box h2 {
-      font-size: 26px;
-      font-weight: 900;
-      margin-bottom: 28px;
-      position: relative;
-    }
-
-    .fit-box h2::after,
-    .careers-box h2::after {
-      content: "";
-      display: block;
-      width: 42px;
-      height: 4px;
-      background: #9661b8;
-      border-radius: 999px;
-      margin-top: 10px;
-    }
-
-    .fit-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      margin-bottom: 28px;
-    }
-
-    .fit-list li {
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.4;
-    }
-
-    .fit-list li::before {
-      content: "✓";
-      background: #a64ed0;
-      color: white;
-      font-weight: 900;
-      border-radius: 50%;
-      padding: 2px 6px;
-      margin-right: 12px;
-    }
-
-    .note {
-      background: #f4e8fb;
-      padding: 18px;
-      border-radius: 12px;
-      color: #6f3496;
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.5;
-    }
-
-    .careers {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      justify-content: center;
-    }
-
-    .career-card {
-  background: #f8effc;
-  border-radius: 14px;
-  padding: 24px 12px;
-  text-align: center;
-  font-weight: 900;
-  display: flex;
-  align-items: center;      
-  justify-content: center;  
-  min-height: 90px;       
+.specializari-page {
+  min-height: 100vh;
+  padding: 140px 80px 90px;
+  background: #f6f0fb;
 }
 
-    .career-icon {
-      font-size: 34px;
-      margin-bottom: 12px;
-    }
+.intro {
+  text-align: center;
+  margin-bottom: 60px;
+}
 
-    .quiz-banner {
-      margin-top: 48px;
-      background: linear-gradient(90deg, #7430a6, #a44dd4);
-      border-radius: 20px;
-      padding: 38px 48px;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
-      overflow: hidden;
-    }
+.intro h1 {
+  font-size: 52px;
+  font-weight: 900;
+  color: #1f1f1f;
+  margin-bottom: 18px;
+}
 
-    .quiz-banner h2 {
-      font-size: 24px;
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
+.intro p {
+  font-size: 20px;
+  font-weight: 700;
+  color: #5d5368;
+}
 
-    .quiz-banner p {
-      font-size: 15px;
-      font-weight: 500;
-    }
+.specializari-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 34px;
+  max-width: 1350px;
+  margin: 0 auto;
+}
 
-    .quiz-banner a {
-      background: white;
-      color: #7c3fc0;
-      text-decoration: none;
-      padding: 18px 28px;
-      border-radius: 12px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
+.profil-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
 
-    footer {
-      background: #786286;
-      padding: 80px 90px 90px;
-      color: white;
-    }
+.specializare-card {
+  background: white;
+  padding: 38px;
+  border-radius: 22px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  transition: 0.25s;
+  min-height: 250px;
+  position: relative;
+  z-index: 2;
+}
+
+.detalii-box {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+
+  background: #f6f0fb;
+
+  padding: 55px 42px 50px;
+  border-radius: 0 0 22px 22px;
+
+  margin-top: -20px;
+  margin-bottom: 34px;
+
+  box-shadow: 0 12px 25px rgba(0,0,0,0.10);
+}
+
+.detalii-box.active {
+  display: grid;
+}
+
+.specializare-card h2 {
+  font-size: 30px;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.specializare-card p {
+  font-size: 17px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.specializare-card a {
+  display: inline-block;
+  background: #9661b8;
+  color: white;
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+.specializare-card a:hover {
+  background: #7b4d99;
+}
+
+.detalii-btn {
+  display: inline-block;
+  background: #9661b8;
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.detalii-box button {
+  margin-top: 18px;
+  margin-bottom: 50px;
+}
+
+.detalii-box h3 {
+  font-size: 26px;
+  color: #9661b8;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.detalii-box ul {
+  margin-left: 24px;
+  margin-bottom: 34px;
+}
+
+.detalii-box li {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  line-height: 1.55;
+}
+
+.detalii-box p {
+  font-size: 17px;
+  font-weight: 700;
+  margin-top: 14px;
+  line-height: 1.6;
+}
+
+.detalii-box a {
+  color: #9661b8;
+  font-weight: 900;
+}
+
+@media (max-width: 800px) {
+  .specializari-page {
+    padding: 120px 24px 60px;
+  }
+
+  .intro h1 {
+    font-size: 36px;
+  }
+
+  .specializari-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detalii-box {
+    grid-template-columns: 1fr;
+  }
+}
+
+    	footer {
+  	background: #786286;
+  	padding: 80px 90px 90px;
+  	color: white;
+	}
 
     .footer-logo {
       font-size: 24px;
@@ -367,42 +276,57 @@
       font-weight: 700;
       margin-bottom: 8px;
     }
-
-    @media (max-width: 900px) {
-      main {
-        padding: 95px 24px 60px;
+	.sidebar {
+  	position: fixed;
+  	top: 0;
+  	left: -320px;
+  	width: 320px;
+  	height: 100vh;
+  	background: linear-gradient(
+  	180deg,
+  	#8c63b3 0%,
+  	#6f4796 100%
+	);
+  	z-index: 2000;
+  	padding: 110px 40px;
+  	display: flex;
+  	flex-direction: column;
+  	gap: 28px;
+ 	transition: 0.35s;
+  	box-shadow: 6px 0 30px rgba(0,0,0,0.18);
+	}
+	.sidebar.active {
+  	left: 0;
+	}
+	.sidebar a {
+  	text-decoration: none;
+  	color: #ffffff;
+  	font-size: 22px;
+  	font-weight: 900;
+  	transition: 0.2s;
+	}
+	.sidebar a:hover {
+  	color: #ffe34d;
+  	transform: translateX(8px);
+	}
+	.close-btn {
+  	position: absolute;
+  	top: 28px;
+  	right: 28px;
+  	background: transparent;
+  	border: none;
+  	font-size: 34px;
+  	cursor: pointer;
+  	color: #ffffff;
+  	font-weight: 900;
+	}
+    @media (max-width: 800px) {
+      .hero h1 {
+        font-size: 30px;
       }
-
-      .hero-specializare {
-        padding: 42px 28px;
+      .cta {
+        width: 280px;
       }
-
-      .hero-specializare h1 {
-        font-size: 42px;
-      }
-
-      .subjects {
-        grid-template-columns: 1fr;
-      }
-
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .fit-box {
-        border-right: none;
-        border-bottom: 1px solid #eadff1;
-      }
-
-      .careers {
-        grid-template-columns: 1fr;
-      }
-
-      .quiz-banner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
       .footer-grid {
         grid-template-columns: 1fr;
         gap: 24px;
@@ -413,160 +337,362 @@
 
 <body>
 
-  <header>
+   <header>
     <div class="logo-area">
       <button class="menu" id="menuBtn">☰</button>
       <div class="logo">Ǝliceu</div>
     </div>
-
     <nav>
-      <a href="index.html">Acasă</a>
-      <a href="licee.html">Toate liceele</a>
-      <a href="profil.html">Profiluri</a>
-      <a href="test.html">Test de orientare</a>
+      <a href="indexf.html" > Înregistrare</a>
+      <a href="indexf.html" >Autentificare</a>
     </nav>
   </header>
 
   <div class="sidebar" id="sidebar">
-    <button class="close-btn" id="closeBtn">✕</button>
-    <a href="index.html">Acasă</a>
-    <a href="profil.html">Profil</a>
-    <a href="licee.html">Toate liceele</a>
-    <a href="specializari.html">Specializări</a>
-    <a href="test.html">Test de orientare</a>
-    <a href="evenimente.html">Evenimente și noutăți</a>
-    <a href="despre.html">Despre noi</a>
-    <a href="contact.html">Contact</a>
+  <button class="close-btn" id="closeBtn">✕</button>
+  <a href="acasa.html">Acasă</a>
+  <a href="licee.html">Toate liceele</a>
+  <a href="specializari.html">Specializări</a>
+  <a href="test.html">Test de orientare</a>
+  <a href="evenimente.html">Evenimente și noutăți</a>
+  <a href="despre.html">Despre noi</a>
+  <a href="contact.html">Contact</a>
+  </div>
+	
+	<main class="specializari-page">
+  <section class="intro">
+    <h1>Specializări liceu</h1>
+    <p>Află ce presupune fiecare profil și vezi care ți se potrivește cel mai bine.</p>
+  </section>
+
+  <section class="specializari-grid">
+
+    <div class="profil-item">
+  <div class="specializare-card">
+    <h2>Profil Real</h2>
+    <p>Matematică, informatică, științe și logică.</p>
+    <button class="detalii-btn" onclick="toggleDetalii('real-detalii')">
+      Vezi detalii
+    </button>
   </div>
 
-  <main>
+  <div class="detalii-box" id="real-detalii">
+    <div>
+      <h3>Materii principale</h3>
+      <ul>
+        <li>Matematică</li>
+        <li>Informatică</li>
+        <li>Fizică</li>
+      </ul>
 
-    <section class="hero-specializare">
-      <div class="hero-text">
-        <div class="breadcrumb">Acasă › Specializări › Profil Real</div>
+      <button onclick="window.location.href='licee.html'">
+        Vezi licee
+      </button>
 
-        <h1>Profil Real</h1>
+      <p>Mai multe informații <a href="#">aici</a>.</p>
+    </div>
 
-        <p>
-          Pentru elevii pasionați de logică, analiză, tehnologie și științe exacte.
-        </p>
+    <div>
+      <h3>Top 3 facultăți</h3>
+      <ul>
+        <li>Automatică și Calculatoare</li>
+        <li>Informatică</li>
+        <li>Politehnică</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-      </div>
-    </section>
+<div class="profil-item">
+  <div class="specializare-card">
+    <h2>Profil Uman</h2>
+    <p>Limbi străine, literatură, istorie și comunicare.</p>
+    <button class="detalii-btn" onclick="toggleDetalii('uman-detalii')">
+      Vezi detalii
+    </button>
+  </div>
 
-    <h2 class="section-title">Materii și facultăți potrivite</h2>
+  <div class="detalii-box" id="uman-detalii">
+    <div>
+      <h3>Materii principale</h3>
+      <ul>
+        <li>Limba română</li>
+        <li>Istorie</li>
+        <li>Limbi străine</li>
+      </ul>
 
-    <section class="subjects">
-      <div class="subject-card">
-        <h3>Matematică</h3>
-        <p> Facultatea de Matematică și Informatică<br>
-            Facultatea de Automatică și Calculatoare<br>
-            Facultatea de Științe Aplicate
-        </p>
-      </div>
+      <button onclick="window.location.href='licee.html'">
+        Vezi licee
+      </button>
 
-      <div class="subject-card">
-        <h3>Informatică</h3>
-        <p>Facultatea de Automatică și Calculatoare – Politehnica București<br>
-            Facultatea de Matematică și Informatică – Universitatea din București<br>
-            Facultatea de Electronică, Telecomunicații și Tehnologia Informației – Politehnica București<br>
-        </p>
-      </div>
+      <p>Mai multe informații <a href="#">aici</a>.</p>
+    </div>
 
-      <div class="subject-card">
-        <h3>Fizică</h3>
-        <p>Facultatea de Fizică – Universitatea din București.<br>
-          Facultatea de Științe Aplicate – Politehnica București<br>
-          Facultatea de Inginerie Aerospațială – Politehnica București<br>
-        
-        </p>
-      </div>
+    <div>
+      <h3>Top 3 facultăți</h3>
+      <ul>
+        <li>Drept</li>
+        <li>Litere</li>
+        <li>Jurnalism</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-      <div class="subject-card">
-        <h3>Chimie</h3>
-        <p>Facultatea de Chimie – Universitatea din București<br>
-        Facultatea de Inginerie Chimică și Biotehnologii – Politehnica București<br>
-        Facultatea de Chimie Aplicată și Știința Materialelor – Politehnica București<br>
-        </p>
-      </div>
-    </section>
+<div class="profil-item">
+<div class="specializare-card">
+  <h2>Profil Tehnic</h2>
+  <p>Tehnologie, mecanică, electronică și aplicații practice.</p>
+  <button class="detalii-btn" onclick="toggleDetalii('tehnic-detalii')">
+    Vezi detalii
+  </button>
+</div>
 
-    <section class="info-grid">
-      <div class="fit-box">
-        <h2>Ți se potrivește dacă...</h2>
+<div class="detalii-box" id="tehnic-detalii">
+  <div>
+    <h3>Materii principale</h3>
+    <ul>
+      <li>Tehnologii</li>
+      <li>Electronică</li>
+      <li>Mecanică</li>
+    </ul>
+    <button onclick="window.location.href='licee.html'">Vezi licee</button>
+    <p>Mai multe informații <a href="#">aici</a>.</p>
+  </div>
+  <div>
+    <h3>Top 3 facultăți</h3>
+    <ul>
+      <li>Inginerie</li>
+      <li>Automatică</li>
+      <li>Electronică</li>
+    </ul>
+  </div>
+</div>
+</div>
 
-        <ul class="fit-list">
-          <li>Îți place să rezolvi probleme și provocări.</li>
-          <li>Ești curios și îți place să descoperi cum funcționează lucrurile.</li>
-          <li>Preferi logica, calculele și gândirea analitică.</li>
-          <li>Ești pasionat de tehnologie și inovație.</li>
-        </ul>
+<div class="profil-item">
+<div class="specializare-card">
+  <h2>Profil Militar</h2>
+  <p>Disciplină, pregătire fizică, ordine și carieră militară.</p>
+  <button class="detalii-btn" onclick="toggleDetalii('militar-detalii')">Vezi detalii</button>
+</div>
 
-        <div class="note">
-          Elevii de la profilul Real dezvoltă abilități esențiale pentru viitor și au acces la domenii foarte căutate.
-        </div>
-      </div>
+<div class="detalii-box" id="militar-detalii">
+  <div>
+    <h3>Materii principale</h3>
+    <ul>
+      <li>Pregătire militară</li>
+      <li>Educație fizică</li>
+      <li>Matematică</li>
+    </ul>
+    <button onclick="window.location.href='licee.html'">Vezi licee</button>
+    <p>Mai multe informații <a href="#">aici</a>.</p>
+  </div>
+  <div>
+    <h3>Top 3 facultăți</h3>
+    <ul>
+      <li>Academia Tehnică Militară</li>
+      <li>Academia Forțelor Terestre</li>
+      <li>Academia de Poliție</li>
+    </ul>
+  </div>
+</div>
+</div>
 
-      <div class="careers-box">
-        <h2>Ce cariere poți urma</h2>
+<div class="profil-item">
+<div class="specializare-card">
+  <h2>Profil Teologic</h2>
+  <p>Religie, cultură, valori morale și studii umaniste.</p>
+  <button class="detalii-btn" onclick="toggleDetalii('teologic-detalii')">Vezi detalii</button>
+</div>
 
-        <div class="careers">
-          <div class="career-card">
-            Programator
-          </div>
+<div class="detalii-box" id="teologic-detalii">
+  <div>
+    <h3>Materii principale</h3>
+    <ul>
+      <li>Religie</li>
+      <li>Limba română</li>
+      <li>Istorie</li>
+    </ul>
+    <button onclick="window.location.href='licee.html'">Vezi licee</button>
+    <p>Mai multe informații <a href="#">aici</a>.</p>
+  </div>
+  <div>
+    <h3>Top 3 facultăți</h3>
+    <ul>
+      <li>Teologie</li>
+      <li>Litere</li>
+      <li>Asistență socială</li>
+    </ul>
+  </div>
+</div>
+</div>
 
-          <div class="career-card">
-            Inginer
-          </div>
+<div class="profil-item">
+<div class="specializare-card">
+  <h2>Profil Artistic</h2>
+  <p>Arte plastice, muzică, teatru, creativitate și expresie.</p>
+  <button class="detalii-btn" onclick="toggleDetalii('artistic-detalii')">Vezi detalii</button>
+</div>
 
-          <div class="career-card">
-            Data Scientist
-          </div>
+<div class="detalii-box" id="artistic-detalii">
+  <div>
+    <h3>Materii principale</h3>
+    <ul>
+      <li>Desen</li>
+      <li>Muzică</li>
+      <li>Istoria artei</li>
+    </ul>
+    <button onclick="window.location.href='licee.html'">Vezi licee</button>
+    <p>Mai multe informații <a href="#">aici</a>.</p>
+  </div>
+  <div>
+    <h3>Top 3 facultăți</h3>
+    <ul>
+      <li>UNArte</li>
+      <li>UNATC</li>
+      <li>Conservator</li>
+    </ul>
+  </div>
+</div>
+</div>
 
-          <div class="career-card">
-            Arhitect software
-          </div>
+<div class="profil-item">
+<div class="specializare-card">
+  <h2>Profil Servicii</h2>
+  <p>Turism, alimentație publică, comerț și activități economice.</p>
+  <button class="detalii-btn" onclick="toggleDetalii('servicii-detalii')">Vezi detalii</button>
+</div>
 
-          <div class="career-card">
-            Cercetător
-          </div>
+<div class="detalii-box" id="servicii-detalii">
+  <div>
+    <h3>Materii principale</h3>
+    <ul>
+      <li>Turism</li>
+      <li>Comerț</li>
+      <li>Economic</li>
+    </ul>
+    <button onclick="window.location.href='licee.html'">Vezi licee</button>
+    <p>Mai multe informații <a href="#">aici</a>.</p>
+  </div>
+  <div>
+    <h3>Top 3 facultăți</h3>
+    <ul>
+      <li>Business și Turism</li>
+      <li>Marketing</li>
+      <li>Management</li>
+    </ul>
+  </div>
+</div>
+</div>
 
-          <div class="career-card">
-            Analist
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="profil-item">
+<div class="specializare-card">
+  <h2>Profil Sport</h2>
+  <p>Performanță sportivă, pregătire fizică și competiții.</p>
+  <button class="detalii-btn" onclick="toggleDetalii('sport-detalii')">Vezi detalii</button>
+</div>
 
-    <section class="quiz-banner">
-      <div>
-        <h2>Nu ești sigur că ți se potrivește?</h2>
-        <p>Fă testul nostru de orientare și descoperă profilul ideal pentru tine.</p>
-      </div>
+<div class="detalii-box" id="sport-detalii">
+  <div>
+    <h3>Materii principale</h3>
+    <ul>
+      <li>Educație fizică</li>
+      <li>Antrenament sportiv</li>
+      <li>Biologie</li>
+    </ul>
+    <button onclick="window.location.href='licee.html'">Vezi licee</button>
+    <p>Mai multe informații <a href="#">aici</a>.</p>
+  </div>
+  <div>
+    <h3>Top 3 facultăți</h3>
+    <ul>
+      <li>UNEFS</li>
+      <li>Kinetoterapie</li>
+      <li>Medicină sportivă</li>
+    </ul>
+  </div>
+</div>
+</div>
 
-      <a href="test.html">Fă testul de orientare →</a>
-    </section>
+<div class="profil-item">
+<div class="specializare-card">
+  <h2>Profil Pedagogic</h2>
+  <p>Educație, comunicare, psihologie și lucrul cu elevii.</p>
+  <button class="detalii-btn" onclick="toggleDetalii('pedagogic-detalii')">Vezi detalii</button>
+</div>
 
-  </main>
+<div class="detalii-box" id="pedagogic-detalii">
+  <div>
+    <h3>Materii principale</h3>
+    <ul>
+      <li>Pedagogie</li>
+      <li>Psihologie</li>
+      <li>Limba română</li>
+    </ul>
+    <button onclick="window.location.href='licee.html'">Vezi licee</button>
+    <p>Mai multe informații <a href="#">aici</a>.</p>
+  </div>
+  <div>
+    <h3>Top 3 facultăți</h3>
+    <ul>
+      <li>Psihologie</li>
+      <li>Științele educației</li>
+      <li>Litere</li>
+    </ul>
+  </div>
+</div>
+</div>
 
-  <footer>
+<div class="profil-item">
+<div class="specializare-card">
+  <h2>Profil Resurse</h2>
+  <p>Protecția mediului, agricultură, resurse naturale și sustenabilitate.</p>
+  <button class="detalii-btn" onclick="toggleDetalii('resurse-detalii')">Vezi detalii</button>
+</div>
+
+<div class="detalii-box" id="resurse-detalii">
+  <div>
+    <h3>Materii principale</h3>
+    <ul>
+      <li>Biologie</li>
+      <li>Chimie</li>
+      <li>Protecția mediului</li>
+    </ul>
+    <button onclick="window.location.href='licee.html'">Vezi licee</button>
+    <p>Mai multe informații <a href="#">aici</a>.</p>
+  </div>
+  <div>
+    <h3>Top 3 facultăți</h3>
+    <ul>
+      <li>Biologie</li>
+      <li>Ingineria mediului</li>
+      <li>Agronomie</li>
+    </ul>
+  </div>
+</div>
+</div>
+  </section>
+</main>
+	
+   <footer>
     <div class="footer-logo">Ǝliceu</div>
 
     <div class="footer-grid">
       <div>
         <h3>Navigare</h3>
-        <a href="licee.html">Toate liceele</a>
+        <a href="#">Toate Liceele</a>
         <a href="#">Favorite</a>
         <a href="#">Comparare</a>
-        <a href="indexf.html">Înregistrare</a>
-        <a href="indexf.html">Autentificare</a>
+        <a href="#">Înregistrare</a>
+        <a href="#">Autentificare</a>
       </div>
 
       <div>
         <h3>Resurse</h3>
-        <a href="specializari.html">Informații despre profiluri</a>
-        <a href="test.html">Test de îndrumare</a>
-        <a href="evenimente.html">Evenimente</a>
+        <a href="#">Informații despre profiluri</a>
+        <a href="#">Test de îndrumare</a>
+        <a href="#">Evenimente</a>
       </div>
 
       <div>
@@ -577,19 +703,25 @@
     </div>
   </footer>
 
-  <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const sidebar = document.getElementById("sidebar");
-    const closeBtn = document.getElementById("closeBtn");
+<script>
 
-    menuBtn.addEventListener("click", function() {
-      sidebar.classList.add("active");
-    });
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const closeBtn = document.getElementById("closeBtn");
 
-    closeBtn.addEventListener("click", function() {
-      sidebar.classList.remove("active");
-    });
-  </script>
+  menuBtn.addEventListener("click", function() {
+  	sidebar.classList.add("active");
+  });
+  closeBtn.addEventListener("click", function() {
+ 	sidebar.classList.remove("active");
+   });
+
+function toggleDetalii(id) {
+  const box = document.getElementById(id);
+  box.classList.toggle("active");
+}
+
+</script>
 
 </body>
 </html>
