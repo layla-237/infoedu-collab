@@ -345,8 +345,7 @@
   <div class="sidebar" id="sidebar">
   <button class="close-btn" id="closeBtn">✕</button>
 
-  <a href="index.html">Acasă</a>
-  <a href="profil.html">Profil</a>
+  <a href="acasa.html">Acasă</a>
   <a href="licee.html">Toate liceele</a>
   <a href="specializari.html">Specializări</a>
   <a href="test.html">Test de orientare</a>
