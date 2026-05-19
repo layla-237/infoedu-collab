@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toate Liceele – Ǝliceu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --purple:       #9661b8;
+      --purple-dark:  #7a4d99;
+      --purple-light: #eee3f4;
+      --purple-mid:   #c9a8e0;
+      --yellow:       #ffe34d;
+      --sidebar-bg1:  #8c63b3;
+      --sidebar-bg2:  #6f4796;
+      --text:         #1f1f1f;
+      --text-muted:   #6b6b6b;
+      --border:       #e8ddf2;
+      --white:        #ffffff;
+      --shadow-sm:    0 2px 8px rgba(150,97,184,.12);
+      --shadow-md:    0 6px 24px rgba(150,97,184,.18);
+      --shadow-lg:    0 12px 40px rgba(150,97,184,.22);
+      --radius:       16px;
+      --radius-sm:    10px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f7f3fb;
+      color: var(--text);
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      width: 100%; height: 72px;
+      background: var(--purple);
+      position: fixed; top: 0; left: 0;
+      z-index: 1000;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+    }
+    .logo-area { display: flex; align-items: center; gap: 16px; }
+    .menu { font-size: 32px; color: #fff; font-weight: 900; background: transparent; border: 0; cursor: pointer; }
+    .logo { font-size: 34px; font-weight: 900; color: var(--yellow); letter-spacing: -1px; }
+    nav { display: flex; gap: 38px; }
+    nav a { color: #fff; text-decoration: none; font-size: 13px; font-weight: 900; }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      position: fixed; top: 0; left: -320px;
+      width: 320px; height: 100vh;
+      background: linear-gradient(180deg, var(--sidebar-bg1) 0%, var(--sidebar-bg2) 100%);
+      z-index: 2000; padding: 110px 40px;
+      display: flex; flex-direction: column; gap: 28px;
+      transition: 0.35s;
+      box-shadow: 6px 0 30px rgba(0,0,0,.18);
+    }
+    .sidebar.active { left: 0; }
+    .sidebar a { text-decoration: none; color: #fff; font-size: 22px; font-weight: 900; transition: 0.2s; }
+    .sidebar a:hover { color: var(--yellow); transform: translateX(8px); }
+    .close-btn { position: absolute; top: 28px; right: 28px; background: transparent; border: none; font-size: 34px; cursor: pointer; color: #fff; font-weight: 900; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 1500; opacity: 0; pointer-events: none; transition: opacity 0.35s; }
+    .overlay.active { opacity: 1; pointer-events: all; }
+
+    /* ─── PAGE WRAPPER ─── */
+    .page-wrapper { padding-top: 72px; min-height: 100vh; }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb {
+      padding: 16px 40px; background: var(--white);
+      border-bottom: 1px solid var(--border);
+      font-size: 13px; font-weight: 600; color: var(--text-muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb a { color: var(--purple); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { color: var(--text-muted); }
+
+    /* ─── HERO BANNER ─── */
+    .shop-banner {
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+      padding: 36px 40px; color: white;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 24px;
+      position: relative; overflow: hidden;
+    }
+    .shop-banner::before {
+      content: ''; position: absolute; right: -60px; top: -60px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: rgba(255,255,255,.06);
+    }
+    .shop-banner::after {
+      content: ''; position: absolute; right: 80px; bottom: -80px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(255,255,255,.04);
+    }
+    .shop-banner h1 { font-size: 28px; font-weight: 900; margin-bottom: 6px; }
+    .shop-banner p { font-size: 14px; font-weight: 500; opacity: .85; }
+    .banner-badge {
+      background: var(--yellow); color: #1f1f1f;
+      font-size: 13px; font-weight: 900;
+      padding: 8px 18px; border-radius: 50px;
+      white-space: nowrap; position: relative; z-index: 1;
+    }
+
+    /* ─── SEARCH BAR ─── */
+    .search-bar-wrap {
+      background: var(--white); padding: 16px 40px;
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 12px; align-items: center;
+    }
+    .search-input-wrap { position: relative; flex: 1; max-width: 560px; }
+    .search-input-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+    .search-input {
+      width: 100%; height: 46px; padding: 0 16px 0 44px;
+      border: 2px solid var(--border); border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+      color: var(--text); background: #faf8fc; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(150,97,184,.15); background: var(--white); }
+    .search-btn {
+      height: 46px; padding: 0 24px; background: var(--purple);
+      color: white; border: none; border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: background 0.2s, transform 0.1s; white-space: nowrap;
+    }
+    .search-btn:hover { background: var(--purple-dark); }
+    .search-btn:active { transform: scale(.97); }
+
+    /* Compare bar */
+    .compare-bar {
+      display: none;
+      background: var(--purple);
+      color: white; padding: 12px 40px;
+      align-items: center; justify-content: space-between; gap: 12px;
+      font-size: 13px; font-weight: 700;
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown { from { transform: translateY(-100%); opacity:0; } to { transform: translateY(0); opacity:1; } }
+    .compare-bar.visible { display: flex; }
+    .compare-bar-names { display: flex; gap: 10px; flex-wrap: wrap; }
+    .compare-bar-chip {
+      background: rgba(255,255,255,.2); padding: 4px 12px;
+      border-radius: 50px; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .compare-bar-chip button {
+      background: transparent; border: none; color: white;
+      cursor: pointer; font-size: 14px; font-weight: 900; line-height: 1;
+    }
+    .compare-go-btn {
+      height: 40px; padding: 0 22px;
+      background: var(--yellow); color: #1f1f1f;
+      border: none; border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 900;
+      cursor: pointer; white-space: nowrap;
+      transition: transform 0.15s;
+    }
+    .compare-go-btn:hover { transform: scale(1.03); }
+
+    /* ─── SORT BAR ─── */
+    .sort-bar {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 20px;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .sort-bar .results-count { font-size: 14px; font-weight: 600; color: var(--text-muted); }
+    .sort-bar .results-count strong { color: var(--text); }
+    .sort-controls { display: flex; gap: 8px; align-items: center; }
+    .sort-label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+    .sort-select {
+      height: 38px; padding: 0 36px 0 12px;
+      border: 2px solid var(--border); border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--text); background: var(--white); cursor: pointer;
+      outline: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b6b' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+    }
+    .sort-select:focus { border-color: var(--purple); }
+    .view-toggle { display: flex; gap: 4px; }
+    .view-btn {
+      width: 38px; height: 38px; border: 2px solid var(--border);
+      border-radius: var(--radius-sm); background: var(--white);
+      cursor: pointer; display: flex; align-items: center;
+      justify-content: center; transition: all 0.2s; color: var(--text-muted);
+    }
+    .view-btn.active { border-color: var(--purple); background: var(--purple-light); color: var(--purple); }
+    .view-btn:hover { border-color: var(--purple); color: var(--purple); }
+
+    /* ─── MAIN LAYOUT ─── */
+    .shop-main {
+      display: flex; gap: 24px;
+      padding: 24px 40px 60px;
+      max-width: 1440px; margin: 0 auto;
+      align-items: flex-start;
+    }
+
+    /* ─── FILTER SIDEBAR ─── */
+    .filter-sidebar {
+      width: 260px; flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .filter-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 20px; box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+    }
+    .filter-card-header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 16px;
+      cursor: pointer; user-select: none;
+    }
+    .filter-card-header h3 {
+      font-size: 13px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .6px; color: var(--text);
+    }
+    .filter-toggle {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: var(--purple-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: var(--purple); font-weight: 700;
+    }
+    .filter-options { display: flex; flex-direction: column; gap: 10px; }
+    .filter-option { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .filter-option input[type="checkbox"] { display: none; }
+    .check-box {
+      width: 18px; height: 18px; border: 2px solid var(--border);
+      border-radius: 5px; display: flex; align-items: center;
+      justify-content: center; transition: all 0.15s; flex-shrink: 0; background: white;
+    }
+    .filter-option input:checked + .check-box { background: var(--purple); border-color: var(--purple); }
+    .filter-option input:checked + .check-box::after { content: '✓'; color: white; font-size: 11px; font-weight: 900; }
+    .filter-option-label { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+    .filter-option-count {
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+      background: var(--purple-light); padding: 2px 7px; border-radius: 20px;
+    }
+    .price-range-wrap { display: flex; flex-direction: column; gap: 12px; }
+    .price-inputs { display: flex; gap: 8px; align-items: center; }
+    .price-input {
+      flex: 1; height: 36px; padding: 0 10px;
+      border: 2px solid var(--border); border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      text-align: center; outline: none;
+    }
+    .price-input:focus { border-color: var(--purple); }
+    .price-sep { font-size: 13px; color: var(--text-muted); font-weight: 700; }
+    .range-slider {
+      width: 100%; -webkit-appearance: none; appearance: none;
+      height: 4px; border-radius: 2px; outline: none; cursor: pointer;
+      background: linear-gradient(to right, var(--purple) 0%, var(--purple) 50%, var(--border) 50%, var(--border) 100%);
+    }
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--purple); box-shadow: 0 2px 6px rgba(150,97,184,.4);
+      cursor: pointer; border: 3px solid white;
+    }
+    .apply-filters-btn {
+      width: 100%; height: 42px; background: var(--purple); color: white;
+      border: none; border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 800;
+      cursor: pointer; transition: background 0.2s, transform 0.1s;
+    }
+    .apply-filters-btn:hover { background: var(--purple-dark); }
+    .clear-filters {
+      width: 100%; height: 38px; background: transparent;
+      border: 2px solid var(--border); color: var(--text-muted);
+      border-radius: var(--radius-sm); font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    }
+    .clear-filters:hover { border-color: var(--purple); color: var(--purple); background: var(--purple-light); }
+
+    /* ─── PRODUCT GRID AREA ─── */
+    .grid-area { flex: 1; min-width: 0; }
+    .active-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .active-filter-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--purple-light); border: 1px solid var(--purple-mid);
+      color: var(--purple); font-size: 12px; font-weight: 700;
+      padding: 5px 12px; border-radius: 50px; cursor: pointer; transition: all 0.2s;
+    }
+    .active-filter-pill:hover { background: #dfc8f5; }
+    .pill-close { font-size: 14px; font-weight: 900; line-height: 1; }
+
+    /* ─── PRODUCT CARDS GRID ─── */
+    .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .products-grid.list-view { grid-template-columns: 1fr; }
+
+    /* ─── SINGLE PRODUCT CARD ─── */
+    .product-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid var(--border); overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex; flex-direction: column; position: relative;
+      animation: fadeInUp 0.4s ease both;
+      cursor: pointer;
+    }
+    .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .product-card:hover .card-overlay { opacity: 1; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .product-card:nth-child(1) { animation-delay: 0s; }
+    .product-card:nth-child(2) { animation-delay: .06s; }
+    .product-card:nth-child(3) { animation-delay: .12s; }
+    .product-card:nth-child(4) { animation-delay: .18s; }
+    .product-card:nth-child(5) { animation-delay: .24s; }
+    .product-card:nth-child(6) { animation-delay: .30s; }
+
+    .card-badge {
+      position: absolute; top: 12px; left: 12px; z-index: 2;
+      font-size: 11px; font-weight: 800;
+      padding: 4px 10px; border-radius: 50px;
+      text-transform: uppercase; letter-spacing: .4px;
+    }
+    .badge-top     { background: var(--purple); color: white; }
+    .badge-nou     { background: #27ae60; color: white; }
+    .badge-popular { background: #e67e22; color: white; }
+    .badge-rising  { background: #27ae60; color: white; }
+    .badge-steady  { background: #95a5a6; color: white; }
+    .badge-balanced{ background: #3498db; color: white; }
+    .badge-basic   { background: #95a5a6; color: white; }
+
+    .fav-btn {
+      position: absolute; top: 12px; right: 12px; z-index: 2;
+      width: 34px; height: 34px; background: white;
+      border: 2px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 16px; transition: all 0.2s;
+    }
+    .fav-btn:hover { border-color: #e74c3c; background: #fff0f0; }
+    .fav-btn.active { border-color: #e74c3c; background: #fff0f0; }
+
+    .card-image-wrap {
+      width: 100%; height: 200px; background: var(--purple-light);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative; flex-shrink: 0;
+    }
+    .card-image-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .product-card:hover .card-image-wrap img { transform: scale(1.05); }
+    .card-overlay { position: absolute; inset: 0; background: rgba(150,97,184,.08); opacity: 0; transition: opacity 0.25s; }
+
+    .card-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .card-category { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--purple); }
+    .card-title { font-size: 15px; font-weight: 800; color: var(--text); line-height: 1.3; }
+    .card-desc { font-size: 12px; font-weight: 500; color: var(--text-muted); line-height: 1.45; flex: 1; }
+
+    .card-stats { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .stat-chip { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); }
+
+    .card-price-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; padding-top: 4px;
+      border-top: 1px solid var(--border); margin-top: auto;
+    }
+    .price-block { display: flex; flex-direction: column; gap: 0; }
+    .price-main { font-size: 20px; font-weight: 900; color: var(--purple); line-height: 1.1; }
+    .price-unit { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+
+    .add-btn {
+      height: 38px; padding: 0 16px; background: var(--purple);
+      color: white; border: none; border-radius: 10px;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 800;
+      cursor: pointer; transition: background 0.2s, transform 0.1s;
+      white-space: nowrap; display: flex; align-items: center; gap: 6px;
+    }
+    .add-btn:hover { background: var(--purple-dark); }
+    .add-btn:active { transform: scale(.95); }
+    .add-btn.added { background: #27ae60; }
+    .add-btn.compare-added { background: #3498db; }
+
+    /* List view */
+    .products-grid.list-view .product-card { flex-direction: row; }
+    .products-grid.list-view .card-image-wrap { width: 180px; height: auto; flex-shrink: 0; border-radius: 0; }
+
+    /* ─── PAGINATION ─── */
+    .pagination {
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; margin-top: 40px; flex-wrap: wrap;
+    }
+    .page-btn {
+      min-width: 40px; height: 40px; padding: 0 10px;
+      border: 2px solid var(--border); border-radius: 10px;
+      background: var(--white); font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 700; color: var(--text); cursor: pointer;
+      transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+    }
+    .page-btn:hover { border-color: var(--purple); color: var(--purple); background: var(--purple-light); }
+    .page-btn.active { background: var(--purple); border-color: var(--purple); color: white; }
+    .page-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state { text-align: center; padding: 80px 20px; display: none; }
+    .empty-state.visible { display: block; }
+    .empty-icon { font-size: 60px; margin-bottom: 16px; }
+    .empty-state h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .empty-state p { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+
+    /* ─── FOOTER ─── */
+    footer { background: #786286; padding: 80px 90px 90px; color: white; }
+    .footer-logo { font-size: 24px; font-weight: 900; color: var(--yellow); margin-bottom: 22px; }
+    .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 80px; }
+    footer h3 { font-size: 17px; font-weight: 900; margin-bottom: 14px; }
+    footer a { display: block; color: white; text-decoration: none; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #27ae60; color: white; padding: 14px 22px;
+      border-radius: 12px; font-size: 14px; font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0,0,0,.2);
+      transform: translateY(80px); opacity: 0;
+      transition: all 0.3s; z-index: 9999;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ─── MOBILE ─── */
+    .mobile-filter-btn {
+      display: none; align-items: center; gap: 8px;
+      height: 42px; padding: 0 18px; background: var(--purple-light);
+      border: 2px solid var(--purple-mid); border-radius: var(--radius-sm);
+      color: var(--purple); font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 800; cursor: pointer;
+    }
+
+    .filter-drawer { position: fixed; inset: 0; z-index: 3000; display: none; }
+    .filter-drawer.open { display: flex; }
+    .filter-drawer-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.4); }
+    .filter-drawer-panel {
+      position: relative; width: 300px; max-width: 90vw; height: 100%;
+      background: var(--white); overflow-y: auto; padding: 24px 20px;
+      display: flex; flex-direction: column; gap: 16px;
+      transform: translateX(-100%); transition: transform 0.3s;
+    }
+    .filter-drawer.open .filter-drawer-panel { transform: translateX(0); }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .drawer-header h2 { font-size: 18px; font-weight: 900; }
+    .drawer-close { background: transparent; border: none; font-size: 26px; cursor: pointer; font-weight: 900; color: var(--text); }
+
+    @media (max-width: 1100px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .shop-main { padding: 20px 24px 60px; }
+    }
+    @media (max-width: 900px) {
+      .filter-sidebar { display: none; }
+      .shop-main { padding: 16px 16px 60px; }
+      .shop-banner { padding: 28px 20px; }
+      .search-bar-wrap { padding: 12px 16px; }
+      .breadcrumb { padding: 12px 16px; }
+      .mobile-filter-btn { display: flex; }
+      .compare-bar { padding: 12px 16px; }
+    }
+    @media (max-width: 680px) {
+      .products-grid { grid-template-columns: 1fr; }
+      header { padding: 0 20px; }
+      nav { gap: 18px; }
+      nav a { font-size: 12px; }
+      .shop-banner h1 { font-size: 22px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+      footer { padding: 40px 24px 50px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-area">
+      <button class="menu" id="menuBtn">☰</button>
+      <div class="logo">Ǝliceu</div>
+    </div>
+    <nav>
+      <a href="indexf.html">Înregistrare</a>
+      <a href="indexf.html">Autentificare</a>
+    </nav>
+  </header>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <a href="index.html">Acasă</a>
+    <a href="profil.html">Profil</a>
+    <a href="licee.html">Toate liceele</a>
+    <a href="specializari.html">Specializări</a>
+    <a href="test.html">Test de orientare</a>
+    <a href="evenimente.html">Evenimente și noutăți</a>
+    <a href="despre.html">Despre noi</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <!-- MOBILE FILTER DRAWER -->
+  <div class="filter-drawer" id="filterDrawer">
+    <div class="filter-drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="filter-drawer-panel" id="drawerPanel">
+      <div class="drawer-header">
+        <h2>Filtre</h2>
+        <button class="drawer-close" id="drawerClose">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">✓ Adăugat la lista ta!</div>
+
+  <!-- PAGE -->
+  <div class="page-wrapper">
+    <div class="breadcrumb">
+      <a href="index.html">Acasă</a>
+      <span>›</span>
+      <span>Toate Liceele</span>
+    </div>
+
+    <div class="shop-banner">
+      <div>
+        <h1>Toate Liceele din București</h1>
+        <p>Explorează, compară și adaugă la lista ta. Găsește liceul perfect.</p>
+      </div>
+      <div class="banner-badge">15+ Licee disponibile</div>
+    </div>
+
+    <!-- COMPARE BAR -->
+    <div class="compare-bar" id="compareBar">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font-weight:900">Comparare:</span>
+        <div class="compare-bar-names" id="compareBarNames"></div>
+      </div>
+      <button class="compare-go-btn" id="compareGoBtn">Compară acum →</button>
+    </div>
+
+    <div class="search-bar-wrap">
+      <div class="search-input-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input class="search-input" id="searchInput" type="text" placeholder="Caută un liceu, profil sau specializare…">
+      </div>
+      <button class="mobile-filter-btn" id="mobileFilterBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+        Filtre
+      </button>
+      <button class="search-btn" id="searchBtn">Caută</button>
+    </div>
+
+    <div class="shop-main">
+      <!-- FILTER SIDEBAR -->
+      <aside class="filter-sidebar" id="filterSidebar">
+        <div class="filter-card">
+          <div class="filter-card-header">
+            <h3>Profil</h3>
+            <div class="filter-toggle">▾</div>
+          </div>
+          <div class="filter-options">
+            <label class="filter-option"><input type="checkbox" value="Real" class="filter-profil"><div class="check-box"></div><span class="filter-option-label">Real</span><span class="filter-option-count">8</span></label>
+            <label class="filter-option"><input type="checkbox" value="Uman" class="filter-profil"><div class="check-box"></div><span class="filter-option-label">Uman</span><span class="filter-option-count">5</span></label>
+            <label class="filter-option"><input type="checkbox" value="Mixt" class="filter-profil"><div class="check-box"></div><span class="filter-option-label">Mixt</span><span class="filter-option-count">2</span></label>
+          </div>
+        </div>
+        <div class="filter-card">
+          <div class="filter-card-header">
+            <h3>Sector</h3>
+            <div class="filter-toggle">▾</div>
+          </div>
+          <div class="filter-options">
+            <label class="filter-option"><input type="checkbox" value="Sector 1" class="filter-sector"><div class="check-box"></div><span class="filter-option-label">Sector 1</span><span class="filter-option-count">8</span></label>
+            <label class="filter-option"><input type="checkbox" value="Sector 2" class="filter-sector"><div class="check-box"></div><span class="filter-option-label">Sector 2</span><span class="filter-option-count">4</span></label>
+            <label class="filter-option"><input type="checkbox" value="Sector 4" class="filter-sector"><div class="check-box"></div><span class="filter-option-label">Sector 4</span><span class="filter-option-count">1</span></label>
+            <label class="filter-option"><input type="checkbox" value="Sector 5" class="filter-sector"><div class="check-box"></div><span class="filter-option-label">Sector 5</span><span class="filter-option-count">1</span></label>
+            <label class="filter-option"><input type="checkbox" value="Sector 6" class="filter-sector"><div class="check-box"></div><span class="filter-option-label">Sector 6</span><span class="filter-option-count">1</span></label>
+          </div>
+        </div>
+        <div class="filter-card">
+          <div class="filter-card-header">
+            <h3>Medie admitere</h3>
+            <div class="filter-toggle">▾</div>
+          </div>
+          <div class="price-range-wrap">
+            <div class="price-inputs">
+              <input class="price-input" id="medieMin" type="number" value="5" min="5" max="10" step="0.1">
+              <span class="price-sep">—</span>
+              <input class="price-input" id="medieMax" type="number" value="10" min="5" max="10" step="0.1">
+            </div>
+            <input type="range" class="range-slider" id="medieSlider" min="5" max="10" step="0.1" value="10">
+          </div>
+        </div>
+        <button class="apply-filters-btn" id="applyFilters">Aplică filtrele</button>
+        <button class="clear-filters" id="clearFilters">Șterge toate filtrele</button>
+      </aside>
+
+      <!-- GRID AREA -->
+      <div class="grid-area">
+        <div class="active-filters" id="activePills"></div>
+
+        <div class="sort-bar">
+          <span class="results-count">
+            Afișez <strong id="countShown">9</strong> licee din <strong id="countTotal">15</strong>
+          </span>
+          <div class="sort-controls">
+            <span class="sort-label">Sortează:</span>
+            <select class="sort-select" id="sortSelect">
+              <option value="default">Recomandate</option>
+              <option value="rating-desc">Rating descrescător</option>
+              <option value="rating-asc">Rating crescător</option>
+              <option value="medie-desc">Medie admitere ↓</option>
+              <option value="medie-asc">Medie admitere ↑</option>
+              <option value="name-asc">Nume A–Z</option>
+              <option value="name-desc">Nume Z–A</option>
+            </select>
+            <div class="view-toggle">
+              <button class="view-btn active" id="gridViewBtn" title="Grid">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+              </button>
+              <button class="view-btn" id="listViewBtn" title="Listă">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon"></div>
+          <h3>Niciun liceu găsit</h3>
+          <p>Încearcă să ajustezi filtrele sau termenul de căutare.</p>
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Ǝliceu</div>
+    <div class="footer-grid">
+      <div>
+        <h3>Navigare</h3>
+        <a href="licee.html">Toate Liceele</a>
+        <a href="#">Favorite</a>
+        <a href="compare.html">Comparare</a>
+        <a href="indexf.html">Înregistrare</a>
+      </div>
+      <div>
+        <h3>Resurse</h3>
+        <a href="#">Test de îndrumare</a>
+        <a href="#">Evenimente</a>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <a href="#">Termeni și condiții</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+  // ─── HELPERS ────────────────────────────────────────────────────────────
+  function getFavs() { try { return new Set(JSON.parse(localStorage.getItem('eliceu_favs') || '[]')); } catch { return new Set(); } }
+  function saveFavs(s) { localStorage.setItem('eliceu_favs', JSON.stringify([...s])); }
+
+  function renderStars(r) {
+    return Array.from({length:5},(_,i)=>`<span style="font-size:12px;color:${i<Math.round(r)?'#f5c518':'#ddd'}">★</span>`).join('');
+  }
+
+  function showToast(msg = '✓ Adăugat!') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  const ITEMS_PER_PAGE = 9;
+  const state = {
+    search: '', profil: [], sector: [], medieMax: 10,
+    sort: 'default', page: 1, view: 'grid',
+    compareIds: new Set()
+  };
+
+  // ─── RENDER CARDS ────────────────────────────────────────────────────────
+  function renderCards() {
+    const favs = getFavs();
+
+    let filtered = allLicee.filter(l => {
+      const q = state.search.toLowerCase();
+      if (q && !l.name.toLowerCase().includes(q) && !l.specializare.toLowerCase().includes(q) &&
+          !l.profil.toLowerCase().includes(q) && !l.sector.toLowerCase().includes(q)) return false;
+      if (state.profil.length && !state.profil.includes(l.profil)) return false;
+      if (state.sector.length && !state.sector.includes(l.sector)) return false;
+      if (l.medie > state.medieMax) return false;
+      return true;
+    });
+
+    filtered.sort((a,b) => {
+      switch(state.sort) {
+        case 'rating-desc': return b.rating - a.rating;
+        case 'rating-asc':  return a.rating - b.rating;
+        case 'medie-desc':  return b.medie - a.medie;
+        case 'medie-asc':   return a.medie - b.medie;
+        case 'name-asc':    return a.name.localeCompare(b.name);
+        case 'name-desc':   return b.name.localeCompare(a.name);
+        default: return 0;
+      }
+    });
+
+    const total = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(total / ITEMS_PER_PAGE));
+    if (state.page > totalPages) state.page = 1;
+    const paged = filtered.slice((state.page-1)*ITEMS_PER_PAGE, state.page*ITEMS_PER_PAGE);
+
+    document.getElementById('countShown').textContent = paged.length;
+    document.getElementById('countTotal').textContent = total;
+
+    const grid = document.getElementById('productsGrid');
+    const empty = document.getElementById('emptyState');
+
+    if (!paged.length) {
+      grid.innerHTML = '';
+      empty.classList.add('visible');
+    } else {
+      empty.classList.remove('visible');
+      grid.className = 'products-grid' + (state.view === 'list' ? ' list-view' : '');
+      grid.innerHTML = paged.map((l, i) => {
+        const isFav = favs.has(l.id);
+        const isComp = state.compareIds.has(l.id);
+        return `
+          <div class="product-card" style="animation-delay:${i*.06}s" onclick="goToLiceu(${l.id}, event)">
+            ${l.badge ? `<div class="card-badge badge-${l.badge}">${l.badgeText}</div>` : ''}
+            <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav(${l.id}, event)" title="${isFav ? 'Elimina din favorite' : 'Adaugă la favorite'}">${isFav ? '❤️' : '🤍'}</button>
+
+            <div class="card-image-wrap">
+              <img src="${l.image}" alt="${l.name}" loading="lazy">
+              <div class="card-overlay"></div>
+            </div>
+
+            <div class="card-body">
+              <div class="card-category">${l.profil} · ${l.sector}</div>
+              <div class="card-title">${l.name}</div>
+              <div class="card-desc">${l.desc}</div>
+
+              <div class="card-stats">
+                <div class="stat-chip">${l.elevi.toLocaleString()}</div>
+                <div class="stat-chip">${l.clase} clase</div>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:6px;margin-top:2px">
+                <div style="display:flex;gap:2px">${renderStars(l.rating)}</div>
+                <span style="font-size:12px;font-weight:700;color:var(--text-muted)">${l.rating} (${l.reviews})</span>
+              </div>
+
+              <div class="card-price-row">
+                <div>
+                  <div class="price-unit">Medie admitere</div>
+                  <div class="price-main">${l.medie.toFixed(2)}</div>
+                </div>
+                <div style="display:flex;gap:8px">
+                  <button class="add-btn ${isComp ? 'compare-added' : ''}"
+                    onclick="toggleCompare(${l.id}, event)">
+                    ${isComp ? 'Selectat' : 'Compară'}
+                  </button>
+                  <button class="add-btn ${isFav ? 'added' : ''}"
+                    onclick="toggleFav(${l.id}, event)">
+                    ${isFav ? '✓' : '+'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    renderPagination(totalPages);
+    renderCompareBa();
+  }
+
+  function goToLiceu(id, e) {
+    if (e.target.closest('button')) return;
+    window.location.href = `liceu.html?id=${id}`;
+  }
+
+  // ─── FAVORITE ───────────────────────────────────────────────────────────
+  function toggleFav(id, e) {
+    if (e) e.stopPropagation();
+    const favs = getFavs();
+    if (favs.has(id)) { favs.delete(id); showToast('✕ Eliminat din favorite'); }
+    else { favs.add(id); showToast('❤️ Adăugat la favorite!'); }
+    saveFavs(favs);
+    renderCards();
+  }
+
+  // ─── COMPARE ────────────────────────────────────────────────────────────
+  function toggleCompare(id, e) {
+    if (e) e.stopPropagation();
+    if (state.compareIds.has(id)) {
+      state.compareIds.delete(id);
+    } else {
+      if (state.compareIds.size >= 3) { alert('Poți selecta maxim 3 licee pentru comparare.'); return; }
+      state.compareIds.add(id);
+      showToast( 'Adăugat la comparare!');
+    }
+    renderCards();
+  }
+
+  function renderCompareBa() {
+    const bar = document.getElementById('compareBar');
+    const names = document.getElementById('compareBarNames');
+    if (!state.compareIds.size) { bar.classList.remove('visible'); return; }
+    bar.classList.add('visible');
+    names.innerHTML = [...state.compareIds].map(id => {
+      const l = getLiceuById(id);
+      return `<div class="compare-bar-chip">${l ? l.name.replace('Colegiul Național ','CN ') : id} <button onclick="toggleCompare(${id})">✕</button></div>`;
+    }).join('');
+  }
+
+  document.getElementById('compareGoBtn').addEventListener('click', () => {
+    if (!state.compareIds.size) return;
+    window.location.href = `compare.html?ids=${[...state.compareIds].join(',')}`;
+  });
+
+  // ─── PAGINATION ──────────────────────────────────────────────────────────
+  function renderPagination(totalPages) {
+    const pag = document.getElementById('pagination');
+    if (totalPages <= 1) { pag.innerHTML = ''; return; }
+    let html = `<button class="page-btn" onclick="goPage(${state.page-1})" ${state.page===1?'disabled':''}>‹</button>`;
+    for (let i=1; i<=totalPages; i++) html += `<button class="page-btn ${i===state.page?'active':''}" onclick="goPage(${i})">${i}</button>`;
+    html += `<button class="page-btn" onclick="goPage(${state.page+1})" ${state.page===totalPages?'disabled':''}>›</button>`;
+    pag.innerHTML = html;
+  }
+  function goPage(n) { state.page = n; renderCards(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+  // ─── EVENTS ──────────────────────────────────────────────────────────────
+  document.getElementById('menuBtn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.add('active');
+    document.getElementById('overlay').classList.add('active');
+  });
+  ['closeBtn','overlay'].forEach(id => {
+    document.getElementById(id).addEventListener('click', () => {
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('overlay').classList.remove('active');
+    });
+  });
+
+  document.getElementById('searchInput').addEventListener('input', function() { state.search = this.value; state.page = 1; renderCards(); });
+  document.getElementById('searchBtn').addEventListener('click', () => { state.search = document.getElementById('searchInput').value; state.page = 1; renderCards(); });
+  document.getElementById('sortSelect').addEventListener('change', function() { state.sort = this.value; state.page = 1; renderCards(); });
+
+  document.querySelectorAll('.filter-profil').forEach(cb => cb.addEventListener('change', () => {
+    state.profil = [...document.querySelectorAll('.filter-profil:checked')].map(x => x.value);
+    state.page = 1; renderCards();
+  }));
+  document.querySelectorAll('.filter-sector').forEach(cb => cb.addEventListener('change', () => {
+    state.sector = [...document.querySelectorAll('.filter-sector:checked')].map(x => x.value);
+    state.page = 1; renderCards();
+  }));
+
+  document.getElementById('medieSlider').addEventListener('input', function() {
+    state.medieMax = parseFloat(this.value);
+    document.getElementById('medieMax').value = this.value;
+    state.page = 1; renderCards();
+  });
+
+  document.getElementById('gridViewBtn').addEventListener('click', () => {
+    state.view = 'grid';
+    document.getElementById('gridViewBtn').classList.add('active');
+    document.getElementById('listViewBtn').classList.remove('active');
+    renderCards();
+  });
+  document.getElementById('listViewBtn').addEventListener('click', () => {
+    state.view = 'list';
+    document.getElementById('listViewBtn').classList.add('active');
+    document.getElementById('gridViewBtn').classList.remove('active');
+    renderCards();
+  });
+
+  document.getElementById('clearFilters').addEventListener('click', () => {
+    state.profil = []; state.sector = []; state.medieMax = 10; state.search = ''; state.page = 1;
+    document.querySelectorAll('.filter-profil, .filter-sector').forEach(c => c.checked = false);
+    document.getElementById('medieMax').value = 10;
+    document.getElementById('medieSlider').value = 10;
+    document.getElementById('searchInput').value = '';
+    renderCards();
+  });
+
+  // Mobile drawer
+  document.getElementById('mobileFilterBtn').addEventListener('click', () => document.getElementById('filterDrawer').classList.add('open'));
+  ['drawerBackdrop','drawerClose'].forEach(id => document.getElementById(id)?.addEventListener('click', () => document.getElementById('filterDrawer').classList.remove('open')));
+
+  // ─── INIT ────────────────────────────────────────────────────────────────
+  renderCards();
+  </script>
+</body>
+</html>
