@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* ─── RESET & BASE ─── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -30,16 +29,17 @@
       --radius-sm:    10px;
     }
 
-    body { font-family: 'Inter', sans-serif; background: #f7f3fb; color: var(--text); }
+    html, body { height: 100%; }
+    body { font-family: 'Inter', sans-serif; background: #f7f3fb; color: var(--text); min-height: 100vh; }
 
-    /* ─── HEADER ─── */
+    /* HEADER */
     header {
       width: 100%; height: 72px;
       background: var(--purple);
       position: fixed; top: 0; left: 0;
       z-index: 1000;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 42px;
+      padding: 0 48px;
     }
     .logo-area { display: flex; align-items: center; gap: 16px; }
     .menu { font-size: 32px; color: #fff; font-weight: 900; background: transparent; border: 0; cursor: pointer; }
@@ -47,7 +47,7 @@
     nav { display: flex; gap: 38px; }
     nav a { color: #fff; text-decoration: none; font-size: 13px; font-weight: 900; }
 
-    /* ─── SIDEBAR ─── */
+    /* SIDEBAR */
     .sidebar {
       position: fixed; top: 0; left: -320px;
       width: 320px; height: 100vh;
@@ -63,12 +63,12 @@
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 1500; opacity: 0; pointer-events: none; transition: opacity 0.35s; }
     .overlay.active { opacity: 1; pointer-events: all; }
 
-    /* ─── PAGE WRAPPER ─── */
-    .page-wrapper { padding-top: 72px; min-height: 100vh; }
+    /* PAGE WRAPPER */
+    .page-wrapper { padding-top: 72px; min-height: calc(100vh - 72px); display: flex; flex-direction: column; }
 
-    /* ─── BREADCRUMB ─── */
+    /* BREADCRUMB */
     .breadcrumb {
-      padding: 16px 40px; background: var(--white);
+      padding: 16px 48px; background: var(--white);
       border-bottom: 1px solid var(--border);
       font-size: 13px; font-weight: 600; color: var(--text-muted);
       display: flex; align-items: center; gap: 6px;
@@ -76,24 +76,26 @@
     .breadcrumb a { color: var(--purple); text-decoration: none; }
     .breadcrumb a:hover { text-decoration: underline; }
 
-    /* ─── PRODUCT MAIN ─── */
+    /* PRODUCT MAIN — full width, no max-width cap */
     .product-main {
-      max-width: 1400px; margin: 0 auto;
-      padding: 32px 40px 60px;
+      width: 100%;
+      padding: 36px 48px 60px;
+      flex: 1;
     }
 
-    /* ─── PRODUCT TOP SECTION ─── */
+    /* PRODUCT TOP — hero two-column: gallery left, info right */
     .product-top {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 36px;
-      margin-bottom: 40px;
+      grid-template-columns: 55% 1fr;
+      gap: 40px;
+      margin-bottom: 44px;
+      align-items: start;
     }
 
-    /* ─── GALLERY ─── */
-    .gallery-col { display: flex; flex-direction: column; gap: 12px; }
+    /* GALLERY */
+    .gallery-col { display: flex; flex-direction: column; gap: 14px; }
     .main-image-wrap {
-      width: 100%; aspect-ratio: 4/3;
+      width: 100%; aspect-ratio: 16/9;
       border-radius: var(--radius);
       overflow: hidden;
       background: var(--purple-light);
@@ -107,23 +109,15 @@
       transition: transform 0.5s ease;
       display: block;
     }
-    .main-image-wrap:hover img { transform: scale(1.06); }
+    .main-image-wrap:hover img { transform: scale(1.05); }
     .main-image-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(to bottom, transparent 60%, rgba(150,97,184,.15));
       pointer-events: none;
     }
-    .zoom-hint {
-      position: absolute; bottom: 14px; right: 14px;
-      background: rgba(255,255,255,.85);
-      backdrop-filter: blur(6px);
-      font-size: 11px; font-weight: 700; color: var(--purple);
-      padding: 5px 12px; border-radius: 20px;
-      display: flex; align-items: center; gap: 5px;
-    }
     .thumb-row { display: flex; gap: 10px; }
     .thumb {
-      width: 80px; height: 60px; border-radius: 10px;
+      width: 90px; height: 68px; border-radius: 10px;
       overflow: hidden; border: 2px solid var(--border);
       cursor: pointer; transition: all 0.2s; flex-shrink: 0;
       background: var(--purple-light);
@@ -132,81 +126,37 @@
     .thumb:hover { border-color: var(--purple-mid); }
     .thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* ─── INFO COL ─── */
-    .info-col { display: flex; flex-direction: column; gap: 20px; }
-
-    .school-category {
-      font-size: 12px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: .8px;
-      color: var(--purple); display: flex; align-items: center; gap: 6px;
-    }
-    .school-category::before {
-      content: ''; display: inline-block;
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--purple);
-    }
-
-    .school-name {
-      font-size: 26px; font-weight: 900; line-height: 1.2;
-      color: var(--text);
-    }
-
-    .rating-row {
-      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    }
-    .stars-big { display: flex; gap: 3px; }
-    .star-big { font-size: 18px; color: #f5c518; }
-    .star-big.empty { color: #ddd; }
-    .rating-score { font-size: 18px; font-weight: 900; color: var(--text); }
-    .rating-count { font-size: 13px; font-weight: 600; color: var(--text-muted); }
-    .rating-divider { color: var(--border); font-weight: 300; }
-    .rank-badge {
-      background: var(--purple-light); color: var(--purple);
-      font-size: 12px; font-weight: 800;
-      padding: 4px 12px; border-radius: 20px;
-    }
-
+    /* INFO COL */
+    .info-col { display: flex; flex-direction: column; gap: 22px; }
+    .school-name { font-size: 30px; font-weight: 900; line-height: 1.2; color: var(--text); }
     .school-desc {
-      font-size: 14px; font-weight: 500; line-height: 1.65;
+      font-size: 14px; font-weight: 500; line-height: 1.7;
       color: var(--text-muted);
-      padding: 16px; border-radius: var(--radius-sm);
+      padding: 18px; border-radius: var(--radius-sm);
       background: #faf8fc; border: 1px solid var(--border);
     }
 
-    /* ─── BADGES ─── */
-    .badges-row { display: flex; flex-wrap: wrap; gap: 8px; }
-    .badge-tag {
-      display: flex; align-items: center; gap: 6px;
-      padding: 8px 16px; border-radius: 50px;
-      font-size: 12px; font-weight: 800;
-      border: 2px solid;
-    }
-    .badge-top { background: #fffbea; border-color: #f5c518; color: #8a6800; }
-    .badge-admitere { background: #fff0f0; border-color: #e74c3c; color: #c0392b; }
-    .badge-real { background: var(--purple-light); border-color: var(--purple-mid); color: var(--purple-dark); }
-    .badge-acreditat { background: #eafaf1; border-color: #27ae60; color: #1e8449; }
-
-    /* ─── QUICK STATS ─── */
+    /* QUICK STATS */
     .quick-stats {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 14px;
     }
     .stat-box {
       background: var(--white); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 14px 16px;
+      border-radius: var(--radius-sm); padding: 16px;
       text-align: center;
       box-shadow: var(--shadow-sm);
       transition: transform 0.2s, box-shadow 0.2s;
     }
     .stat-box:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .stat-icon { font-size: 22px; margin-bottom: 4px; }
-    .stat-value { font-size: 20px; font-weight: 900; color: var(--purple); line-height: 1; }
+    .stat-value { font-size: 22px; font-weight: 900; color: var(--purple); line-height: 1; }
     .stat-label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-top: 4px; }
 
-    /* ─── ACTION BUTTONS ─── */
+    /* ACTION BUTTONS */
     .action-buttons { display: flex; flex-direction: column; gap: 10px; }
     .btn-primary {
-      height: 52px; border-radius: var(--radius-sm);
+      height: 54px; border-radius: var(--radius-sm);
       background: var(--purple); color: white;
       border: none; font-family: 'Inter', sans-serif;
       font-size: 15px; font-weight: 800; cursor: pointer;
@@ -218,7 +168,7 @@
     .btn-primary:active { transform: scale(.97); }
     .btn-secondary-row { display: flex; gap: 10px; }
     .btn-secondary {
-      flex: 1; height: 46px;
+      flex: 1; height: 48px;
       border-radius: var(--radius-sm);
       background: var(--white); color: var(--purple);
       border: 2px solid var(--purple-mid);
@@ -227,82 +177,65 @@
       display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: all 0.2s;
     }
-    .btn-secondary:hover {
-      background: var(--purple-light);
-      border-color: var(--purple);
-    }
+    .btn-secondary:hover { background: var(--purple-light); border-color: var(--purple); }
     .btn-secondary.active { background: var(--purple-light); border-color: var(--purple); }
 
-    /* ─── SECTIONS COMMON ─── */
+    /* BOTTOM GRID — two columns: specs | admitere */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* SECTIONS */
     .section-block {
       background: var(--white); border-radius: var(--radius);
       border: 1px solid var(--border); box-shadow: var(--shadow-sm);
-      margin-bottom: 24px; overflow: hidden;
+      overflow: hidden;
     }
     .section-header {
       padding: 20px 28px; border-bottom: 1px solid var(--border);
       display: flex; align-items: center; gap: 12px;
     }
-    .section-header h2 {
-      font-size: 17px; font-weight: 900; color: var(--text);
-    }
-    .section-icon {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: var(--purple-light); color: var(--purple);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; flex-shrink: 0;
-    }
+    .section-header h2 { font-size: 17px; font-weight: 900; color: var(--text); }
     .section-body { padding: 24px 28px; }
 
-    /* ─── SPECS TABLE ─── */
+    /* SPECS TABLE */
     .specs-table { width: 100%; border-collapse: collapse; }
     .specs-table tr { border-bottom: 1px solid var(--border); }
     .specs-table tr:last-child { border-bottom: none; }
     .specs-table tr:hover td { background: #faf8fc; }
-    .specs-table td {
-      padding: 13px 16px; font-size: 14px; transition: background 0.15s;
-    }
-    .specs-table td:first-child {
-      font-weight: 700; color: var(--text-muted);
-      width: 200px; background: #faf8fc;
-    }
+    .specs-table td { padding: 13px 16px; font-size: 14px; transition: background 0.15s; }
+    .specs-table td:first-child { font-weight: 700; color: var(--text-muted); background: #faf8fc; width: 180px; }
     .specs-table tr:hover td:first-child { background: var(--purple-light); color: var(--purple); }
     .specs-table td:last-child { font-weight: 600; color: var(--text); }
     .spec-link { color: var(--purple); text-decoration: none; font-weight: 700; }
     .spec-link:hover { text-decoration: underline; }
 
-    /* ─── ADMITERE TABLE ─── */
+    /* ADMITERE TABLE */
     .admitere-table-wrap { overflow-x: auto; }
-    .admitere-table { width: 100%; border-collapse: collapse; min-width: 600px; }
-    .admitere-table thead tr {
-      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
-    }
+    .admitere-table { width: 100%; border-collapse: collapse; min-width: 560px; }
+    .admitere-table thead tr { background: linear-gradient(135deg, var(--purple), var(--purple-dark)); }
     .admitere-table thead th {
-      padding: 14px 18px; text-align: left;
+      padding: 14px 16px; text-align: left;
       font-size: 12px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: .6px;
-      color: white;
+      text-transform: uppercase; letter-spacing: .6px; color: white;
     }
     .admitere-table thead th:first-child { border-radius: 10px 0 0 0; }
     .admitere-table thead th:last-child { border-radius: 0 10px 0 0; }
-    .admitere-table tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s, transform 0.15s;
-      cursor: default;
-    }
+    .admitere-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
     .admitere-table tbody tr:last-child { border-bottom: none; }
     .admitere-table tbody tr:hover { background: var(--purple-light); }
-    .admitere-table td { padding: 13px 18px; font-size: 14px; font-weight: 600; color: var(--text); }
+    .admitere-table td { padding: 13px 16px; font-size: 14px; font-weight: 600; color: var(--text); }
     .admitere-table td:first-child { font-weight: 900; color: var(--purple); }
     .medie-badge {
       display: inline-flex; align-items: center; justify-content: center;
       background: var(--purple); color: white;
-      font-size: 13px; font-weight: 900;
-      padding: 4px 14px; border-radius: 20px;
-      min-width: 60px;
+      font-size: 12px; font-weight: 900;
+      padding: 4px 12px; border-radius: 20px; min-width: 56px;
     }
     .medie-badge.high { background: #27ae60; }
-    .medie-badge.mid { background: var(--purple); }
     .pozitie-chip {
       display: inline-flex; align-items: center;
       background: var(--purple-light); color: var(--purple-dark);
@@ -310,82 +243,29 @@
       padding: 3px 10px; border-radius: 20px;
     }
 
-    /* ─── PROFILE CARDS ─── */
-    .profiles-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-    .profile-card {
-      border: 2px solid var(--border); border-radius: var(--radius-sm);
-      padding: 20px; display: flex; flex-direction: column; gap: 10px;
-      transition: all 0.25s; cursor: default; background: var(--white);
-    }
-    .profile-card:hover {
-      border-color: var(--purple);
-      background: var(--purple-light);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
-    }
-    .profile-card-header { display: flex; align-items: center; gap: 12px; }
-    .profile-icon {
-      width: 46px; height: 46px; border-radius: 12px;
-      background: var(--purple); color: white;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; flex-shrink: 0;
-    }
-    .profile-name { font-size: 16px; font-weight: 900; color: var(--text); }
-    .profile-tag { font-size: 11px; font-weight: 700; color: var(--purple); }
-    .profile-desc { font-size: 13px; font-weight: 500; color: var(--text-muted); line-height: 1.5; }
-    .profile-medie {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 10px; border-top: 1px solid var(--border);
-      font-size: 13px; font-weight: 700; color: var(--text-muted);
-    }
-    .medie-val { font-size: 20px; font-weight: 900; color: var(--purple); }
-    .profile-spots {
-      font-size: 12px; font-weight: 700;
-      background: #eafaf1; color: #27ae60;
-      padding: 4px 10px; border-radius: 20px;
-    }
+    /* ARCH TABLE EXTRAS */
+    .arch-table thead th { text-align: center; }
+    .arch-table thead th:first-child { text-align: left; }
+    .arch-table tbody td { text-align: center; }
+    .spec-name { text-align: left !important; color: var(--purple) !important; font-weight: 700; font-size: 13px; }
+    .bil-cell { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+    .bilingual-sub { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-muted); }
+    .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
 
-    /* ─── FILES / FLYERE ─── */
-    .files-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
+    /* TAB SWITCHER */
+    .adm-tab {
+      padding: 10px 22px; border: none; border-bottom: 3px solid transparent;
+      background: transparent; font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 700; color: var(--text-muted);
+      cursor: pointer; transition: all 0.2s; margin-bottom: -2px;
     }
-    .file-card {
-      display: flex; align-items: center; gap: 14px;
-      padding: 16px 18px; border-radius: var(--radius-sm);
-      border: 2px solid var(--border); background: var(--white);
-      text-decoration: none; transition: all 0.2s; cursor: pointer;
-    }
-    .file-card:hover {
-      border-color: var(--purple);
-      background: var(--purple-light);
-      transform: translateX(4px);
-    }
-    .file-icon {
-      width: 46px; height: 46px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; flex-shrink: 0;
-    }
-    .file-icon.pdf { background: #fff0f0; }
-    .file-icon.doc { background: #eaf4ff; }
-    .file-info { flex: 1; }
-    .file-name { font-size: 14px; font-weight: 800; color: var(--text); }
-    .file-size { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-top: 2px; }
-    .file-dl {
-      width: 34px; height: 34px; border-radius: 8px;
-      background: var(--purple-light); color: var(--purple);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; flex-shrink: 0;
-      transition: background 0.2s;
-    }
-    .file-card:hover .file-dl { background: var(--purple); color: white; }
+    .adm-tab:hover { color: var(--purple); }
+    .adm-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
 
-    /* ─── TOAST ─── */
+    /* TOAST */
     .toast {
-      position: fixed; bottom: 24px; right: 24px;
+      position: fixed; bottom: 28px; right: 28px;
       background: #27ae60; color: white;
       padding: 14px 22px; border-radius: 12px;
       font-size: 14px; font-weight: 700;
@@ -396,68 +276,40 @@
     }
     .toast.show { transform: translateY(0); opacity: 1; }
 
-    /* ─── FOOTER ─── */
-    footer { background: #786286; padding: 60px 90px; color: white; }
-    .footer-logo { font-size: 24px; font-weight: 900; color: var(--yellow); margin-bottom: 22px; }
+    /* FOOTER */
+    footer { background: #786286; padding: 60px 48px; color: white; margin-top: auto; }
+    .footer-logo { font-size: 24px; font-weight: 900; color: var(--yellow); margin-bottom: 28px; }
     .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
     footer h3 { font-size: 17px; font-weight: 900; margin-bottom: 14px; }
     footer a { display: block; color: white; text-decoration: none; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+    footer a:hover { color: var(--yellow); }
 
-    /* ─── ARCHIVE TABLES EXTRA ─── */
-    .arch-table { min-width: 700px; }
-    .arch-table thead th { text-align: center; font-size: 12px; font-weight: 800; letter-spacing: .5px; }
-    .arch-table tbody td { text-align: center; }
-    .spec-name { text-align: left !important; color: var(--purple) !important; font-weight: 700; font-size: 13px; max-width: 200px; }
-    .bil-cell { font-size: 13px; color: var(--text-muted); font-weight: 600; }
-    .bilingual-sub { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); }
-    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-muted); }
-    .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
-
-    /* ─── TAB SWITCHER ─── */
-    .adm-tab {
-      padding: 10px 22px;
-      border: none; border-bottom: 3px solid transparent;
-      background: transparent;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px; font-weight: 700;
-      color: var(--text-muted);
-      cursor: pointer; transition: all 0.2s;
-      margin-bottom: -2px;
-    }
-    .adm-tab:hover { color: var(--purple); }
-    .adm-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
-
-    /* ─── ANIMATIONS ─── */
+    /* ANIMATIONS */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .fade-in { animation: fadeInUp 0.5s ease both; }
-    .fade-in-1 { animation-delay: .05s; }
-    .fade-in-2 { animation-delay: .10s; }
-    .fade-in-3 { animation-delay: .15s; }
-    .fade-in-4 { animation-delay: .20s; }
-    .fade-in-5 { animation-delay: .25s; }
+    .fade-in   { animation: fadeInUp 0.5s ease both; }
+    .fade-in-1 { animation-delay: .07s; }
+    .fade-in-2 { animation-delay: .14s; }
+    .fade-in-3 { animation-delay: .21s; }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 1000px) {
+    /* RESPONSIVE */
+    @media (max-width: 1200px) {
+      .bottom-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 960px) {
       .product-top { grid-template-columns: 1fr; }
-      .gallery-col { max-width: 560px; margin: 0 auto; width: 100%; }
-    }
-    @media (max-width: 768px) {
-      .product-main { padding: 20px 16px 40px; }
-      .profiles-grid { grid-template-columns: 1fr; }
-      .files-grid { grid-template-columns: 1fr; }
-      .quick-stats { grid-template-columns: repeat(3, 1fr); }
-      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+      .gallery-col { max-width: 640px; }
+      .product-main { padding: 24px 24px 48px; }
+      .breadcrumb { padding: 14px 24px; }
+      header { padding: 0 24px; }
       footer { padding: 40px 24px; }
-      header { padding: 0 20px; }
-      .breadcrumb { padding: 12px 16px; }
-      .admitere-table td, .admitere-table th { padding: 10px 12px; }
     }
-    @media (max-width: 480px) {
-      .school-name { font-size: 20px; }
+    @media (max-width: 640px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
       .quick-stats { grid-template-columns: 1fr 1fr; }
+      .school-name { font-size: 22px; }
     }
   </style>
 </head>
@@ -470,530 +322,296 @@
     <div class="logo">Ǝliceu</div>
   </div>
   <nav>
-    <a href="indexf.html">Înregistrare</a>
-    <a href="indexf.html">Autentificare</a>
+    <a href="#">Înregistrare</a>
+    <a href="#">Autentificare</a>
   </nav>
 </header>
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
   <button class="close-btn" id="closeBtn">✕</button>
-  <a href="index.html">Acasă</a>
-  <a href="profil.html">Profil</a>
-  <a href="licee.html">Toate liceele</a>
-  <a href="specializari.html">Specializări</a>
-  <a href="test.html">Test de orientare</a>
-  <a href="evenimente.html">Evenimente și noutăți</a>
-  <a href="despre.html">Despre noi</a>
-  <a href="contact.html">Contact</a>
+  <a href="#">Acasă</a>
+  <a href="#">Profil</a>
+  <a href="#">Toate liceele</a>
+  <a href="#">Specializări</a>
+  <a href="#">Test de orientare</a>
+  <a href="#">Evenimente și noutăți</a>
+  <a href="#">Despre noi</a>
+  <a href="#">Contact</a>
 </div>
 <div class="overlay" id="overlay"></div>
 
-<!-- TOAST -->
-<div class="toast" id="toast">✓ Adăugat la favorite!</div>
+<div class="toast" id="toast">Adăugat la favorite!</div>
 
 <div class="page-wrapper">
 
   <!-- BREADCRUMB -->
   <div class="breadcrumb">
-    <a href="index.html">Acasă</a>
+    <a href="#">Acasă</a>
     <span>›</span>
-    <a href="licee.html">Toate Liceele</a>
+    <a href="#">Toate Liceele</a>
     <span>›</span>
     <span>Colegiul Național „Gheorghe Lazăr"</span>
   </div>
 
   <div class="product-main">
 
-    <!-- ═══════════════════════════════════════
-         PRODUCT TOP – GALLERY + INFO
-    ═══════════════════════════════════════ -->
+    <!-- HERO: gallery + info -->
     <div class="product-top">
 
-      <!-- GALLERY -->
       <div class="gallery-col fade-in">
-        <div class="main-image-wrap" id="mainImgWrap">
+        <div class="main-image-wrap">
           <img id="mainImg"
-               src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=900&q=80"
+               src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80"
                alt="Colegiul Național Gheorghe Lazăr">
           <div class="main-image-overlay"></div>
-          <div class="zoom-hint">🔍 Hover pentru zoom</div>
         </div>
         <div class="thumb-row">
-          <div class="thumb active" onclick="setImg(this, 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=900&q=80')">
+          <div class="thumb active" onclick="setImg(this,'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80')">
             <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=200&q=70" alt="">
           </div>
-          <div class="thumb" onclick="setImg(this, 'https://images.unsplash.com/photo-1562774053-701939374585?w=900&q=80')">
+          <div class="thumb" onclick="setImg(this,'https://images.unsplash.com/photo-1562774053-701939374585?w=1200&q=80')">
             <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=200&q=70" alt="">
-          </div>
-          <div class="thumb" onclick="setImg(this, 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=900&q=80')">
-            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=200&q=70" alt="">
-          </div>
-          <div class="thumb" onclick="setImg(this, 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80')">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=70" alt="">
-          </div>
-          <div class="thumb" onclick="setImg(this, 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=900&q=80')">
-            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=200&q=70" alt="">
           </div>
         </div>
       </div>
 
-      <!-- INFO -->
       <div class="info-col fade-in fade-in-1">
-        <div class="school-category">Colegiu Național · București</div>
-
         <h1 class="school-name">Colegiul Național<br>„Gheorghe Lazăr"</h1>
-
-        <div class="rating-row">
-          <div class="stars-big">
-            <span class="star-big">★</span>
-            <span class="star-big">★</span>
-            <span class="star-big">★</span>
-            <span class="star-big">★</span>
-            <span class="star-big">★</span>
-          </div>
-          <span class="rating-score">4.9</span>
-          <span class="rating-count">(327 recenzii)</span>
-          <span class="rating-divider">|</span>
-          <span class="rank-badge">🏆 Top 3 București</span>
-        </div>
 
         <p class="school-desc">
           Unul dintre cele mai prestigioase colegii naționale din România, cu o tradiție de peste 170 de ani. Colegiul Gheorghe Lazăr formează anual sute de absolvenți care accesează universități de top din țară și din străinătate. Profilul dominant este matematică-informatică, cu rezultate remarcabile la olimpiade naționale și internaționale.
         </p>
 
-        <div class="badges-row">
-          <span class="badge-tag badge-top">⭐ Top Liceu</span>
-          <span class="badge-tag badge-admitere">🎯 Admitere Ridicată</span>
-          <span class="badge-tag badge-real">📐 Profil Real</span>
-          <span class="badge-tag badge-acreditat">✅ Acreditat ARACIP</span>
-        </div>
-
         <div class="quick-stats">
           <div class="stat-box">
-            <div class="stat-icon">👨‍🎓</div>
+            <div class="stat-icon"></div>
             <div class="stat-value">1.240</div>
             <div class="stat-label">Elevi</div>
           </div>
           <div class="stat-box">
-            <div class="stat-icon">📚</div>
+            <div class="stat-icon"></div>
             <div class="stat-value">4</div>
             <div class="stat-label">Profiluri</div>
           </div>
           <div class="stat-box">
-            <div class="stat-icon">🏅</div>
+            <div class="stat-icon"></div>
             <div class="stat-value">9.87</div>
             <div class="stat-label">Medie min. 2025</div>
           </div>
         </div>
 
         <div class="action-buttons">
-          <button class="btn-primary" id="favBtn" onclick="toggleFav()">
-            <span id="favIcon">♡</span>
-            <span id="favText">Adaugă la favorite</span>
-          </button>
           <div class="btn-secondary-row">
-            <button class="btn-secondary" onclick="openMap()">
-              📍 Vezi pe hartă
-            </button>
             <button class="btn-secondary" id="compareBtn" onclick="toggleCompare()">
-              ⚖️ Compară
+              ⇄ Compară
             </button>
+
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-         SPECIFICAȚII
-    ═══════════════════════════════════════ -->
-    <div class="section-block fade-in fade-in-2">
-      <div class="section-header">
-        <div class="section-icon">📋</div>
-        <h2>Specificații</h2>
-      </div>
-      <div class="section-body" style="padding: 0;">
-        <table class="specs-table">
-          <tr>
-            <td>Denumire oficială</td>
-            <td>Colegiul Național „Gheorghe Lazăr" București</td>
-          </tr>
-          <tr>
-            <td>Locație</td>
-            <td>Str. Lazăr Gheorghe nr. 4, București</td>
-          </tr>
-          <tr>
-            <td>Sector</td>
-            <td>Sector 1</td>
-          </tr>
-          <tr>
-            <td>Program</td>
-            <td>Luni – Vineri, 08:00 – 16:00</td>
-          </tr>
-          <tr>
-            <td>Tip liceu</td>
-            <td>Colegiu Național de Stat</td>
-          </tr>
-          <tr>
-            <td>Profiluri</td>
-            <td>Matematică-Informatică, Științe ale Naturii, Filologie, Științe Sociale</td>
-          </tr>
-          <tr>
-            <td>Limbi străine</td>
-            <td>Engleză, Franceză, Germană, Spaniolă</td>
-          </tr>
-          <tr>
-            <td>Număr elevi</td>
-            <td>~1.240 elevi (32 clase)</td>
-          </tr>
-          <tr>
-            <td>Telefon</td>
-            <td>+40 21 314 22 17</td>
-          </tr>
-          <tr>
-            <td>Email</td>
-            <td><a class="spec-link" href="mailto:contact@cngl.ro">contact@cngl.ro</a></td>
-          </tr>
-          <tr>
-            <td>Site oficial</td>
-            <td><a class="spec-link" href="https://cngl.ro" target="_blank">cngl.ro ↗</a></td>
-          </tr>
-          <tr>
-            <td>An înființare</td>
-            <td>1851</td>
-          </tr>
-        </table>
-      </div>
-    </div>
+    <!-- BOTTOM: specs left, admitere right -->
+    <div class="bottom-grid"> 
 
-    <!-- ═══════════════════════════════════════
-         ARHIVA ADMITERE – 2 TABELE NOI
-    ═══════════════════════════════════════ -->
-    <div class="section-block fade-in fade-in-3">
-      <div class="section-header">
-        <div class="section-icon">📊</div>
-        <h2>Istoricul Admiterii</h2>
-      </div>
-      <div class="section-body" style="display:flex; flex-direction:column; gap:32px;">
-
-        <!-- TAB SWITCHER -->
-        <div style="display:flex; gap:8px; border-bottom:2px solid var(--border); padding-bottom:0;">
-          <button class="adm-tab active" onclick="switchTab('medii',this)">Arhivă medii</button>
-          <button class="adm-tab" onclick="switchTab('pozitii',this)">Arhivă poziții</button>
+      <!-- SPECIFICAȚII -->
+      <div class="section-block fade-in fade-in-2">
+        <div class="section-header">
+          <h2>Specificații</h2>
         </div>
-
-        <!-- TABEL MEDII -->
-        <div id="tab-medii">
-          <p style="font-size:13px; font-weight:600; color:var(--text-muted); margin-bottom:14px;">Ultima medie acceptată pe specializare și an</p>
-          <div class="admitere-table-wrap">
-            <table class="admitere-table arch-table">
-              <thead>
-                <tr>
-                  <th style="text-align:left;">Specializare</th>
-                  <th>Bilingv</th>
-                  <th>2025</th>
-                  <th>2024</th>
-                  <th>2023</th>
-                  <th>2022</th>
-                  <th>2021</th>
-                  <th>2020</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="spec-name">Matematică-Informatică</td>
-                  <td class="bil-cell">—</td>
-                  <td><span class="medie-badge high">9.87</span></td>
-                  <td><span class="medie-badge high">9.83</span></td>
-                  <td><span class="medie-badge high">9.79</span></td>
-                  <td><span class="medie-badge high">9.76</span></td>
-                  <td><span class="medie-badge high">9.71</span></td>
-                  <td><span class="medie-badge high">9.68</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Matematică-Informatică<span class="bilingual-sub">Intensiv</span></td>
-                  <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Engleză</td>
-                  <td><span class="medie-badge high">9.90</span></td>
-                  <td><span class="medie-badge high">9.88</span></td>
-                  <td><span class="medie-badge high">9.85</span></td>
-                  <td><span class="medie-badge high">9.82</span></td>
-                  <td><span class="medie-badge high">9.84</span></td>
-                  <td><span class="medie-badge high">9.79</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Matematică-Informatică<span class="bilingual-sub">Intensiv</span></td>
-                  <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Franceză</td>
-                  <td><span class="medie-badge high">9.82</span></td>
-                  <td><span class="medie-badge high">9.78</span></td>
-                  <td><span class="medie-badge high">9.74</span></td>
-                  <td><span class="medie-badge high">9.71</span></td>
-                  <td><span class="medie-badge high">9.98</span></td>
-                  <td><span class="medie-badge high">9.76</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Științe ale Naturii</td>
-                  <td class="bil-cell">—</td>
-                  <td><span class="medie-badge mid">9.72</span></td>
-                  <td><span class="medie-badge mid">9.69</span></td>
-                  <td><span class="medie-badge mid">9.65</span></td>
-                  <td><span class="medie-badge mid">9.61</span></td>
-                  <td><span class="medie-badge mid">9.58</span></td>
-                  <td><span class="medie-badge mid">9.54</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Filologie</td>
-                  <td class="bil-cell">—</td>
-                  <td><span class="medie-badge mid">9.52</span></td>
-                  <td><span class="medie-badge mid">9.48</span></td>
-                  <td><span class="medie-badge mid">9.44</span></td>
-                  <td><span class="medie-badge mid">9.41</span></td>
-                  <td><span class="medie-badge mid">9.38</span></td>
-                  <td><span class="medie-badge mid">9.31</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Științe Sociale</td>
-                  <td class="bil-cell">—</td>
-                  <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.38</span></td>
-                  <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.34</span></td>
-                  <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.29</span></td>
-                  <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.25</span></td>
-                  <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.21</span></td>
-                  <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.12</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;">
-            <span class="legend-item"><span class="legend-dot" style="background:#27ae60;"></span>9.75+ foarte mare</span>
-            <span class="legend-item"><span class="legend-dot" style="background:var(--purple);"></span>9.40–9.74 medie</span>
-            <span class="legend-item"><span class="legend-dot" style="background:#e74c3c;"></span>sub 9.40</span>
-          </div>
+        <div class="section-body" style="padding:0;">
+          <table class="specs-table">
+            <tr><td>Denumire oficială</td><td>Colegiul Național „Gheorghe Lazăr" București</td></tr>
+            <tr><td>Locație</td><td>Str. Lazăr Gheorghe nr. 4, București</td></tr>
+            <tr><td>Sector</td><td>Sector 1</td></tr>
+            <tr><td>Program</td><td>Luni – Vineri, 08:00 – 16:00</td></tr>
+            <tr><td>Tip liceu</td><td>Colegiu Național de Stat</td></tr>
+            <tr><td>Profiluri</td><td>Matematică-Informatică, Științe ale Naturii, Filologie, Științe Sociale</td></tr>
+            <tr><td>Număr elevi</td><td>~1.240 elevi (32 clase)</td></tr>
+            <tr><td>Site oficial</td><td><a class="spec-link" href="https://cngl.ro" target="_blank">cngl.ro ↗</a></td></tr>
+          </table>
         </div>
+      </div>
 
-        <!-- TABEL POZITII -->
-        <div id="tab-pozitii" style="display:none;">
-          <p style="font-size:13px; font-weight:600; color:var(--text-muted); margin-bottom:14px;">Locul în ierarhia din București al ultimului elev admis pe fiecare specializare</p>
-          <div class="admitere-table-wrap">
-            <table class="admitere-table arch-table">
-              <thead>
-                <tr>
-                  <th style="text-align:left;">Specializare</th>
-                  <th>Bilingv</th>
-                  <th>2025</th>
-                  <th>2024</th>
-                  <th>2023</th>
-                  <th>2022</th>
-                  <th>2021</th>
-                  <th>2020</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="spec-name">Matematică-Informatică</td>
-                  <td class="bil-cell">—</td>
-                  <td><span class="pozitie-chip">#56</span></td>
-                  <td><span class="pozitie-chip">#62</span></td>
-                  <td><span class="pozitie-chip">#68</span></td>
-                  <td><span class="pozitie-chip">#71</span></td>
-                  <td><span class="pozitie-chip">#74</span></td>
-                  <td><span class="pozitie-chip">#80</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Matematică-Informatică<span class="bilingual-sub">Intensiv</span></td>
-                  <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Engleză</td>
-                  <td><span class="pozitie-chip">#28</span></td>
-                  <td><span class="pozitie-chip">#31</span></td>
-                  <td><span class="pozitie-chip">#35</span></td>
-                  <td><span class="pozitie-chip">#37</span></td>
-                  <td><span class="pozitie-chip">#29</span></td>
-                  <td><span class="pozitie-chip">#33</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Matematică-Informatică<span class="bilingual-sub">Intensiv</span></td>
-                  <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Franceză</td>
-                  <td><span class="pozitie-chip">#44</span></td>
-                  <td><span class="pozitie-chip">#47</span></td>
-                  <td><span class="pozitie-chip">#51</span></td>
-                  <td><span class="pozitie-chip">#54</span></td>
-                  <td><span class="pozitie-chip">#40</span></td>
-                  <td><span class="pozitie-chip">#48</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Științe ale Naturii</td>
-                  <td class="bil-cell">—</td>
-                  <td><span class="pozitie-chip">#98</span></td>
-                  <td><span class="pozitie-chip">#104</span></td>
-                  <td><span class="pozitie-chip">#112</span></td>
-                  <td><span class="pozitie-chip">#118</span></td>
-                  <td><span class="pozitie-chip">#121</span></td>
-                  <td><span class="pozitie-chip">#127</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Filologie</td>
-                  <td class="bil-cell">—</td>
-                  <td><span class="pozitie-chip">#145</span></td>
-                  <td><span class="pozitie-chip">#152</span></td>
-                  <td><span class="pozitie-chip">#158</span></td>
-                  <td><span class="pozitie-chip">#163</span></td>
-                  <td><span class="pozitie-chip">#170</span></td>
-                  <td><span class="pozitie-chip">#178</span></td>
-                </tr>
-                <tr>
-                  <td class="spec-name">Științe Sociale</td>
-                  <td class="bil-cell">—</td>
-                  <td><span class="pozitie-chip">#192</span></td>
-                  <td><span class="pozitie-chip">#198</span></td>
-                  <td><span class="pozitie-chip">#205</span></td>
-                  <td><span class="pozitie-chip">#211</span></td>
-                  <td><span class="pozitie-chip">#219</span></td>
-                  <td><span class="pozitie-chip">#224</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">* Pozițiile reprezintă locul în ierarhia generală a candidaților din București.</p>
+      <!-- ISTORICUL ADMITERII -->
+      <div class="section-block fade-in fade-in-3">
+        <div class="section-header">
+          <h2>Istoricul Admiterii</h2>
         </div>
+        <div class="section-body" style="display:flex;flex-direction:column;gap:24px;">
 
-      </div>
-    </div>
+          <div style="display:flex;gap:8px;border-bottom:2px solid var(--border);padding-bottom:0;">
+            <button class="adm-tab active" onclick="switchTab('medii',this)">Arhivă medii</button>
+            <button class="adm-tab" onclick="switchTab('pozitii',this)">Arhivă poziții</button>
+          </div>
 
-    <!-- ═══════════════════════════════════════
-         PROFILURI DISPONIBILE
-    ═══════════════════════════════════════ -->
-    <div class="section-block fade-in fade-in-4">
-      <div class="section-header">
-        <div class="section-icon">🎓</div>
-        <h2>Profiluri Disponibile</h2>
-      </div>
-      <div class="section-body">
-        <div class="profiles-grid">
-
-          <div class="profile-card">
-            <div class="profile-card-header">
-              <div class="profile-icon" style="background: #7a4d99;">💻</div>
-              <div>
-                <div class="profile-name">Matematică-Informatică</div>
-                <div class="profile-tag">Intensiv Engleză disponibil</div>
-              </div>
+          <!-- MEDII -->
+          <div id="tab-medii">
+            <p style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:14px;">Ultima medie acceptată pe specializare și an</p>
+            <div class="admitere-table-wrap">
+              <table class="admitere-table arch-table">
+                <thead>
+                  <tr>
+                    <th style="text-align:left;">Specializare</th>
+                    <th>Bilingv</th>
+                    <th>2025</th><th>2024</th><th>2023</th><th>2022</th><th>2021</th><th>2020</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="spec-name">Matematică-Informatică</td>
+                    <td class="bil-cell">—</td>
+                    <td><span class="medie-badge high">9.87</span></td>
+                    <td><span class="medie-badge high">9.83</span></td>
+                    <td><span class="medie-badge high">9.79</span></td>
+                    <td><span class="medie-badge high">9.76</span></td>
+                    <td><span class="medie-badge high">9.71</span></td>
+                    <td><span class="medie-badge high">9.68</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Mat-Info<span class="bilingual-sub">Intensiv</span></td>
+                    <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Engleză</td>
+                    <td><span class="medie-badge high">9.90</span></td>
+                    <td><span class="medie-badge high">9.88</span></td>
+                    <td><span class="medie-badge high">9.85</span></td>
+                    <td><span class="medie-badge high">9.82</span></td>
+                    <td><span class="medie-badge high">9.84</span></td>
+                    <td><span class="medie-badge high">9.79</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Mat-Info<span class="bilingual-sub">Intensiv</span></td>
+                    <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Franceză</td>
+                    <td><span class="medie-badge high">9.82</span></td>
+                    <td><span class="medie-badge high">9.78</span></td>
+                    <td><span class="medie-badge high">9.74</span></td>
+                    <td><span class="medie-badge high">9.71</span></td>
+                    <td><span class="medie-badge high">9.98</span></td>
+                    <td><span class="medie-badge high">9.76</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Științe ale Naturii</td>
+                    <td class="bil-cell">—</td>
+                    <td><span class="medie-badge mid">9.72</span></td>
+                    <td><span class="medie-badge mid">9.69</span></td>
+                    <td><span class="medie-badge mid">9.65</span></td>
+                    <td><span class="medie-badge mid">9.61</span></td>
+                    <td><span class="medie-badge mid">9.58</span></td>
+                    <td><span class="medie-badge mid">9.54</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Filologie</td>
+                    <td class="bil-cell">—</td>
+                    <td><span class="medie-badge mid">9.52</span></td>
+                    <td><span class="medie-badge mid">9.48</span></td>
+                    <td><span class="medie-badge mid">9.44</span></td>
+                    <td><span class="medie-badge mid">9.41</span></td>
+                    <td><span class="medie-badge mid">9.38</span></td>
+                    <td><span class="medie-badge mid">9.31</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Științe Sociale</td>
+                    <td class="bil-cell">—</td>
+                    <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.38</span></td>
+                    <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.34</span></td>
+                    <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.29</span></td>
+                    <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.25</span></td>
+                    <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.21</span></td>
+                    <td><span class="medie-badge" style="background:#fff0f0;color:#c0392b;">9.12</span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p class="profile-desc">Profil axat pe matematică, informatică și fizică. Ideal pentru viitorii ingineri, programatori și cercetători. Include olimpiade și concursuri naționale.</p>
-            <div class="profile-medie">
-              <div>
-                <div style="font-size:11px; margin-bottom:2px;">Media minimă estimată</div>
-                <div class="medie-val">9.71+</div>
-              </div>
-              <span class="profile-spots">84 locuri</span>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;">
+              <span class="legend-item"><span class="legend-dot" style="background:#27ae60;"></span>9.75+ foarte mare</span>
+              <span class="legend-item"><span class="legend-dot" style="background:var(--purple);"></span>9.40–9.74 medie</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#e74c3c;"></span>sub 9.40</span>
             </div>
           </div>
 
-          <div class="profile-card">
-            <div class="profile-card-header">
-              <div class="profile-icon" style="background: #27ae60;">🔬</div>
-              <div>
-                <div class="profile-name">Științe ale Naturii</div>
-                <div class="profile-tag">Biologie · Chimie · Fizică</div>
-              </div>
+          <!-- POZITII -->
+          <div id="tab-pozitii" style="display:none;">
+            <p style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:14px;">Locul în ierarhia din București al ultimului elev admis pe fiecare specializare</p>
+            <div class="admitere-table-wrap">
+              <table class="admitere-table arch-table">
+                <thead>
+                  <tr>
+                    <th style="text-align:left;">Specializare</th>
+                    <th>Bilingv</th>
+                    <th>2025</th><th>2024</th><th>2023</th><th>2022</th><th>2021</th><th>2020</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="spec-name">Matematică-Informatică</td>
+                    <td class="bil-cell">—</td>
+                    <td><span class="pozitie-chip">#56</span></td>
+                    <td><span class="pozitie-chip">#62</span></td>
+                    <td><span class="pozitie-chip">#68</span></td>
+                    <td><span class="pozitie-chip">#71</span></td>
+                    <td><span class="pozitie-chip">#74</span></td>
+                    <td><span class="pozitie-chip">#80</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Mat-Info<span class="bilingual-sub">Intensiv</span></td>
+                    <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Engleză</td>
+                    <td><span class="pozitie-chip">#28</span></td>
+                    <td><span class="pozitie-chip">#31</span></td>
+                    <td><span class="pozitie-chip">#35</span></td>
+                    <td><span class="pozitie-chip">#37</span></td>
+                    <td><span class="pozitie-chip">#29</span></td>
+                    <td><span class="pozitie-chip">#33</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Mat-Info<span class="bilingual-sub">Intensiv</span></td>
+                    <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Franceză</td>
+                    <td><span class="pozitie-chip">#44</span></td>
+                    <td><span class="pozitie-chip">#47</span></td>
+                    <td><span class="pozitie-chip">#51</span></td>
+                    <td><span class="pozitie-chip">#54</span></td>
+                    <td><span class="pozitie-chip">#40</span></td>
+                    <td><span class="pozitie-chip">#48</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Științe ale Naturii</td>
+                    <td class="bil-cell">—</td>
+                    <td><span class="pozitie-chip">#98</span></td>
+                    <td><span class="pozitie-chip">#104</span></td>
+                    <td><span class="pozitie-chip">#112</span></td>
+                    <td><span class="pozitie-chip">#118</span></td>
+                    <td><span class="pozitie-chip">#121</span></td>
+                    <td><span class="pozitie-chip">#127</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Filologie</td>
+                    <td class="bil-cell">—</td>
+                    <td><span class="pozitie-chip">#145</span></td>
+                    <td><span class="pozitie-chip">#152</span></td>
+                    <td><span class="pozitie-chip">#158</span></td>
+                    <td><span class="pozitie-chip">#163</span></td>
+                    <td><span class="pozitie-chip">#170</span></td>
+                    <td><span class="pozitie-chip">#178</span></td>
+                  </tr>
+                  <tr>
+                    <td class="spec-name">Științe Sociale</td>
+                    <td class="bil-cell">—</td>
+                    <td><span class="pozitie-chip">#192</span></td>
+                    <td><span class="pozitie-chip">#198</span></td>
+                    <td><span class="pozitie-chip">#205</span></td>
+                    <td><span class="pozitie-chip">#211</span></td>
+                    <td><span class="pozitie-chip">#219</span></td>
+                    <td><span class="pozitie-chip">#224</span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p class="profile-desc">Profil dedicat biologiei, chimiei și fizicii. Recomandat candidaților la medicină, farmacie sau știinte naturale. Laborator modern dotat.</p>
-            <div class="profile-medie">
-              <div>
-                <div style="font-size:11px; margin-bottom:2px;">Media minimă estimată</div>
-                <div class="medie-val">9.50+</div>
-              </div>
-              <span class="profile-spots">28 locuri</span>
-            </div>
-          </div>
-
-          <div class="profile-card">
-            <div class="profile-card-header">
-              <div class="profile-icon" style="background: #e67e22;">📖</div>
-              <div>
-                <div class="profile-name">Filologie</div>
-                <div class="profile-tag">Română · Engleză · Franceză</div>
-              </div>
-            </div>
-            <p class="profile-desc">Profil umanist axat pe limbi și literaturi, comunicare și jurnalism. Potrivit pentru viitorii scriitori, traducători sau filologi. Activitate teatrală bogată.</p>
-            <div class="profile-medie">
-              <div>
-                <div style="font-size:11px; margin-bottom:2px;">Media minimă estimată</div>
-                <div class="medie-val">9.20+</div>
-              </div>
-              <span class="profile-spots">28 locuri</span>
-            </div>
-          </div>
-
-          <div class="profile-card">
-            <div class="profile-card-header">
-              <div class="profile-icon" style="background: #2980b9;">🏛️</div>
-              <div>
-                <div class="profile-name">Științe Sociale</div>
-                <div class="profile-tag">Economie · Filosofie · Psihologie</div>
-              </div>
-            </div>
-            <p class="profile-desc">Profil dedicat economiei, psihologiei și sociologiei. Recomandat pentru viitorii economiști, juriști sau psihologi. Dezbateri și proiecte sociale active.</p>
-            <div class="profile-medie">
-              <div>
-                <div style="font-size:11px; margin-bottom:2px;">Media minimă estimată</div>
-                <div class="medie-val">9.10+</div>
-              </div>
-              <span class="profile-spots">28 locuri</span>
-            </div>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">* Pozițiile reprezintă locul în ierarhia generală a candidaților din București.</p>
           </div>
 
         </div>
       </div>
-    </div>
 
-    <!-- ═══════════════════════════════════════
-         FIȘIERE / FLYERE
-    ═══════════════════════════════════════ -->
-    <div class="section-block fade-in fade-in-5">
-      <div class="section-header">
-        <div class="section-icon">📁</div>
-        <h2>Documente & Flyere</h2>
-      </div>
-      <div class="section-body">
-        <div class="files-grid">
-
-          <div class="file-card" onclick="fakeDownload('Flyer Admitere 2025')">
-            <div class="file-icon pdf">📄</div>
-            <div class="file-info">
-              <div class="file-name">Flyer Admitere 2025</div>
-              <div class="file-size">PDF · 1.2 MB · Actualizat Mai 2025</div>
-            </div>
-            <div class="file-dl">⬇</div>
-          </div>
-
-          <div class="file-card" onclick="fakeDownload('Broșură Liceu')">
-            <div class="file-icon pdf">📰</div>
-            <div class="file-info">
-              <div class="file-name">Broșură Colegiu 2024–2025</div>
-              <div class="file-size">PDF · 4.7 MB · Ediția curentă</div>
-            </div>
-            <div class="file-dl">⬇</div>
-          </div>
-
-          <div class="file-card" onclick="fakeDownload('Regulament Intern')">
-            <div class="file-icon doc">📝</div>
-            <div class="file-info">
-              <div class="file-name">Regulament Intern</div>
-              <div class="file-size">PDF · 890 KB · An școlar 2024–2025</div>
-            </div>
-            <div class="file-dl">⬇</div>
-          </div>
-
-          <div class="file-card" onclick="fakeDownload('Orar Semestrul II')">
-            <div class="file-icon doc">🗓️</div>
-            <div class="file-info">
-              <div class="file-name">Orar Semestrul II</div>
-              <div class="file-size">PDF · 320 KB · Semestrul II 2024–2025</div>
-            </div>
-            <div class="file-dl">⬇</div>
-          </div>
-
-        </div>
-      </div>
-    </div>
+    </div><!-- /bottom-grid -->
 
   </div><!-- /product-main -->
 
@@ -1012,7 +630,7 @@
         <h3>Informații</h3>
         <a href="#">Despre noi</a>
         <a href="#">Contact</a>
-        <a href="#">GDPR & Confidențialitate</a>
+        <a href="#">GDPR &amp; Confidențialitate</a>
         <a href="#">Termeni și condiții</a>
       </div>
       <div>
@@ -1027,89 +645,46 @@
 </div><!-- /page-wrapper -->
 
 <script>
-  /* ─── SIDEBAR ─── */
-  const menuBtn   = document.getElementById('menuBtn');
-  const closeBtn  = document.getElementById('closeBtn');
-  const sidebar   = document.getElementById('sidebar');
-  const overlay   = document.getElementById('overlay');
+  const menuBtn  = document.getElementById('menuBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const sidebar  = document.getElementById('sidebar');
+  const overlay  = document.getElementById('overlay');
 
-  menuBtn.addEventListener('click', () => {
-    sidebar.classList.add('active');
-    overlay.classList.add('active');
-  });
+  menuBtn.addEventListener('click', () => { sidebar.classList.add('active'); overlay.classList.add('active'); });
   closeBtn.addEventListener('click', closeSidebar);
   overlay.addEventListener('click', closeSidebar);
-  function closeSidebar() {
-    sidebar.classList.remove('active');
-    overlay.classList.remove('active');
-  }
+  function closeSidebar() { sidebar.classList.remove('active'); overlay.classList.remove('active'); }
 
-  /* ─── GALLERY ─── */
   function setImg(thumb, src) {
     document.getElementById('mainImg').src = src;
     document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
     thumb.classList.add('active');
   }
 
-  /* ─── TOAST ─── */
   const toast = document.getElementById('toast');
   function showToast(msg) {
-    toast.textContent = '✓ ' + msg;
+    toast.textContent =msg;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3000);
   }
 
-  /* ─── FAVORITE ─── */
-  let favActive = false;
-  function toggleFav() {
-    favActive = !favActive;
-    const btn = document.getElementById('favBtn');
-    const icon = document.getElementById('favIcon');
-    const text = document.getElementById('favText');
-    if (favActive) {
-      icon.textContent = '♥';
-      text.textContent = 'Eliminat din favorite';
-      btn.style.background = '#e74c3c';
-      showToast('Adăugat la favorite!');
-    } else {
-      icon.textContent = '♡';
-      text.textContent = 'Adaugă la favorite';
-      btn.style.background = '';
-      showToast('Eliminat din favorite.');
-    }
-  }
-
-  /* ─── COMPARE ─── */
   let compareActive = false;
   function toggleCompare() {
     compareActive = !compareActive;
     const btn = document.getElementById('compareBtn');
-    if (compareActive) {
-      btn.textContent = '✓ Adăugat la comparație';
-      btn.classList.add('active');
-      showToast('Adăugat la comparație!');
-    } else {
-      btn.innerHTML = '⚖️ Compară';
-      btn.classList.remove('active');
-    }
+    if (compareActive) { btn.textContent = 'Adăugat la comparație'; btn.classList.add('active'); showToast('Adăugat la comparație!'); }
+    else { btn.innerHTML = 'Compară'; btn.classList.remove('active'); }
   }
 
-  /* ─── ADMITERE TABS ─── */
   function switchTab(tab, btn) {
-    document.getElementById('tab-medii').style.display    = tab === 'medii'    ? 'block' : 'none';
-    document.getElementById('tab-pozitii').style.display  = tab === 'pozitii'  ? 'block' : 'none';
+    document.getElementById('tab-medii').style.display   = tab === 'medii'   ? 'block' : 'none';
+    document.getElementById('tab-pozitii').style.display = tab === 'pozitii' ? 'block' : 'none';
     document.querySelectorAll('.adm-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
 
-  /* ─── MAP ─── */
   function openMap() {
     window.open('https://maps.google.com/?q=Colegiul+National+Gheorghe+Lazar+Bucuresti', '_blank');
-  }
-
-  /* ─── FILE DOWNLOAD (fake) ─── */
-  function fakeDownload(name) {
-    showToast('Se descarcă: ' + name);
   }
 </script>
 </body>
