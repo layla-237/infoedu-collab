@@ -11,22 +11,13 @@ Funcționalități
 - Predicții de admitere cu Random Forest
 - Sistem de autentificare
 - Design responsive
+
 Tehnologii
-Frontend
-- HTML
-- CSS
-- JavaScript
-Backend
-- PHP
-- MySQL
-Inteligență Artificială
-- Python
-- FastAPI
-- Scikit-learn
-- Random Forest
-Hosting
-- Render
-Funcționarea AI-ului
+Frontend: HTML, CSS, JavaScript; 
+Backend: PHP, MySQL;
+Inteligență Artificială: Python, FastAPI, Scikit-learn, Random Forest;
+Hosting - Render;
+
 Modelul AI analizează:
 - media elevului
 - profilul dorit
@@ -35,8 +26,10 @@ Modelul AI analizează:
 - limba
 - media liceului
 și estimează probabilitatea de admitere.
+
 Scop
 Proiectul a fost realizat pentru concursul InfoEducație și are scopul de a face procesul alegerii liceului mai simplu și mai accesibil pentru elevi.
+
 Autori
 - Cătrună Daria-Andreea
 - Farhat Fatima-Maria
