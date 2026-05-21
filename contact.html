@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Eliceu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1f1f1f;
+    }
+
+    header {
+      width: 100%;
+      height: 72px;
+      background: #9661b8;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .menu {
+      font-size: 32px;
+      color: #ffffff;
+      font-weight: 900;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 900;
+      color: #ffe34d;
+      letter-spacing: -1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100vh;
+      background: linear-gradient(180deg, #8c63b3 0%, #6f4796 100%);
+      z-index: 2000;
+      padding: 110px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: 0.35s;
+      box-shadow: 6px 0 30px rgba(0,0,0,0.18);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 900;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #ffe34d;
+      transform: translateX(8px);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: transparent;
+      border: none;
+      font-size: 34px;
+      cursor: pointer;
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .contact-page {
+      min-height: 100vh;
+      padding-top: 72px;
+    }
+
+    .contact-hero {
+      min-height: calc(100vh - 72px);
+      background-image:
+        linear-gradient(rgba(0,0,0,0.48), rgba(0,0,0,0.48)),
+        url("contact-bg.jpg");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px;
+    }
+
+    .contact-card {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(255,255,255,0.94);
+      border-radius: 26px;
+      padding: 46px;
+      text-align: center;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+    }
+
+    .contact-card h1 {
+      font-size: 42px;
+      font-weight: 900;
+      color: #9661b8;
+      margin-bottom: 16px;
+    }
+
+    .contact-card p {
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #4d4457;
+      margin-bottom: 34px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      text-align: left;
+    }
+
+    .contact-row {
+      background: #f6f0fb;
+      padding: 18px 20px;
+      border-radius: 16px;
+    }
+
+    .contact-row strong {
+      display: block;
+      color: #9661b8;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    .contact-row span,
+    .contact-row a {
+      color: #1f1f1f;
+      font-size: 17px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    footer {
+      background: #786286;
+      padding: 80px 90px 90px;
+      color: white;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffe34d;
+      margin-bottom: 22px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+    }
+
+    footer h3 {
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    footer a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 800px) {
+      header {
+        padding: 0 24px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .contact-card {
+        padding: 34px 26px;
+      }
+
+      .contact-card h1 {
+        font-size: 34px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      footer {
+        padding: 60px 30px 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo-area">
+      <button class="menu" id="menuBtn">☰</button>
+      <div class="logo">Ǝliceu</div>
+
+    </div>
+
+    <nav>
+       
+      <a href="login/index.php">Înregistrare</a>
+      <a href="login/index.php" >Autentificare</a>
+    
+    </nav>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeBtn">✕</button>
+
+    <a href="acasa.html">Acasă</a>
+    <a href="comp/liceu.php">Toate liceele</a>
+    <a href="specializari.html">Specializări</a>
+    <a href="test.html">Test de orientare</a>
+    <a href="evenimente.html">Evenimente și noutăți</a>
+    <a href="chatbot.php">Chatbot</a>
+    <a href="despre.html">Despre noi</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <main class="contact-page">
+    <section class="contact-hero">
+      <div class="contact-card">
+        <h1>Contact</h1>
+
+        <p>
+          Ai o întrebare, o sugestie sau vrei să ne transmiți o informație despre un liceu?
+          Ne poți contacta aici.
+        </p>
+
+        <div class="contact-info">
+          <div class="contact-row">
+            <strong>Email</strong>
+            <a href="mailto:contact@eliceu.ro">contact@eliceu.ro</a>
+          </div>
+
+          <div class="contact-row">
+            <strong>Telefon</strong>
+            <a href="tel:+40700000000">+40 700 000 000</a>
+          </div>
+
+          <div class="contact-row">
+            <strong>Oraș</strong>
+            <span>București, România</span>
+          </div>
+
+          <div class="contact-row">
+            <strong>Program</strong>
+            <span>Luni - Vineri, 09:00 - 17:00</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-logo">Ǝliceu</div>
+
+    <div class="footer-grid">
+      <div>
+        <h3>Navigare</h3>
+        <a href="comp/liceu.php">Toate Liceele</a>
+	<a href="chatbot.php">Chatbot AI</a>
+        <a href="despre.html">Despre noi</a>
+        <a href="contact.html">Contact</a>
+        <a href="login/index.php">Înregistrare</a>
+        <a href="login/index.php">Autentificare</a>
+      </div>
+
+      <div>
+        <h3>Resurse</h3>
+        <a href="specializari.html">Informații despre profiluri</a>
+        <a href="test.html">Test de îndrumare</a>
+        <a href="evenimente.html">Evenimente</a>
+      </div>
+
+      <div>
+        <h3>Legal</h3>
+        <a href="#">Termeni și condiții</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", function() {
+      sidebar.classList.add("active");
+    });
+
+    closeBtn.addEventListener("click", function() {
+      sidebar.classList.remove("active");
+    });
+  </script>
+
+</body>
+</html>

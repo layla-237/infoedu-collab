@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eliceu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+	* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+   body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1f1f1f;
+    }
+
+    header {
+      width: 100%;
+      height: 72px;
+      background: #9661b8;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .menu {
+      font-size: 32px;
+      color: #ffffff;
+      font-weight: 900;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 900;
+      color: #ffe34d;
+      letter-spacing: -1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+
+    .quiz {
+      width: 70%;
+      margin: 130px auto;
+      background: white;
+      padding: 45px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 35px;
+    }
+
+    .question {
+      text-align: left;
+      margin-bottom: 35px;
+    }
+
+    .question h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      background: #eee3f4;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    label:hover {
+      background: #dfcbea;
+    }
+
+    button {
+      background: #9661b8;
+      color: white;
+      border: none;
+      padding: 18px 35px;
+      border-radius: 14px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #rezultat {
+      margin-top: 35px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #9661b8;
+    }
+	footer {
+  	background: #786286;
+  	padding: 80px 90px 90px;
+  	color: white;
+	}
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffe34d;
+      margin-bottom: 22px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+    }
+
+    footer h3 {
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    footer a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+	.sidebar {
+  	position: fixed;
+  	top: 0;
+  	left: -320px;
+  	width: 320px;
+  	height: 100vh;
+  	background: linear-gradient(
+  	180deg,
+  	#8c63b3 0%,
+  	#6f4796 100%
+	);
+  	z-index: 2000;
+  	padding: 110px 40px;
+  	display: flex;
+  	flex-direction: column;
+  	gap: 28px;
+ 	transition: 0.35s;
+  	box-shadow: 6px 0 30px rgba(0,0,0,0.18);
+	}
+	.sidebar.active {
+  	left: 0;
+	}
+	.sidebar a {
+  	text-decoration: none;
+  	color: #ffffff;
+  	font-size: 22px;
+  	font-weight: 900;
+  	transition: 0.2s;
+	}
+	.sidebar a:hover {
+  	color: #ffe34d;
+  	transform: translateX(8px);
+	}
+	.close-btn {
+  	position: absolute;
+  	top: 28px;
+  	right: 28px;
+  	background: transparent;
+  	border: none;
+  	font-size: 34px;
+  	cursor: pointer;
+  	color: #ffffff;
+  	font-weight: 900;
+	}
+    @media (max-width: 800px) {
+      .hero h1 {
+        font-size: 30px;
+      }
+      .cta {
+        width: 280px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+   <header>
+    <div class="logo-area">
+      <button class="menu" id="menuBtn">☰</button>
+      <div class="logo">Ǝliceu</div>
+    </div>
+    <nav>
+      <a href="login/index.php">Înregistrare</a>
+      <a href="login/index.php" >Autentificare</a>
+    </nav>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+  <button class="close-btn" id="closeBtn">✕</button>
+  <a href="acasa.html">Acasă</a>
+  <a href="comp/liceu.php">Toate liceele</a>
+  <a href="specializari.html">Specializări</a>
+  <a href="test.html">Test de orientare</a>
+  <a href="evenimente.html">Evenimente și noutăți</a>
+  <a href="chatbot.php">Chatbot</a>
+  <a href="despre.html">Despre noi</a>
+  <a href="contact.html">Contact</a>
+  </div>
+
+  <div class="quiz">
+    <h1>Ce profil ți se potrivește?</h1>
+    <p>Răspunde la întrebări și vezi ce profil ți se potrivește cel mai bine.</p>
+
+    <div class="question">
+      <h2>1. Ce materii îți plac cel mai mult?</h2>
+
+      <label><input type="radio" name="q1" value="real"> Matematică și informatică</label>
+      <label><input type="radio" name="q1" value="uman"> Română și istorie</label>
+      <label><input type="radio" name="q1" value="economic"> Economie și antreprenoriat</label>
+      <label><input type="radio" name="q1" value="vocational"> Arte, sport sau muzică</label>
+    </div>
+
+    <div class="question">
+      <h2>2. Ce activitate preferi?</h2>
+
+      <label><input type="radio" name="q2" value="real"> Să rezolv probleme logice</label>
+      <label><input type="radio" name="q2" value="uman"> Să citesc și să scriu</label>
+      <label><input type="radio" name="q2" value="economic"> Să organizez proiecte</label>
+      <label><input type="radio" name="q2" value="vocational"> Să creez ceva practic</label>
+    </div>
+
+    <div class="question">
+      <h2>3. Ce carieră te atrage?</h2>
+
+      <label><input type="radio" name="q3" value="real"> Programator / inginer</label>
+      <label><input type="radio" name="q3" value="uman"> Profesor / avocat / jurnalist</label>
+      <label><input type="radio" name="q3" value="economic"> Manager / antreprenor</label>
+      <label><input type="radio" name="q3" value="vocational"> Artist / sportiv / designer</label>
+    </div>
+
+    <button onclick="calculeaza()">Vezi rezultatul</button>
+
+    <div id="rezultat"></div>
+  </div>
+
+   <footer>
+    <div class="footer-logo">Ǝliceu</div>
+
+    <div class="footer-grid">
+      <div>
+        <h3>Navigare</h3>
+        <a href="comp/liceu.php">Toate Liceele</a>
+	<a href="chatbot.php">Chatbot AI</a>
+        <a href="despre.html">Despre noi</a>
+        <a href="contact.html">Contact</a>
+        <a href="login/index.php">Înregistrare</a>
+        <a href="login/index.php">Autentificare</a>
+
+      </div>
+
+      <div>
+        <h3>Resurse</h3>
+        <a href="#">Informații despre profiluri</a>
+        <a href="#">Test de îndrumare</a>
+        <a href="#">Evenimente</a>
+      </div>
+
+      <div>
+        <h3>Legal</h3>
+        <a href="#">Termeni și condiții</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const closeBtn = document.getElementById("closeBtn");
+
+  menuBtn.addEventListener("click", function() {
+  	sidebar.classList.add("active");
+  });
+  closeBtn.addEventListener("click", function() {
+ 	sidebar.classList.remove("active");
+   });
+
+
+  function calculeaza() {
+
+    let real = 0;
+    let uman = 0;
+    let economic = 0;
+    let vocational = 0;
+
+    let raspunsuri = document.querySelectorAll("input[type='radio']:checked");
+
+    if (raspunsuri.length < 3) {
+      alert("Răspunde la toate întrebările.");
+      return;
+    }
+
+    for (let i = 0; i < raspunsuri.length; i++) {
+      if (raspunsuri[i].value == "real") {
+        real++;
+      }
+      if (raspunsuri[i].value == "uman") {
+        uman++;
+      }
+      if (raspunsuri[i].value == "economic") {
+        economic++;
+      }
+      if (raspunsuri[i].value == "vocational") {
+        vocational++;
+      }
+    }
+
+    let rezultat = "real";
+    if (uman > real && uman > economic && uman > vocational) {
+      rezultat = "uman";
+    }
+    if (economic > real && economic > uman && economic > vocational) {
+      rezultat = "economic";
+    }
+    if (vocational > real && vocational > uman && vocational > economic) {
+      rezultat = "vocational";
+    }
+    window.location.href = "rezultat.html?profil=" + rezultat;
+  }
+</script>
+
+</body>
+</html>

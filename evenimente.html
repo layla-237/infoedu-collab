@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eliceu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1f1f1f;
+    }
+
+    header {
+      width: 100%;
+      height: 72px;
+      background: #9661b8;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .menu {
+      font-size: 32px;
+      color: #ffffff;
+      font-weight: 900;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 900;
+      color: #ffe34d;
+      letter-spacing: -1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .events-page {
+      min-height: 100vh;
+      padding: 140px 80px 90px;
+      background:
+        radial-gradient(circle at top left, rgba(150,97,184,0.20), transparent 32%),
+        #f6f0fb;
+    }
+
+    .events-hero {
+      max-width: 1200px;
+      margin: 0 auto 60px;
+      background: linear-gradient(135deg, #9661b8, #6f4796);
+      color: white;
+      border-radius: 34px;
+      padding: 70px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+    }
+
+    .events-hero::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.10);
+      right: -80px;
+      top: -80px;
+    }
+
+    .events-hero h1 {
+      font-size: 56px;
+      font-weight: 900;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .events-hero p {
+      max-width: 720px;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.55;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-event {
+      max-width: 1200px;
+      margin: 0 auto 55px;
+      background: white;
+      border-radius: 28px;
+      padding: 42px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 42px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    .big-date {
+      background: #eee3f4;
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #9661b8;
+      min-height: 220px;
+    }
+
+    .big-date span {
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .big-date p {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .feature-info h2 {
+      font-size: 34px;
+      font-weight: 900;
+      color: #9661b8;
+      margin-bottom: 16px;
+    }
+
+    .feature-info p {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .read-more-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 34px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #9661b8, #7e4da6);
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 900;
+      box-shadow: 0 10px 24px rgba(150,97,184,0.28);
+      transition: 0.25s;
+    }
+
+    .read-more-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(150,97,184,0.35);
+    }
+
+    .timeline-section {
+      max-width: 1100px;
+      margin: 0 auto 70px;
+    }
+
+    .timeline-section h2 {
+      font-size: 34px;
+      font-weight: 900;
+      margin-bottom: 32px;
+    }
+
+    .timeline {
+      border-left: 5px solid #9661b8;
+      padding-left: 32px;
+    }
+
+    .timeline-item {
+      background: white;
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -45px;
+      top: 34px;
+      width: 20px;
+      height: 20px;
+      background: #9661b8;
+      border: 5px solid #f6f0fb;
+      border-radius: 50%;
+    }
+
+    .timeline-date {
+      color: #9661b8;
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .timeline-item h3 {
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item p {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.55;
+      color: #4d4457;
+    }
+
+    .news-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      padding: 42px;
+      border-radius: 24px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.10);
+    }
+
+    .news-section h2 {
+      font-size: 32px;
+      font-weight: 900;
+      margin-bottom: 28px;
+      color: #9661b8;
+    }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .news-item {
+      background: #eee3f4;
+      padding: 18px 22px;
+      border-radius: 16px;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .news-item strong {
+      color: #9661b8;
+    }
+
+    footer {
+      background: #786286;
+      padding: 80px 90px 90px;
+      color: white;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffe34d;
+      margin-bottom: 22px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+    }
+
+    footer h3 {
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    footer a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100vh;
+      background: linear-gradient(180deg, #8c63b3 0%, #6f4796 100%);
+      z-index: 2000;
+      padding: 110px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: 0.35s;
+      box-shadow: 6px 0 30px rgba(0,0,0,0.18);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 900;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #ffe34d;
+      transform: translateX(8px);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: transparent;
+      border: none;
+      font-size: 34px;
+      cursor: pointer;
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    @media (max-width: 900px) {
+      .events-page {
+        padding: 120px 24px 60px;
+      }
+
+      .events-hero {
+        padding: 45px 28px;
+      }
+
+      .events-hero h1 {
+        font-size: 38px;
+      }
+
+      .feature-event {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline {
+        padding-left: 24px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo-area">
+      <button class="menu" id="menuBtn">☰</button>
+      <div class="logo">Ǝliceu</div>
+    </div>
+
+    <nav>
+      <a href="login/index.php">Înregistrare</a>
+      <a href="login/index.php">Autentificare</a>
+    </nav>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeBtn">✕</button>
+
+    <a href="acasa.html">Acasă</a>
+    <a href="comp/liceu.php">Toate liceele</a>
+    <a href="specializari.html">Specializări</a>
+    <a href="test.html">Test de orientare</a>
+    <a href="evenimente.html">Evenimente și noutăți</a>
+    <a href="chatbot.php">Chatbot</a>
+    <a href="despre.html">Despre noi</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <main class="events-page">
+
+    <section class="events-hero">
+      <h1>Evenimente și noutăți</h1>
+      <p>
+        Urmărește anunțurile importante, zilele porților deschise și actualizările utile pentru alegerea liceului potrivit.
+      </p>
+    </section>
+
+    <section class="feature-event">
+      <div class="big-date">
+        <span>16</span>
+        <p>IUNIE</p>
+      </div>
+
+      <div class="feature-info">
+        <h2>Ziua porților deschise la Colegiul Național „Grigore Moisil”</h2>
+
+        <p>
+          Elevii pot vizita liceul, pot discuta cu profesorii și pot afla mai multe despre profilurile disponibile,
+          activități, laboratoare și admitere.
+        </p>
+
+        <a href="detalii-eveniment.html" class="read-more-btn">Citește mai mult</a>
+      </div>
+    </section>
+
+    <section class="timeline-section">
+      <h2>Calendar util</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">20 IUNIE 2025</div>
+          <h3>Publicarea calendarului de admitere</h3>
+          <p>Vor fi afișate informațiile importante despre etapele admiterii și perioada de completare a opțiunilor.</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">25 IUNIE 2025</div>
+          <h3>Tur virtual pentru licee</h3>
+          <p>Pe Ǝliceu vor apărea prezentări vizuale pentru mai multe licee din București.</p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">ÎN CURÂND</div>
+          <h3>Recomandări personalizate</h3>
+          <p>Utilizatorii vor putea primi sugestii de licee în funcție de profil, medie, sector și preferințe.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="news-section">
+      <h2>Noutăți rapide</h2>
+
+      <div class="news-list">
+        <div class="news-item">
+          <strong>Nou pe Ǝliceu:</strong>
+          <span>posibilitatea de a compara licee după profil, medie și sector.</span>
+        </div>
+
+        <div class="news-item">
+          <strong>În curând:</strong>
+          <span>test de orientare pentru alegerea profilului potrivit.</span>
+        </div>
+
+        <div class="news-item">
+          <strong>Update:</strong>
+          <span>pagina de specializări a fost actualizată cu mai multe profiluri.</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-logo">Ǝliceu</div>
+
+    <div class="footer-grid">
+      <div>
+        <h3>Navigare</h3>
+        <a href="comp/liceu.php">Toate Liceele</a>
+	<a href="chatbot.php">Chatbot AI</a>
+        <a href="despre.html">Despre noi</a>
+        <a href="contact.html">Contact</a>
+        <a href="login/index.php">Înregistrare</a>
+        <a href="login/index.php">Autentificare</a>
+
+      </div>
+
+      <div>
+        <h3>Resurse</h3>
+        <a href="specializari.html">Informații despre profiluri</a>
+        <a href="test.html">Test de îndrumare</a>
+        <a href="evenimente.html">Evenimente</a>
+      </div>
+
+      <div>
+        <h3>Legal</h3>
+        <a href="#">Termeni și condiții</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.add("active");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      sidebar.classList.remove("active");
+    });
+  </script>
+
+</body>
+</html>

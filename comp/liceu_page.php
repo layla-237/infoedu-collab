@@ -49,9 +49,9 @@ $id = $_GET['id'];
 
   <!-- BREADCRUMB -->
   <div class="breadcrumb">
-    <a href="#">Acasă</a>
+    <a href="../acasa.html">Acasă</a>
     <span>›</span>
-    <a href="#">Toate Liceele</a>
+    <a href="liceu.php">Toate Liceele</a>
     <span>›</span>
     <span><?php echo $rows['tip']. ' '.$rows['name']; ?></span> 
   </div>
@@ -199,66 +199,24 @@ $id = $_GET['id'];
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="spec-name">Matematică-Informatică</td>
-                    <td class="bil-cell">—</td>
-                    <td><span class="pozitie-chip">#56</span></td>
-                    <td><span class="pozitie-chip">#62</span></td>
-                    <td><span class="pozitie-chip">#68</span></td>
-                    <td><span class="pozitie-chip">#71</span></td>
-                    <td><span class="pozitie-chip">#74</span></td>
-                    <td><span class="pozitie-chip">#80</span></td>
+
+                 <?php           
+ 
+                foreach($row3 as $row2){?>
+                 
+                    <td class="spec-name"><?= $row2['specializare'];?></td>
+                    <td class="bil-cell"><?= $row2['bilingv'];?></td>
+                    <td><span class="medie-badge high"><?php echo $row2['u_pozition_2025'];?></span></td>
+                    <td><span class="medie-badge high"><?= $row2['u_pozition_2024'];?></span></td>
+                    <td><span class="medie-badge high"><?= $row2['u_pozition_2023'];?></span></td>
+                    <td><span class="medie-badge high"><?= $row2['u_pozition_2022'];?></span></td>
+                    <td><span class="medie-badge high"><?= $row2['u_pozition_2021'];?></span></td>
+                    <td><span class="medie-badge high"><?= $row2['u_pozition_2020'];?></span></td>
                   </tr>
-                  <tr>
-                    <td class="spec-name">Mat-Info<span class="bilingual-sub">Intensiv</span></td>
-                    <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Engleză</td>
-                    <td><span class="pozitie-chip">#28</span></td>
-                    <td><span class="pozitie-chip">#31</span></td>
-                    <td><span class="pozitie-chip">#35</span></td>
-                    <td><span class="pozitie-chip">#37</span></td>
-                    <td><span class="pozitie-chip">#29</span></td>
-                    <td><span class="pozitie-chip">#33</span></td>
-                  </tr>
-                  <tr>
-                    <td class="spec-name">Mat-Info<span class="bilingual-sub">Intensiv</span></td>
-                    <td class="bil-cell" style="color:var(--purple);font-size:12px;font-weight:700;">Franceză</td>
-                    <td><span class="pozitie-chip">#44</span></td>
-                    <td><span class="pozitie-chip">#47</span></td>
-                    <td><span class="pozitie-chip">#51</span></td>
-                    <td><span class="pozitie-chip">#54</span></td>
-                    <td><span class="pozitie-chip">#40</span></td>
-                    <td><span class="pozitie-chip">#48</span></td>
-                  </tr>
-                  <tr>
-                    <td class="spec-name">Științe ale Naturii</td>
-                    <td class="bil-cell">—</td>
-                    <td><span class="pozitie-chip">#98</span></td>
-                    <td><span class="pozitie-chip">#104</span></td>
-                    <td><span class="pozitie-chip">#112</span></td>
-                    <td><span class="pozitie-chip">#118</span></td>
-                    <td><span class="pozitie-chip">#121</span></td>
-                    <td><span class="pozitie-chip">#127</span></td>
-                  </tr>
-                  <tr>
-                    <td class="spec-name">Filologie</td>
-                    <td class="bil-cell">—</td>
-                    <td><span class="pozitie-chip">#145</span></td>
-                    <td><span class="pozitie-chip">#152</span></td>
-                    <td><span class="pozitie-chip">#158</span></td>
-                    <td><span class="pozitie-chip">#163</span></td>
-                    <td><span class="pozitie-chip">#170</span></td>
-                    <td><span class="pozitie-chip">#178</span></td>
-                  </tr>
-                  <tr>
-                    <td class="spec-name">Științe Sociale</td>
-                    <td class="bil-cell">—</td>
-                    <td><span class="pozitie-chip">#192</span></td>
-                    <td><span class="pozitie-chip">#198</span></td>
-                    <td><span class="pozitie-chip">#205</span></td>
-                    <td><span class="pozitie-chip">#211</span></td>
-                    <td><span class="pozitie-chip">#219</span></td>
-                    <td><span class="pozitie-chip">#224</span></td>
-                  </tr>
-                </tbody>
+<?php
+}
+ ?>
+             </tbody>
               </table>
             </div>
             <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">* Pozițiile reprezintă locul în ierarhia generală a candidaților din București.</p>

@@ -50,7 +50,10 @@ include('../template/pagination.php');
     </div>
 
     <!-- COMPARE BAR -->
-    <div class="compare-bar" id="compareBar">
+
+<div class="compare-bar" id="compareBar">
+
+    
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
         <span style="font-weight:900">Comparare:</span>
         <div class="compare-bar-names" id="compareBarNames"></div>
@@ -163,49 +166,6 @@ include('../template/pagination.php');
      
         <div class="products-grid" id="productsGrid">
 
-        <!-- <div class="product-card" style="animation-delay: .1s">
-
-            
-            <div class="card-image-wrap">
-              <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=1200&q=80" alt="Colegiul Național „Sfântul Sava”" loading="lazy">
-              <div class="card-overlay"></div>
-            </div>
-            <div class="card-body">
-              <div class="card-category">Real · Sector 5</div>
-              <div class="card-title">Colegiul Național „Gheorghe Lazăr”</div>
-              <div class="card-desc">Tradiție academică de excepție, cu performanțe remarcabile la matematică și informatică. Locul de formare al multor olimpici naționali și internaționali.</div>
-
-              <div class="card-stats">
-                <div class="stat-chip">1,200</div>
-                <div class="stat-chip">34 clase</div>
-              </div>
-
-              <div style="display:flex;align-items:center;gap:6px;margin-top:2px">
-                <div style="display:flex;gap:2px">
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                </div>
-
-                <span font-size:12px;font-weight:400;color:var(--text-muted)>5 (300)</span>
-              </div>
-
-              <div class="card-price-row">
-                <div>
-                  <div class="price-unit">Medie admitere</div>
-                  <div class="price-main">9.88</div>
-                </div>
-                <div style="display:flex;gap:8px">
-                  <button class="add-btn" >
-                    Compară
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>-->
-
 <?php           
    
 
@@ -237,25 +197,14 @@ include('../template/pagination.php');
                 <div class="stat-chip"><?php echo place($row['name']) ?> </div>
               </div>
 
-              <!--<div style="display:flex;align-items:center;gap:6px;margin-top:2px">
-                <div style="display:flex;gap:2px">
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                  <span style="font-size:12px;color:#f5c518">★</span>
-                </div>
-
-                <span font-size:12px;font-weight:400;color:var(--text-muted)>5 (300)</span>
-              </div>-->
-
+     
               <div class="card-price-row">
                 <div>
                   <div class="price-unit">Medie admitere</div>
                   <div class="price-main"><?php echo media($row['name']) ?></div>
                 </div>
                 <div style="display:flex;gap:8px">
-                  <button class="add-btn" >
+                  <button class="add-btn red"  id="<?= $row['id_numa_liceu'] ?>" onClick="checkNr(this.id)">
                     Compară
                   </button>
                 </div>
