@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Despre noi - Eliceu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1f1f1f;
+    }
+
+    header {
+      width: 100%;
+      height: 72px;
+      background: #9661b8;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .menu {
+      font-size: 32px;
+      color: #ffffff;
+      font-weight: 900;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 900;
+      color: #ffe34d;
+      letter-spacing: -1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100vh;
+      background: linear-gradient(180deg, #8c63b3 0%, #6f4796 100%);
+      z-index: 2000;
+      padding: 110px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: 0.35s;
+      box-shadow: 6px 0 30px rgba(0,0,0,0.18);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 900;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #ffe34d;
+      transform: translateX(8px);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: transparent;
+      border: none;
+      font-size: 34px;
+      cursor: pointer;
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .about-page {
+      padding-top: 72px;
+      background: #ffffff;
+    }
+
+    .hero {
+      padding: 110px 80px 90px;
+      background: #f6f0fb;
+      border-bottom: 1px solid #e6d8ef;
+    }
+
+    .hero-inner {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .hero-text .label {
+      color: #9661b8;
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+
+    .hero-text h1 {
+      font-size: 58px;
+      line-height: 1.05;
+      font-weight: 900;
+      margin-bottom: 26px;
+      max-width: 650px;
+    }
+
+    .hero-text p {
+      font-size: 20px;
+      line-height: 1.65;
+      color: #4f4658;
+      font-weight: 600;
+      max-width: 640px;
+    }
+
+    .hero-photo {
+      height: 390px;
+      background: #e8dff0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #dac7e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9661b8;
+      font-size: 22px;
+      font-weight: 900;
+      text-align: center;
+      padding: 30px;
+    }
+   .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+   }
+    .content {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 80px 80px;
+    }
+
+    .two-columns {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 70px;
+      margin-bottom: 80px;
+      align-items: start;
+    }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 900;
+      color: #1f1f1f;
+    }
+
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 58px;
+      height: 5px;
+      background: #9661b8;
+      border-radius: 10px;
+      margin-top: 18px;
+    }
+
+    .text-block p {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #3f3947;
+      font-weight: 500;
+      margin-bottom: 22px;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid #e6d8ef;
+      margin-bottom: 80px;
+    }
+
+    .principle {
+      padding: 36px;
+      border-right: 1px solid #e6d8ef;
+      background: #ffffff;
+    }
+
+    .principle:last-child {
+      border-right: none;
+    }
+
+    .principle span {
+      display: block;
+      color: #9661b8;
+      font-size: 14px;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    .principle h3 {
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .principle p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #4f4658;
+      font-weight: 500;
+    }
+
+    .process {
+      background: #f6f0fb;
+      padding: 70px 80px;
+      margin: 0 -80px 80px;
+      border-top: 1px solid #e6d8ef;
+      border-bottom: 1px solid #e6d8ef;
+    }
+
+    .process-inner {
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .process h2 {
+      font-size: 38px;
+      font-weight: 900;
+      margin-bottom: 40px;
+    }
+
+    .process-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .process-item {
+      background: white;
+      padding: 28px;
+      border-radius: 6px;
+      border: 1px solid #e6d8ef;
+    }
+
+    .process-item strong {
+      display: block;
+      color: #9661b8;
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+
+    .process-item h3 {
+      font-size: 21px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .process-item p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #4f4658;
+      font-weight: 500;
+    }
+
+    .team-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 55px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .team-image {
+      height: 430px;
+      background: #eee3f4;
+      border: 1px solid #dac7e8;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9661b8;
+      font-size: 22px;
+      font-weight: 900;
+      text-align: center;
+      padding: 30px;
+    }
+   .team-image img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+    }
+    .team-text h2 {
+      font-size: 38px;
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+
+    .team-text p {
+      font-size: 18px;
+      line-height: 1.75;
+      color: #3f3947;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .cta-section {
+      padding: 55px 60px;
+      background: #9661b8;
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .cta-section h2 {
+      font-size: 34px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .cta-section p {
+      font-size: 17px;
+      line-height: 1.55;
+      font-weight: 500;
+      max-width: 620px;
+    }
+
+    .cta-section a {
+      background: white;
+      color: #9661b8;
+      text-decoration: none;
+      padding: 16px 28px;
+      border-radius: 8px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    footer {
+      background: #786286;
+      padding: 80px 90px 90px;
+      color: white;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffe34d;
+      margin-bottom: 22px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+    }
+
+    footer h3 {
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    footer a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        padding: 110px 24px 60px;
+      }
+
+      .hero-inner,
+      .two-columns,
+      .team-section {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text h1 {
+        font-size: 42px;
+      }
+
+      .content {
+        padding: 60px 24px;
+      }
+
+      .principles {
+        grid-template-columns: 1fr;
+      }
+
+      .principle {
+        border-right: none;
+        border-bottom: 1px solid #e6d8ef;
+      }
+
+      .process {
+        margin: 0 -24px 60px;
+        padding: 55px 24px;
+      }
+
+      .process-list {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-section {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo-area">
+      <button class="menu" id="menuBtn">☰</button>
+      <div class="logo">Ǝliceu</div>
+    </div>
+
+    <nav>
+      <a href="autentificare.html#register">Înregistrare</a>
+      <a href="autentificare.html" >Autentificare</a>
+    </nav>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <button class="close-btn" id="closeBtn">✕</button>
+
+    <a href="acasa.html">Acasă</a>
+    <a href="licee.html">Toate liceele</a>
+    <a href="specializari.html">Specializări</a>
+    <a href="test.html">Test de orientare</a>
+    <a href="evenimente.html">Evenimente și noutăți</a>
+    <a href="chatbot.php">Chatbot</a>
+    <a href="despre.html">Despre noi</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <main class="about-page">
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <div class="label">Despre proiect</div>
+
+          <h1>Alegerea liceului ar trebui să fie mai clară.</h1>
+
+          <p>
+            Ǝliceu este o platformă creată pentru elevii din București care vor să aleagă liceul potrivit
+            într-un mod mai simplu, mai organizat și mai informat.
+          </p>
+        </div>
+
+        <div class="hero-photo">
+  	  <img src="despre-hero.jpg" alt="Elevi care aleg liceul">
+	</div>
+      </div>
+    </section>
+
+    <section class="content">
+
+      <section class="two-columns">
+        <h2 class="section-title">De ce am creat Ǝliceu?</h2>
+
+        <div class="text-block">
+          <p>
+            Alegerea liceului este una dintre primele decizii importante pentru un elev, dar informațiile sunt
+            adesea greu de comparat și răspândite în mai multe locuri.
+          </p>
+
+          <p>
+            Mulți elevi aleg liceul doar după medie, după recomandări sau după ce aud de la alții.
+            Noi vrem ca această alegere să fie făcută pe baza unor informații clare și relevante.
+          </p>
+
+          <p>
+            Pe Ǝliceu poți compara licee, descoperi specializări, vedea medii de admitere și folosi un test de orientare.
+          </p>
+        </div>
+      </section>
+
+      <section class="principles">
+        <div class="principle">
+          <span>01</span>
+          <h3>Alegere mai sigură</h3>
+          <p>
+            Elevii pot analiza opțiunile în funcție de profil, medie, interese și obiective personale.
+          </p>
+        </div>
+
+        <div class="principle">
+          <span>02</span>
+          <h3>Informații clare</h3>
+          <p>
+            Datele despre licee sunt prezentate într-un format simplu, logic și ușor de urmărit.
+          </p>
+        </div>
+
+        <div class="principle">
+          <span>03</span>
+          <h3>Orientare personalizată</h3>
+          <p>
+            Testul de orientare și paginile despre specializări ajută elevii să înțeleagă ce direcție li se potrivește.
+          </p>
+        </div>
+      </section>
+
+      <section class="process">
+        <div class="process-inner">
+          <h2>Cum te ajută platforma?</h2>
+
+          <div class="process-list">
+            <div class="process-item">
+              <strong>Pasul 1</strong>
+              <h3>Explorezi</h3>
+              <p>Vezi licee, profiluri, specializări și informații importante pentru admitere.</p>
+            </div>
+
+            <div class="process-item">
+              <strong>Pasul 2</strong>
+              <h3>Compari</h3>
+              <p>Analizezi opțiunile după medie, profil, sector și preferințele tale.</p>
+            </div>
+
+            <div class="process-item">
+              <strong>Pasul 3</strong>
+              <h3>Te orientezi</h3>
+              <p>Folosești testul de orientare pentru a descoperi ce direcție ți se potrivește.</p>
+            </div>
+
+            <div class="process-item">
+              <strong>Pasul 4</strong>
+              <h3>Alegi</h3>
+              <p>Îți formezi o listă mai clară și iei o decizie mai sigură.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="team-section">
+        <div class="team-image">
+ 	 <img src="poza-echipa.jpg" alt="Echipa Eliceu">
+	</div>
+
+        <div class="team-text">
+          <h2>Cum am lucrat la proiect?</h2>
+
+          <p>
+            Ǝliceu a pornit de la o problemă simplă: alegerea liceului este importantă, dar informațiile sunt
+            adesea greu de comparat.
+          </p>
+
+          <p>
+            Echipa noastră a lucrat la organizarea datelor, realizarea designului, construirea paginilor și
+            testarea funcțiilor principale ale platformei.
+          </p>
+
+          <p>
+            Am vrut ca site-ul să fie util, clar și prietenos pentru elevii care se pregătesc pentru admitere.
+          </p>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div>
+          <h2>Alege informat. Alege potrivit.</h2>
+          <p>
+            Ǝliceu nu îți spune doar ce licee există, ci te ajută să înțelegi care dintre ele are sens pentru tine.
+          </p>
+        </div>
+
+        <a href="licee.html">Vezi liceele</a>
+      </section>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-logo">Ǝliceu</div>
+
+    <div class="footer-grid">
+      <div>
+        <h3>Navigare</h3>
+        <a href="licee.html">Toate Liceele</a>
+	<a href="chatbot.php">Chatbot AI</a>
+        <a href="despre.html">Despre noi</a>
+        <a href="contact.html">Contact</a>
+        <a href="autentificare.html#register">Înregistrare</a>
+        <a href="autentificare.html">Autentificare</a>
+
+      </div>
+
+      <div>
+        <h3>Resurse</h3>
+        <a href="specializari.html">Informații despre profiluri</a>
+        <a href="test.html">Test de îndrumare</a>
+        <a href="evenimente.html">Evenimente</a>
+      </div>
+
+      <div>
+        <h3>Legal</h3>
+        <a href="#">Termeni și condiții</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", function() {
+      sidebar.classList.add("active");
+    });
+
+    closeBtn.addEventListener("click", function() {
+      sidebar.classList.remove("active");
+    });
+  </script>
+
+</body>
+</html>
