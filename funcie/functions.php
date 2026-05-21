@@ -1,0 +1,10 @@
+<?php
+
+function getLatest($select,$table,$order,$limit = 5){
+        global $con;
+        $getstat = $con->prepare("SELECT $select FROM " . DB_PREFIX . "$table  ORDER BY $order DESC LIMIT $limit");
+        $getstat->execute();
+        $rows = $getstat->fetchAll();
+        return $rows;
+        
+     }   
