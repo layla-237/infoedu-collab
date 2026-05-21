@@ -1,14 +1,10 @@
 # Ǝliceu
 
 ## Descriere
-
 Ǝliceu este o platformă educațională care ajută elevii să aleagă liceul potrivit pe baza mediilor, profilurilor și specializărilor disponibile în București.
-
 Platforma include un chatbot AI și un sistem de Machine Learning pentru estimarea șanselor de admitere.
 
-
 ## Funcționalități
-
 - Căutare și filtrare licee
 - Informații despre specializări
 - Test de orientare
@@ -17,9 +13,7 @@ Platforma include un chatbot AI și un sistem de Machine Learning pentru estimar
 - Sistem de autentificare
 - Design responsive
 
-
 ## Tehnologii folosite
-
 ### Frontend
 - HTML
 - CSS
