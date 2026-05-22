@@ -30,27 +30,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "medie_liceu" => floatval($row["medie_actuala"])
         ];
 
-        $options = [
-            "http" => [
-                "header" => "Content-Type: application/json\r\n",
-                "method" => "POST",
-                "content" => json_encode($payload),
-                "timeout" => 3
-            ]
-        ];
+        $ch = curl_init("https://eliceu-ai.onrender.com/predict");
 
-        $context = stream_context_create($options);
-        $response = file_get_contents("https://eliceu-ai.onrender.com/predict", false, $context);
-        if ($response === false) {
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Content-Type: application/json"
+        ]);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            curl_close($ch);
+
             return [
                 "probabilitate" => "N/A",
                 "nivel" => "AI indisponibil"
             ];
         }
 
+        curl_close($ch);
+
         $prediction = json_decode($response, true);
 
-        if (!$prediction) {
+        if (!$prediction || !isset($prediction["nivel"])) {
             return [
                 "probabilitate" => "N/A",
                 "nivel" => "AI indisponibil"
@@ -670,12 +675,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <div>
         <h3>Navigare</h3>
         <a href="licee.html">Toate Liceele</a>
-	      <a href="chatbot.php">Chatbot AI</a>
+        <a href="chatbot.php">Chatbot AI</a>
         <a href="despre.html">Despre noi</a>
         <a href="contact.html">Contact</a>
         <a href="autentificare.html#register">Înregistrare</a>
         <a href="autentificare.html">Autentificare</a>
-
       </div>
 
       <div>
