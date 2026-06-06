@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliceu</title>
+  <title>Specializări - Ǝliceu</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
   <style>
-	* {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-   body {
+    body {
       font-family: 'Inter', sans-serif;
       background: #ffffff;
       color: #1f1f1f;
@@ -48,6 +49,7 @@
       background: transparent;
       border: 0;
       cursor: pointer;
+      padding: 0;
     }
 
     .logo {
@@ -69,185 +71,293 @@
       font-weight: 900;
     }
 
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100vh;
+      background: linear-gradient(180deg, #8c63b3 0%, #6f4796 100%);
+      z-index: 2000;
+      padding: 110px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: 0.35s;
+      box-shadow: 6px 0 30px rgba(0,0,0,0.18);
+    }
 
-      button {
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 900;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #ffe34d;
+      transform: translateX(8px);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: transparent;
+      border: none;
+      font-size: 34px;
+      cursor: pointer;
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .specializari-page {
+      padding-top: 72px;
+      background: #ffffff;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #f6f0fb 0%, #ffffff 100%);
+      padding: 105px 80px 95px;
+      border-bottom: 1px solid #eadcf3;
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-label {
+      color: #9661b8;
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      line-height: 1.08;
+      font-weight: 900;
+      max-width: 850px;
+      margin: 0 auto 24px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      line-height: 1.7;
+      color: #51465d;
+      font-weight: 600;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .explore-link {
+      margin-top: 38px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: #9661b8;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    .arrow-down {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #9661b8;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 12px 25px rgba(150, 97, 184, 0.25);
+    }
+
+    .content {
+      padding: 85px 80px 95px;
+      background: #ffffff;
+    }
+
+    .specializari-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 34px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .profil-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .specializare-card {
+      background: #ffffff;
+      padding: 38px;
+      border-radius: 24px;
+      border: 1px solid #eadcf3;
+      box-shadow: 0 16px 38px rgba(150, 97, 184, 0.10);
+      transition: 0.25s ease;
+      min-height: 245px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .specializare-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 45px rgba(150, 97, 184, 0.16);
+    }
+
+    .specializare-card h2 {
+      font-size: 30px;
+      font-weight: 900;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .specializare-card p {
+      font-size: 17px;
+      line-height: 1.65;
+      color: #50475b;
+      font-weight: 600;
+      margin-bottom: 26px;
+    }
+
+    button,
+    .detalii-btn {
       background: #9661b8;
       color: white;
       border: none;
-      padding: 18px 35px;
+      padding: 14px 24px;
       border-radius: 14px;
-      font-size: 20px;
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 900;
       cursor: pointer;
+      transition: 0.2s ease;
     }
 
+    button:hover,
+    .detalii-btn:hover {
+      background: #7b4d99;
+    }
 
-.specializari-page {
-  min-height: 100vh;
-  padding: 140px 80px 90px;
-  background: #f6f0fb;
-}
+    .detalii-box {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      background: #f8f1fc;
+      padding: 52px 38px 38px;
+      border-radius: 0 0 24px 24px;
+      border: 1px solid #eadcf3;
+      border-top: none;
+      margin-top: -20px;
+      box-shadow: 0 16px 32px rgba(150, 97, 184, 0.10);
+    }
 
-.intro {
-  text-align: center;
-  margin-bottom: 60px;
-}
+    .detalii-box.active {
+      display: grid;
+    }
 
-.intro h1 {
-  font-size: 52px;
-  font-weight: 900;
-  color: #1f1f1f;
-  margin-bottom: 18px;
-}
+    .detalii-box h3 {
+      font-size: 24px;
+      color: #9661b8;
+      font-weight: 900;
+      margin-bottom: 18px;
+      line-height: 1.25;
+    }
 
-.intro p {
-  font-size: 20px;
-  font-weight: 700;
-  color: #5d5368;
-}
+    .detalii-box ul {
+      margin-left: 22px;
+      margin-bottom: 24px;
+    }
 
-.specializari-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 34px;
-  max-width: 1350px;
-  margin: 0 auto;
-}
+    .detalii-box li {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.5;
+      color: #3f3947;
+    }
 
-.profil-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
+    .detalii-box p {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.6;
+      color: #50475b;
+      margin-top: 18px;
+    }
 
-.specializare-card {
-  background: white;
-  padding: 38px;
-  border-radius: 22px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-  transition: 0.25s;
-  min-height: 250px;
-  position: relative;
-  z-index: 2;
-}
+    .detalii-box a {
+      color: #9661b8;
+      font-weight: 900;
+    }
 
-.detalii-box {
-  display: none;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+    .info-card {
+      max-width: 1180px;
+      margin: 80px auto 0;
+      background: linear-gradient(135deg, #9661b8 0%, #7b4d99 100%);
+      color: white;
+      border-radius: 28px;
+      padding: 48px;
+      box-shadow: 0 22px 48px rgba(150, 97, 184, 0.22);
+    }
 
-  background: #f6f0fb;
+    .info-card h2 {
+      font-size: 34px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
 
-  padding: 55px 42px 50px;
-  border-radius: 0 0 22px 22px;
+    .info-card > p {
+      font-size: 18px;
+      line-height: 1.7;
+      font-weight: 600;
+      max-width: 820px;
+      margin-bottom: 34px;
+    }
 
-  margin-top: -20px;
-  margin-bottom: 34px;
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
 
-  box-shadow: 0 12px 25px rgba(0,0,0,0.10);
-}
+    .info-box {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 28px;
+    }
 
-.detalii-box.active {
-  display: grid;
-}
+    .info-box h3 {
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: #ffe34d;
+    }
 
-.specializare-card h2 {
-  font-size: 30px;
-  margin-bottom: 12px;
-  line-height: 1.2;
-}
+    .info-box p {
+      font-size: 16px;
+      line-height: 1.65;
+      font-weight: 600;
+    }
 
-.specializare-card p {
-  font-size: 17px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.specializare-card a {
-  display: inline-block;
-  background: #9661b8;
-  color: white;
-  text-decoration: none;
-  padding: 14px 20px;
-  border-radius: 12px;
-  font-weight: 900;
-}
-
-.specializare-card a:hover {
-  background: #7b4d99;
-}
-
-.detalii-btn {
-  display: inline-block;
-  background: #9661b8;
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 12px;
-  font-weight: 900;
-  font-size: 17px;
-  cursor: pointer;
-}
-
-.detalii-box button {
-  margin-top: 18px;
-  margin-bottom: 30px;
-}
-
-.detalii-box h3 {
-  font-size: 26px;
-  color: #9661b8;
-  margin-bottom: 17px;
-  line-height: 1.2;
-}
-
-.detalii-box ul {
-  margin-left: 24px;
-  margin-bottom: 25px;
-}
-
-.detalii-box li {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 14px;
-  line-height: 1.55;
-}
-
-.detalii-box p {
-  font-size: 17px;
-  font-weight: 700;
-  margin-top: 10px;
-  line-height: 1.6;
-}
-
-.detalii-box a {
-  color: #9661b8;
-  font-weight: 900;
-}
-
-@media (max-width: 800px) {
-  .specializari-page {
-    padding: 120px 24px 60px;
-  }
-
-  .intro h1 {
-    font-size: 36px;
-  }
-
-  .specializari-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .detalii-box {
-    grid-template-columns: 1fr;
-  }
-}
-
-    	footer {
-  	background: #786286;
-  	padding: 80px 90px 90px;
-  	color: white;
-	}
+    footer {
+      background: #786286;
+      padding: 80px 90px 90px;
+      color: white;
+    }
 
     .footer-logo {
       font-size: 24px;
@@ -276,57 +386,57 @@
       font-weight: 700;
       margin-bottom: 8px;
     }
-	.sidebar {
-  	position: fixed;
-  	top: 0;
-  	left: -320px;
-  	width: 320px;
-  	height: 100vh;
-  	background: linear-gradient(
-  	180deg,
-  	#8c63b3 0%,
-  	#6f4796 100%
-	);
-  	z-index: 2000;
-  	padding: 110px 40px;
-  	display: flex;
-  	flex-direction: column;
-  	gap: 28px;
- 	transition: 0.35s;
-  	box-shadow: 6px 0 30px rgba(0,0,0,0.18);
-	}
-	.sidebar.active {
-  	left: 0;
-	}
-	.sidebar a {
-  	text-decoration: none;
-  	color: #ffffff;
-  	font-size: 22px;
-  	font-weight: 900;
-  	transition: 0.2s;
-	}
-	.sidebar a:hover {
-  	color: #ffe34d;
-  	transform: translateX(8px);
-	}
-	.close-btn {
-  	position: absolute;
-  	top: 28px;
-  	right: 28px;
-  	background: transparent;
-  	border: none;
-  	font-size: 34px;
-  	cursor: pointer;
-  	color: #ffffff;
-  	font-weight: 900;
-	}
-    @media (max-width: 800px) {
+
+    @media (max-width: 900px) {
+      header {
+        padding: 0 24px;
+      }
+
+      nav {
+        gap: 20px;
+      }
+
+      .hero {
+        padding: 85px 24px 70px;
+      }
+
       .hero h1 {
-        font-size: 30px;
+        font-size: 38px;
       }
-      .cta {
-        width: 280px;
+
+      .hero p {
+        font-size: 17px;
       }
+
+      .content {
+        padding: 65px 24px 75px;
+      }
+
+      .specializari-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .detalii-box {
+        grid-template-columns: 1fr;
+      }
+
+      .info-card {
+        padding: 34px 26px;
+        margin-top: 60px;
+      }
+
+      .info-card h2 {
+        font-size: 28px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        padding: 60px 24px 70px;
+      }
+
       .footer-grid {
         grid-template-columns: 1fr;
         gap: 24px;
@@ -337,365 +447,442 @@
 
 <body>
 
-   <header>
+  <header>
     <div class="logo-area">
       <button class="menu" id="menuBtn">☰</button>
       <div class="logo">Ǝliceu</div>
     </div>
+
     <nav>
-      <a href="login/index.php">Înregistrare</a>
-      <a href="login/index.php" >Autentificare</a>
+      <a href="autentificare.html#register">Înregistrare</a>
+      <a href="autentificare.html">Autentificare</a>
     </nav>
   </header>
 
   <div class="sidebar" id="sidebar">
-  <button class="close-btn" id="closeBtn">✕</button>
-  <a href="acasa.html">Acasă</a>
-  <a href="comp/liceu.php">Toate liceele</a>
-  <a href="specializari.html">Specializări</a>
-  <a href="test.html">Test de orientare</a>
-  <a href="evenimente.html">Evenimente și noutăți</a>
-  <a href="chatbot.php">Chatbot</a>
-  <a href="despre.html">Despre noi</a>
-  <a href="contact.html">Contact</a>
-  </div>
-	
-	<main class="specializari-page">
-  <section class="intro">
-    <h1>Specializări liceu</h1>
-    <p>Află ce presupune fiecare profil și vezi care ți se potrivește cel mai bine.</p>
-  </section>
-
-  <section class="specializari-grid">
-
-    <div class="profil-item">
-  <div class="specializare-card">
-    <h2>Profil Real</h2>
-    <p>Matematică, informatică, științe și logică.</p>
-    <button class="detalii-btn" onclick="toggleDetalii('real-detalii')">
-      Vezi detalii
-    </button>
+    <button class="close-btn" id="closeBtn">✕</button>
+    <a href="acasa.html">Acasă</a>
+    <a href="licee.html">Toate liceele</a>
+    <a href="specializari.html">Specializări</a>
+    <a href="test.html">Test de orientare</a>
+    <a href="evenimente.html">Evenimente și noutăți</a>
+    <a href="chatbot.php">Chatbot</a>
+    <a href="despre.html">Despre noi</a>
+    <a href="contact.html">Contact</a>
   </div>
 
-  <div class="detalii-box" id="real-detalii">
-    <div>
-      <h3>Materii principale</h3>
-      <ul>
-        <li>Matematică</li>
-        <li>Informatică</li>
-        <li>Fizică</li>
-      </ul>
+  <main class="specializari-page">
 
-      <button onclick="window.location.href='comp/liceu.php'">
-        Vezi licee
-      </button>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-label">Ghid pentru viitorul tău</div>
 
-      <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-    </div>
+        <h1>Ce job te-ai văzut având de când erai mic?</h1>
 
-    <div>
-      <h3>Top 3 facultăți</h3>
-      <ul>
-        <li>Automatică și Calculatoare</li>
-        <li>Informatică</li>
-        <li>Politehnică</li>
-      </ul>
-    </div>
-  </div>
-</div>
+        <p>
+          Poate ai visat să construiești aplicații, să ajuți oameni, să creezi artă, să descoperi lucruri noi
+          sau să lucrezi într-un domeniu practic. Alegerea profilului de liceu este unul dintre primii pași
+          care te pot apropia de direcția potrivită pentru tine.
+        </p>
 
-<div class="profil-item">
-  <div class="specializare-card">
-    <h2>Profil Uman</h2>
-    <p>Limbi străine, literatură, istorie și comunicare.</p>
-    <button class="detalii-btn" onclick="toggleDetalii('uman-detalii')">
-      Vezi detalii
-    </button>
-  </div>
+        <a href="#profiluri" class="explore-link">
+          Explorează profilurile
+          <span class="arrow-down">↓</span>
+        </a>
+      </div>
+    </section>
 
-  <div class="detalii-box" id="uman-detalii">
-    <div>
-      <h3>Materii principale</h3>
-      <ul>
-        <li>Limba română</li>
-        <li>Istorie</li>
-        <li>Limbi străine</li>
-      </ul>
+    <section class="content" id="profiluri">
 
-      <button onclick="window.location.href='comp/liceu.php'">
-        Vezi licee
-      </button>
+      <section class="specializari-grid">
 
-      <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-    </div>
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Real</h2>
+            <p>Matematică, informatică, științe și logica din spatele lor. Potrivit pentru elevii care preferă analiza, calculele și tehnologia.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('real-detalii')">Vezi detalii</button>
+          </div>
 
-    <div>
-      <h3>Top 3 facultăți</h3>
-      <ul>
-        <li>Drept</li>
-        <li>Litere</li>
-        <li>Jurnalism</li>
-      </ul>
-    </div>
-  </div>
-</div>
+          <div class="detalii-box" id="real-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Matematică</li>
+                <li>Informatică</li>
+                <li>Fizică</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
 
-<div class="profil-item">
-<div class="specializare-card">
-  <h2>Profil Tehnic</h2>
-  <p>Tehnologie, mecanică, electronică și aplicații practice.</p>
-  <button class="detalii-btn" onclick="toggleDetalii('tehnic-detalii')">
-    Vezi detalii
-  </button>
-</div>
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>Automatică și Calculatoare</li>
+                <li>Informatică</li>
+                <li>Politehnică</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<div class="detalii-box" id="tehnic-detalii">
-  <div>
-    <h3>Materii principale</h3>
-    <ul>
-      <li>Tehnologii</li>
-      <li>Electronică</li>
-      <li>Mecanică</li>
-    </ul>
-    <button onclick="window.location.href='comp/liceu.php'">Vezi licee</button>
-    <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-  </div>
-  <div>
-    <h3>Top 3 facultăți</h3>
-    <ul>
-      <li>Inginerie</li>
-      <li>Automatică</li>
-      <li>Electronică</li>
-    </ul>
-  </div>
-</div>
-</div>
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Uman</h2>
+            <p>Limbi străine, literatură, istorie și comunicare. Potrivit pentru elevii cărora le place să citească, să scrie și să argumenteze.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('uman-detalii')">Vezi detalii</button>
+          </div>
 
-<div class="profil-item">
-<div class="specializare-card">
-  <h2>Profil Militar</h2>
-  <p>Disciplină, pregătire fizică, ordine și carieră militară.</p>
-  <button class="detalii-btn" onclick="toggleDetalii('militar-detalii')">Vezi detalii</button>
-</div>
+          <div class="detalii-box" id="uman-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Limba română</li>
+                <li>Istorie</li>
+                <li>Limbi străine</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
 
-<div class="detalii-box" id="militar-detalii">
-  <div>
-    <h3>Materii principale</h3>
-    <ul>
-      <li>Pregătire militară</li>
-      <li>Educație fizică</li>
-      <li>Matematică</li>
-    </ul>
-    <button onclick="window.location.href='comp/liceu.php'">Vezi licee</button>
-    <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-  </div>
-  <div>
-    <h3>Top 3 facultăți</h3>
-    <ul>
-      <li>Academia Tehnică Militară</li>
-      <li>Academia Forțelor Terestre</li>
-      <li>Academia de Poliție</li>
-    </ul>
-  </div>
-</div>
-</div>
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>Drept</li>
+                <li>Litere</li>
+                <li>Jurnalism</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<div class="profil-item">
-<div class="specializare-card">
-  <h2>Profil Teologic</h2>
-  <p>Religie, cultură, valori morale și studii umaniste.</p>
-  <button class="detalii-btn" onclick="toggleDetalii('teologic-detalii')">Vezi detalii</button>
-</div>
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Tehnic</h2>
+            <p>Tehnologie, mecanică, electronică și aplicații practice. Potrivit pentru elevii care vor să înțeleagă cum funcționează lucrurile.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('tehnic-detalii')">Vezi detalii</button>
+          </div>
 
-<div class="detalii-box" id="teologic-detalii">
-  <div>
-    <h3>Materii principale</h3>
-    <ul>
-      <li>Religie</li>
-      <li>Limba română</li>
-      <li>Istorie</li>
-    </ul>
-    <button onclick="window.location.href='comp/liceu.php'">Vezi licee</button>
-    <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-  </div>
-  <div>
-    <h3>Top 3 facultăți</h3>
-    <ul>
-      <li>Teologie</li>
-      <li>Litere</li>
-      <li>Asistență socială</li>
-    </ul>
-  </div>
-</div>
-</div>
+          <div class="detalii-box" id="tehnic-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Tehnologii</li>
+                <li>Electronică</li>
+                <li>Mecanică</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
 
-<div class="profil-item">
-<div class="specializare-card">
-  <h2>Profil Artistic</h2>
-  <p>Arte plastice, muzică, teatru, creativitate și expresie.</p>
-  <button class="detalii-btn" onclick="toggleDetalii('artistic-detalii')">Vezi detalii</button>
-</div>
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>Inginerie</li>
+                <li>Automatică</li>
+                <li>Electronică</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<div class="detalii-box" id="artistic-detalii">
-  <div>
-    <h3>Materii principale</h3>
-    <ul>
-      <li>Desen</li>
-      <li>Muzică</li>
-      <li>Istoria artei</li>
-    </ul>
-    <button onclick="window.location.href='comp/liceu.php'">Vezi licee</button>
-    <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-  </div>
-  <div>
-    <h3>Top 3 facultăți</h3>
-    <ul>
-      <li>UNArte</li>
-      <li>UNATC</li>
-      <li>Conservator</li>
-    </ul>
-  </div>
-</div>
-</div>
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Militar</h2>
+            <p>Disciplină, pregătire fizică, ordine și carieră militară. Potrivit pentru elevii care vor să fie organizați, disciplinați și responsabili.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('militar-detalii')">Vezi detalii</button>
+          </div>
 
-<div class="profil-item">
-<div class="specializare-card">
-  <h2>Profil Servicii</h2>
-  <p>Turism, alimentație publică, comerț și activități economice.</p>
-  <button class="detalii-btn" onclick="toggleDetalii('servicii-detalii')">Vezi detalii</button>
-</div>
+          <div class="detalii-box" id="militar-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Pregătire militară</li>
+                <li>Educație fizică</li>
+                <li>Matematică</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
 
-<div class="detalii-box" id="servicii-detalii">
-  <div>
-    <h3>Materii principale</h3>
-    <ul>
-      <li>Turism</li>
-      <li>Comerț</li>
-      <li>Economic</li>
-    </ul>
-    <button onclick="window.location.href='comp/liceu.php'">Vezi licee</button>
-    <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-  </div>
-  <div>
-    <h3>Top 3 facultăți</h3>
-    <ul>
-      <li>Business și Turism</li>
-      <li>Marketing</li>
-      <li>Management</li>
-    </ul>
-  </div>
-</div>
-</div>
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>Academia Tehnică Militară</li>
+                <li>Academia Forțelor Terestre</li>
+                <li>Academia de Poliție</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<div class="profil-item">
-<div class="specializare-card">
-  <h2>Profil Sport</h2>
-  <p>Performanță sportivă, pregătire fizică și competiții.</p>
-  <button class="detalii-btn" onclick="toggleDetalii('sport-detalii')">Vezi detalii</button>
-</div>
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Teologic</h2>
+            <p>Religie, cultură, valori morale și studii umaniste. Potrivit pentru elevii interesați de spiritualitate, educație și comunitate.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('teologic-detalii')">Vezi detalii</button>
+          </div>
 
-<div class="detalii-box" id="sport-detalii">
-  <div>
-    <h3>Materii principale</h3>
-    <ul>
-      <li>Educație fizică</li>
-      <li>Antrenament sportiv</li>
-      <li>Biologie</li>
-    </ul>
-    <button onclick="window.location.href='comp/liceu.php'">Vezi licee</button>
-    <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-  </div>
-  <div>
-    <h3>Top 3 facultăți</h3>
-    <ul>
-      <li>UNEFS</li>
-      <li>Kinetoterapie</li>
-      <li>Medicină sportivă</li>
-    </ul>
-  </div>
-</div>
-</div>
+          <div class="detalii-box" id="teologic-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Religie</li>
+                <li>Limba română</li>
+                <li>Istorie</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
 
-<div class="profil-item">
-<div class="specializare-card">
-  <h2>Profil Pedagogic</h2>
-  <p>Educație, comunicare, psihologie și lucrul cu elevii.</p>
-  <button class="detalii-btn" onclick="toggleDetalii('pedagogic-detalii')">Vezi detalii</button>
-</div>
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>Teologie</li>
+                <li>Litere</li>
+                <li>Asistență socială</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-<div class="detalii-box" id="pedagogic-detalii">
-  <div>
-    <h3>Materii principale</h3>
-    <ul>
-      <li>Pedagogie</li>
-      <li>Psihologie</li>
-      <li>Limba română</li>
-    </ul>
-    <button onclick="window.location.href='comp/liceu.php'">Vezi licee</button>
-    <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-  </div>
-  <div>
-    <h3>Top 3 facultăți</h3>
-    <ul>
-      <li>Psihologie</li>
-      <li>Științele educației</li>
-      <li>Litere</li>
-    </ul>
-  </div>
-</div>
-</div>
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Artistic</h2>
+            <p>Arte plastice, muzică, teatru, creativitate și expresie. Potrivit pentru elevii care vor să își transforme ideile în creații.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('artistic-detalii')">Vezi detalii</button>
+          </div>
 
-<div class="profil-item">
-<div class="specializare-card">
-  <h2>Profil Resurse</h2>
-  <p>Protecția mediului, agricultură, resurse naturale și sustenabilitate.</p>
-  <button class="detalii-btn" onclick="toggleDetalii('resurse-detalii')">Vezi detalii</button>
-</div>
+          <div class="detalii-box" id="artistic-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Desen</li>
+                <li>Muzică</li>
+                <li>Istoria artei</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
 
-<div class="detalii-box" id="resurse-detalii">
-  <div>
-    <h3>Materii principale</h3>
-    <ul>
-      <li>Biologie</li>
-      <li>Chimie</li>
-      <li>Protecția mediului</li>
-    </ul>
-    <button onclick="window.location.href='comp/liceu.php'">Vezi licee</button>
-    <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
-  </div>
-  <div>
-    <h3>Top 3 facultăți</h3>
-    <ul>
-      <li>Biologie</li>
-      <li>Ingineria mediului</li>
-      <li>Agronomie</li>
-    </ul>
-  </div>
-</div>
-</div>
-  </section>
-</main>
-	
-   <footer>
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>UNArte</li>
+                <li>UNATC</li>
+                <li>Conservator</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Servicii</h2>
+            <p>Turism, alimentație publică, comerț și activități economice. Potrivit pentru elevii sociabili și practici, deschiși să lucreze zilnic cu oameni.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('servicii-detalii')">Vezi detalii</button>
+          </div>
+
+          <div class="detalii-box" id="servicii-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Turism</li>
+                <li>Comerț</li>
+                <li>Economic</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
+
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>Business și Turism</li>
+                <li>Marketing</li>
+                <li>Management</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Sport</h2>
+            <p>Performanță sportivă, pregătire fizică și competiții în domeniu. Potrivit pentru elevii activi, disciplinați și competitivi.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('sport-detalii')">Vezi detalii</button>
+          </div>
+
+          <div class="detalii-box" id="sport-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Educație fizică</li>
+                <li>Antrenament sportiv</li>
+                <li>Biologie</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
+
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>UNEFS</li>
+                <li>Kinetoterapie</li>
+                <li>Medicină sportivă</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Pedagogic</h2>
+            <p>Educație, comunicare, psihologie și lucrul cu elevii. Potrivit pentru cei care vor să învețe, să explice și să ajute la formarea viitoarelor generații.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('pedagogic-detalii')">Vezi detalii</button>
+          </div>
+
+          <div class="detalii-box" id="pedagogic-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Pedagogie</li>
+                <li>Psihologie</li>
+                <li>Limba română</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
+
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>Psihologie</li>
+                <li>Științele educației</li>
+                <li>Litere</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="profil-item">
+          <div class="specializare-card">
+            <h2>Profil Resurse</h2>
+            <p>Protecția mediului, agricultură, resurse naturale și sustenabilitate. Potrivit pentru elevii interesați de natură și mediu.</p>
+            <button class="detalii-btn" onclick="toggleDetalii('resurse-detalii')">Vezi detalii</button>
+          </div>
+
+          <div class="detalii-box" id="resurse-detalii">
+            <div>
+              <h3>Materii principale</h3>
+              <ul>
+                <li>Biologie</li>
+                <li>Chimie</li>
+                <li>Protecția mediului</li>
+              </ul>
+              <button onclick="window.location.href='licee.html'">Vezi licee</button>
+              <p>Mai multe informații <a href="https://www.edu.ro/OMEC_4350_2025_planuri_cadru_liceu_frecventa_zi" target="_blank">aici</a>.</p>
+            </div>
+
+            <div>
+              <h3>Top 3 facultăți</h3>
+              <ul>
+                <li>Biologie</li>
+                <li>Ingineria mediului</li>
+                <li>Agronomie</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="info-card">
+        <h2>Ce înseamnă bilingv și intensiv?</h2>
+
+        <p>
+          Unele licee au clase speciale unde o limbă străină sau o materie este studiată mai aprofundat.
+          Aceste detalii pot conta mult atunci când alegi profilul potrivit.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <h3>Bilingv</h3>
+            <p>
+              O clasă bilingvă presupune studierea unei limbi străine la un nivel mai avansat.
+              De obicei, elevii au mai multe ore de limbă străină și pot studia anumite materii în acea limbă.
+	      
+            </p>
+
+		<br>
+		<br>
+
+	    <p>
+		<span style="
+    			display: inline-flex;
+    			align-items: center;
+    			justify-content: center;
+    			width: 24px;
+    			height: 24px;
+   			background-color: white;
+    			color: #786286;
+    			font-weight: bold;
+    			border-radius: 50%;
+    			font-size: 16px;
+  		">!   </span> 
+
+		&nbsp;&nbsp;Pentru a intra la o astfel de clasă, trebuie să fie susținută o testare care poate fi echivalată cu diferite examene recunoscute precum Cambridge, DELF etc. Nivelul B2 First este minim pentru a fi acceptat.
+	    </p>
+          </div>
+
+          <div class="info-box">
+            <h3>Intensiv</h3>
+            <p>
+		O clasă intensivă presupune mai multe ore pentru o anumită materie, de exemplu informatică sau o limbă străină. Este potrivită pentru elevii care vor să aprofundeze acel domeniu.
+		<br>
+		<br>
+		<span style="
+    			display: inline-flex;
+    			align-items: center;
+    			justify-content: center;
+    			width: 24px;
+    			height: 24px;
+   			background-color: white;
+    			color: #786286;
+    			font-weight: bold;
+    			border-radius: 50%;
+    			font-size: 16px;
+  		">!   </span> 
+              &nbsp;&nbsp;Pentru a intra la o astfel de clasă, NU este necesară o proba de limbă/abilități.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+  </main>
+
+  <footer>
     <div class="footer-logo">Ǝliceu</div>
 
     <div class="footer-grid">
       <div>
         <h3>Navigare</h3>
-        <a href="comp/liceu.php">Toate Liceele</a>
-	<a href="chatbot.php">Chatbot AI</a>
+        <a href="licee.html">Toate Liceele</a>
+        <a href="chatbot.php">Chatbot AI</a>
         <a href="despre.html">Despre noi</a>
         <a href="contact.html">Contact</a>
-        <a href="login/index.php">Înregistrare</a>
-        <a href="login/index.php">Autentificare</a>
-
+        <a href="autentificare.html#register">Înregistrare</a>
+        <a href="autentificare.html">Autentificare</a>
       </div>
 
       <div>
         <h3>Resurse</h3>
-        <a href="#">Informații despre profiluri</a>
-        <a href="#">Test de îndrumare</a>
-        <a href="#">Evenimente</a>
+        <a href="specializari.html">Informații despre profiluri</a>
+        <a href="test.html">Test de îndrumare</a>
+        <a href="evenimente.html">Evenimente</a>
       </div>
 
       <div>
@@ -706,25 +893,24 @@
     </div>
   </footer>
 
-<script>
+  <script>
+    const menuBtn = document.getElementById("menuBtn");
+    const sidebar = document.getElementById("sidebar");
+    const closeBtn = document.getElementById("closeBtn");
 
-  const menuBtn = document.getElementById("menuBtn");
-  const sidebar = document.getElementById("sidebar");
-  const closeBtn = document.getElementById("closeBtn");
+    menuBtn.addEventListener("click", function() {
+      sidebar.classList.add("active");
+    });
 
-  menuBtn.addEventListener("click", function() {
-  	sidebar.classList.add("active");
-  });
-  closeBtn.addEventListener("click", function() {
- 	sidebar.classList.remove("active");
-   });
+    closeBtn.addEventListener("click", function() {
+      sidebar.classList.remove("active");
+    });
 
-function toggleDetalii(id) {
-  const box = document.getElementById(id);
-  box.classList.toggle("active");
-}
-
-</script>
+    function toggleDetalii(id) {
+      const box = document.getElementById(id);
+      box.classList.toggle("active");
+    }
+  </script>
 
 </body>
 </html>
