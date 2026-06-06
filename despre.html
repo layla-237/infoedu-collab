@@ -186,76 +186,109 @@
       padding: 80px 80px;
     }
 
-    .two-columns {
-      display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 70px;
-      margin-bottom: 80px;
-      align-items: start;
-    }
+.two-columns {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 80px;
+  margin-bottom: 70px;
+  align-items: start;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f1fc 100%);
+  padding: 55px;
+  border-radius: 22px;
+  border: 1px solid #eadcf3;
+  box-shadow: 0 18px 45px rgba(150, 97, 184, 0.10);
+}
 
-    .section-title {
-      font-size: 36px;
-      font-weight: 900;
-      color: #1f1f1f;
-    }
+.section-title {
+  font-size: 42px;
+  font-weight: 900;
+  color: #1f1f1f;
+  line-height: 1.1;
+}
 
-    .section-title::after {
-      content: "";
-      display: block;
-      width: 58px;
-      height: 5px;
-      background: #9661b8;
-      border-radius: 10px;
-      margin-top: 18px;
-    }
+.section-title::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 6px;
+  background: #9661b8;
+  border-radius: 20px;
+  margin-top: 22px;
+}
 
-    .text-block p {
-      font-size: 18px;
-      line-height: 1.75;
-      color: #3f3947;
-      font-weight: 500;
-      margin-bottom: 22px;
-    }
+.text-block p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #3f3947;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
 
-    .principles {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      border: 1px solid #e6d8ef;
-      margin-bottom: 80px;
-    }
+.principles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  border: none;
+  margin-bottom: 90px;
+}
 
-    .principle {
-      padding: 36px;
-      border-right: 1px solid #e6d8ef;
-      background: #ffffff;
-    }
+.principle {
+  padding: 38px 34px;
+  border: 1px solid #eadcf3;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 16px 35px rgba(150, 97, 184, 0.11);
+  transition: 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-    .principle:last-child {
-      border-right: none;
-    }
+.principle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 7px;
+  background: linear-gradient(90deg, #9661b8, #ffe34d);
+}
 
-    .principle span {
-      display: block;
-      color: #9661b8;
-      font-size: 14px;
-      font-weight: 900;
-      margin-bottom: 20px;
-    }
+.principle:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 45px rgba(150, 97, 184, 0.18);
+}
 
-    .principle h3 {
-      font-size: 24px;
-      font-weight: 900;
-      margin-bottom: 14px;
-    }
+.principle:last-child {
+  border-right: 1px solid #eadcf3;
+}
 
-    .principle p {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #4f4658;
-      font-weight: 500;
-    }
+.principle span {
+  display: inline-flex;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  background: #f4e9fb;
+  color: #9661b8;
+  font-size: 15px;
+  font-weight: 900;
+  border-radius: 50%;
+  margin-bottom: 22px;
+}
+
+.principle h3 {
+  font-size: 25px;
+  font-weight: 900;
+  margin-bottom: 15px;
+  color: #1f1f1f;
+}
+
+.principle p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: #4f4658;
+  font-weight: 500;
+}
 
     .process {
       background: #f6f0fb;
@@ -438,13 +471,13 @@
       }
 
       .principles {
-        grid-template-columns: 1fr;
-      }
+  	grid-template-columns: 1fr;
+	}
 
-      .principle {
-        border-right: none;
-        border-bottom: 1px solid #e6d8ef;
-      }
+	.principle {
+  		border-right: 1px solid #eadcf3;
+  		border-bottom: 1px solid #eadcf3;
+	}
 
       .process {
         margin: 0 -24px 60px;
@@ -477,8 +510,8 @@
     </div>
 
     <nav>
-      <a href="login/index.php">Înregistrare</a>
-      <a href="login/index.php" >Autentificare</a>
+      <a href="autentificare.html#register">Înregistrare</a>
+      <a href="autentificare.html" >Autentificare</a>
     </nav>
   </header>
 
@@ -486,7 +519,7 @@
     <button class="close-btn" id="closeBtn">✕</button>
 
     <a href="acasa.html">Acasă</a>
-    <a href="comp/liceu.php">Toate liceele</a>
+    <a href="licee.html">Toate liceele</a>
     <a href="specializari.html">Specializări</a>
     <a href="test.html">Test de orientare</a>
     <a href="evenimente.html">Evenimente și noutăți</a>
@@ -511,7 +544,7 @@
         </div>
 
         <div class="hero-photo">
-  	  <img src="despre-hero.jpg" alt="Elevi care aleg liceul">
+  	  <img src="poza harta licee.jpg">
 	</div>
       </div>
     </section>
@@ -533,33 +566,33 @@
           </p>
 
           <p>
-            Pe Ǝliceu poți compara licee, descoperi specializări, vedea medii de admitere și folosi un test de orientare.
+            Ǝliceu nu intenționează doar să centralizeze informațiile, ci și să se asigure că toți elevii conștientizează tangibilitatea carierei lor de vis încă din perioada liceului.
           </p>
         </div>
       </section>
 
       <section class="principles">
         <div class="principle">
-          <span>01</span>
+          
           <h3>Alegere mai sigură</h3>
           <p>
-            Elevii pot analiza opțiunile în funcție de profil, medie, interese și obiective personale.
+            Elevii pot analiza opțiunile în funcție de profil, medie, interese și obiective personale, având posibilitatea de comparare.
           </p>
         </div>
 
         <div class="principle">
-          <span>02</span>
+          
           <h3>Informații clare</h3>
           <p>
-            Datele despre licee sunt prezentate într-un format simplu, logic și ușor de urmărit.
+            Datele despre licee sunt prezentate într-un format ușor de urmărit, interactiv, dar și atractiv.
           </p>
         </div>
 
         <div class="principle">
-          <span>03</span>
+          
           <h3>Orientare personalizată</h3>
           <p>
-            Testul de orientare și paginile despre specializări ajută elevii să înțeleagă ce direcție li se potrivește.
+            Testul de orientare și paginile despre specializări ajută elevii să înțeleagă ce presupune fiecare direcție.
           </p>
         </div>
       </section>
@@ -578,7 +611,7 @@
             <div class="process-item">
               <strong>Pasul 2</strong>
               <h3>Compari</h3>
-              <p>Analizezi opțiunile după medie, profil, sector și preferințele tale.</p>
+              <p>Analizezi opțiunile după medie, profil, sector și preferințele tale folosind secțiunea „Toate Liceele”.</p>
             </div>
 
             <div class="process-item">
@@ -590,7 +623,7 @@
             <div class="process-item">
               <strong>Pasul 4</strong>
               <h3>Alegi</h3>
-              <p>Îți formezi o listă mai clară și iei o decizie mai sigură.</p>
+              <p>Îți formezi o listă mai clară și iei decizii folosind Chatbot-ul și funcția „Favorite”.</p>
             </div>
           </div>
         </div>
@@ -605,17 +638,15 @@
           <h2>Cum am lucrat la proiect?</h2>
 
           <p>
-            Ǝliceu a pornit de la o problemă simplă: alegerea liceului este importantă, dar informațiile sunt
-            adesea greu de comparat.
+            Ǝliceu a pornit de la o problemă simplă: alegerea liceului este importantă, dar informațiile sunt adesea greu de comparat.
           </p>
 
           <p>
-            Echipa noastră a lucrat la organizarea datelor, realizarea designului, construirea paginilor și
-            testarea funcțiilor principale ale platformei.
+            Echipa noastră a lucrat la organizarea datelor, realizarea designului, construirea paginilor și testarea funcțiilor principale ale platformei.
           </p>
 
           <p>
-            Am vrut ca site-ul să fie util, clar și prietenos pentru elevii care se pregătesc pentru admitere.
+            Am vrut ca site-ul să fie util, clar și prietenos atât pentru elevii care se pregătesc pentru admitere, cât și pentru familiile și îndrumătorii lor.
           </p>
         </div>
       </section>
@@ -628,7 +659,7 @@
           </p>
         </div>
 
-        <a href="comp/liceu.php">Vezi liceele</a>
+        <a href="licee.html">Vezi liceele</a>
       </section>
 
     </section>
@@ -641,12 +672,12 @@
     <div class="footer-grid">
       <div>
         <h3>Navigare</h3>
-        <a href="comp/liceu.php">Toate Liceele</a>
+        <a href="licee.html">Toate Liceele</a>
 	<a href="chatbot.php">Chatbot AI</a>
         <a href="despre.html">Despre noi</a>
         <a href="contact.html">Contact</a>
-        <a href="login/index.php">Înregistrare</a>
-        <a href="login/index.php">Autentificare</a>
+        <a href="autentificare.html#register">Înregistrare</a>
+        <a href="autentificare.html">Autentificare</a>
 
       </div>
 
