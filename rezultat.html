@@ -3,21 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliceu</title>
+  <title>Rezultat - Ǝliceu</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <style>
-	* {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-   body {
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
       font-family: 'Inter', sans-serif;
-      background: #ffffff;
+      background: #f6f0fb;
       color: #1f1f1f;
     }
 
@@ -35,15 +32,11 @@
       padding: 0 42px;
     }
 
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .logo-area { display: flex; align-items: center; gap: 16px; }
 
     .menu {
       font-size: 32px;
-      color: #ffffff;
+      color: white;
       font-weight: 900;
       background: transparent;
       border: 0;
@@ -54,35 +47,78 @@
       font-size: 34px;
       font-weight: 900;
       color: #ffe34d;
-      letter-spacing: -1px;
     }
 
-    nav {
-      display: flex;
-      gap: 38px;
-    }
+    nav { display: flex; gap: 38px; }
 
     nav a {
-      color: #ffffff;
+      color: white;
       text-decoration: none;
       font-size: 13px;
       font-weight: 900;
     }
 
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100vh;
+      background: linear-gradient(180deg, #8c63b3 0%, #6f4796 100%);
+      z-index: 2000;
+      padding: 110px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: 0.35s;
+      box-shadow: 6px 0 30px rgba(0,0,0,0.18);
+    }
+
+    .sidebar.active { left: 0; }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      font-size: 22px;
+      font-weight: 900;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #ffe34d;
+      transform: translateX(8px);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: transparent;
+      border: none;
+      font-size: 34px;
+      cursor: pointer;
+      color: white;
+      font-weight: 900;
+    }
 
     .rezultat-box {
-
       width: 70%;
-      margin: 120px auto;
+      max-width: 950px;
+      margin: 140px auto 80px;
       background: white;
-
-      padding: 50px;
-
-      border-radius: 20px;
-
+      padding: 58px;
+      border-radius: 26px;
       text-align: center;
+      box-shadow: 0 18px 45px rgba(150, 97, 184, 0.16);
+    }
 
-      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    .label {
+      color: #9661b8;
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
     }
 
     h1 {
@@ -91,32 +127,33 @@
     }
 
     p {
-      font-size: 22px;
-      line-height: 1.5;
-      margin-bottom: 40px;
+      font-size: 21px;
+      line-height: 1.6;
+      margin-bottom: 38px;
+      color: #4f4658;
+      font-weight: 600;
     }
 
     button {
-
       background: #9661b8;
       color: white;
-
       border: none;
-
       padding: 18px 34px;
-
       border-radius: 14px;
-
       font-size: 20px;
-      font-weight: bold;
-
+      font-weight: 900;
       cursor: pointer;
     }
-	footer {
-  	background: #786286;
-  	padding: 80px 90px 90px;
-  	color: white;
-	}
+
+    button:hover {
+      background: #7b4d99;
+    }
+
+    footer {
+      background: #786286;
+      padding: 80px 90px 90px;
+      color: white;
+    }
 
     .footer-logo {
       font-size: 24px;
@@ -145,176 +182,140 @@
       font-weight: 700;
       margin-bottom: 8px;
     }
-	.sidebar {
-  	position: fixed;
-  	top: 0;
-  	left: -320px;
-  	width: 320px;
-  	height: 100vh;
-  	background: linear-gradient(
-  	180deg,
-  	#8c63b3 0%,
-  	#6f4796 100%
-	);
-  	z-index: 2000;
-  	padding: 110px 40px;
-  	display: flex;
-  	flex-direction: column;
-  	gap: 28px;
- 	transition: 0.35s;
-  	box-shadow: 6px 0 30px rgba(0,0,0,0.18);
-	}
-	.sidebar.active {
-  	left: 0;
-	}
-	.sidebar a {
-  	text-decoration: none;
-  	color: #ffffff;
-  	font-size: 22px;
-  	font-weight: 900;
-  	transition: 0.2s;
-	}
-	.sidebar a:hover {
-  	color: #ffe34d;
-  	transform: translateX(8px);
-	}
-	.close-btn {
-  	position: absolute;
-  	top: 28px;
-  	right: 28px;
-  	background: transparent;
-  	border: none;
-  	font-size: 34px;
-  	cursor: pointer;
-  	color: #ffffff;
-  	font-weight: 900;
-	}
-    @media (max-width: 800px) {
-      .hero h1 {
-        font-size: 30px;
-      }
-      .cta {
-        width: 280px;
-      }
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
-      }
-    }
   </style>
 </head>
 
 <body>
 
-    <header>
-    <div class="logo-area">
-      <button class="menu" id="menuBtn">☰</button>
-      <div class="logo">Ǝliceu</div>
-    </div>
-    <nav>
-      <a href="login/index.php">Înregistrare</a>
-      <a href="login/index.php" >Autentificare</a>
-    </nav>
-  </header>
+<header>
+  <div class="logo-area">
+    <button class="menu" id="menuBtn">☰</button>
+    <div class="logo">Ǝliceu</div>
+  </div>
 
-  <div class="sidebar" id="sidebar">
+  <nav>
+    <a href="autentificare.html#register">Înregistrare</a>
+    <a href="autentificare.html">Autentificare</a>
+  </nav>
+</header>
+
+<div class="sidebar" id="sidebar">
   <button class="close-btn" id="closeBtn">✕</button>
   <a href="acasa.html">Acasă</a>
-  <a href="comp/liceu.php">Toate liceele</a>
+  <a href="licee.html">Toate liceele</a>
   <a href="specializari.html">Specializări</a>
   <a href="test.html">Test de orientare</a>
   <a href="evenimente.html">Evenimente și noutăți</a>
   <a href="chatbot.php">Chatbot</a>
   <a href="despre.html">Despre noi</a>
   <a href="contact.html">Contact</a>
-  </div>
+</div>
 
-  <div class="rezultat-box">
+<div class="rezultat-box">
+  <div class="label">Rezultatul tău</div>
+  <h1 id="titlu"></h1>
+  <p id="descriere"></p>
 
-    <h1 id="titlu"></h1>
+  <button id="profilBtn">
+    Vezi profilul recomandat
+  </button>
+</div>
 
-    <p id="descriere"></p>
+<footer>
+  <div class="footer-logo">Ǝliceu</div>
 
-    <button onclick="window.location.href='specializari.html'">
-      Vezi specializările
-    </button>
-
-  </div>
-
-  <footer>
-    <div class="footer-logo">Ǝliceu</div>
-
-    <div class="footer-grid">
-      <div>
-        <h3>Navigare</h3>
-        <a href="comp/liceu.php">Toate Liceele</a>
-	<a href="chatbot.php">Chatbot AI</a>
-        <a href="despre.html">Despre noi</a>
-        <a href="contact.html">Contact</a>
-        <a href="login/index.php">Înregistrare</a>
-        <a href="login/index.php">Autentificare</a>
-
-      </div>
-
-      <div>
-        <h3>Resurse</h3>
-        <a href="#">Informații despre profiluri</a>
-        <a href="#">Test de îndrumare</a>
-        <a href="#">Evenimente</a>
-      </div>
-
-      <div>
-        <h3>Legal</h3>
-        <a href="#">Termeni și condiții</a>
-        <a href="#">Cookies</a>
-      </div>
+  <div class="footer-grid">
+    <div>
+      <h3>Navigare</h3>
+      <a href="licee.html">Toate Liceele</a>
+      <a href="chatbot.php">Chatbot AI</a>
+      <a href="despre.html">Despre noi</a>
+      <a href="contact.html">Contact</a>
+      <a href="autentificare.html#register">Înregistrare</a>
+      <a href="autentificare.html">Autentificare</a>
     </div>
-  </footer>
 
-  <script>
+    <div>
+      <h3>Resurse</h3>
+      <a href="specializari.html">Informații despre profiluri</a>
+      <a href="test.html">Test de îndrumare</a>
+      <a href="evenimente.html">Evenimente</a>
+    </div>
 
-	const menuBtn = document.getElementById("menuBtn");
-  	const sidebar = document.getElementById("sidebar");
-  	const closeBtn = document.getElementById("closeBtn");
+    <div>
+      <h3>Legal</h3>
+      <a href="termeni.html">Termeni și condiții</a>
+      <a href="cookies.html">Cookies</a>
+    </div>
+  </div>
+</footer>
 
-  	menuBtn.addEventListener("click", function() {
-    		sidebar.classList.add("active");
-  	});
-  	closeBtn.addEventListener("click", function() {
-    		sidebar.classList.remove("active");
-  	});
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const closeBtn = document.getElementById("closeBtn");
 
+  menuBtn.addEventListener("click", function() {
+    sidebar.classList.add("active");
+  });
 
-    const params = new URLSearchParams(window.location.search);
-    const profil = params.get("profil");
-    const titlu = document.getElementById("titlu");
-    const descriere = document.getElementById("descriere");
+  closeBtn.addEventListener("click", function() {
+    sidebar.classList.remove("active");
+  });
 
-    if (profil == "real") {
-      titlu.innerHTML = "Profil Real";
-      descriere.innerHTML =
-      "Ți se potrivesc domeniile bazate pe logică, matematică, tehnologie și analiză.";
+  const profiluri = {
+    real: {
+      titlu: "Profil Real",
+      descriere: "Ți se potrivesc domeniile bazate pe logică, matematică, informatică, tehnologie și analiză."
+    },
+    uman: {
+      titlu: "Profil Uman",
+      descriere: "Ți se potrivesc domeniile bazate pe comunicare, limbi străine, cultură, istorie și argumentare."
+    },
+    tehnic: {
+      titlu: "Profil Tehnic",
+      descriere: "Ți se potrivesc domeniile practice, tehnologia, mecanica, electronica și lucrul cu sisteme concrete."
+    },
+    militar: {
+      titlu: "Profil Militar",
+      descriere: "Ți se potrivește un traseu bazat pe disciplină, ordine, responsabilitate și pregătire fizică."
+    },
+    teologic: {
+      titlu: "Profil Teologic",
+      descriere: "Ți se potrivesc domeniile legate de valori, cultură, comunitate, educație și sprijin pentru ceilalți."
+    },
+    artistic: {
+      titlu: "Profil Artistic",
+      descriere: "Ți se potrivesc domeniile creative, artele vizuale, muzica, teatrul, designul și exprimarea personală."
+    },
+    servicii: {
+      titlu: "Profil Servicii",
+      descriere: "Ți se potrivesc domeniile legate de turism, comerț, economie, organizare și lucrul cu oamenii."
+    },
+    sport: {
+      titlu: "Profil Sport",
+      descriere: "Ți se potrivește un traseu bazat pe mișcare, competiție, disciplină, antrenament și performanță."
+    },
+    pedagogic: {
+      titlu: "Profil Pedagogic",
+      descriere: "Ți se potrivesc domeniile în care explici, ajuți, comunici și lucrezi cu elevi sau copii."
+    },
+    resurse: {
+      titlu: "Profil Resurse",
+      descriere: "Ți se potrivesc domeniile legate de natură, biologie, chimie, protecția mediului și sustenabilitate."
     }
+  };
 
-    if (profil == "uman") {
-      titlu.innerHTML = "Profil Uman";
-      descriere.innerHTML =
-      "Ți se potrivesc domeniile bazate pe comunicare, limbi străine și cultură generală.";
-    }
+  const params = new URLSearchParams(window.location.search);
+  const profil = params.get("profil") || "real";
 
-    if (profil == "economic") {
-      titlu.innerHTML = "Profil Economic";
-      descriere.innerHTML =
-      "Ți se potrivesc domeniile bazate pe afaceri, organizare și antreprenoriat.";
-    }
+  document.getElementById("titlu").innerHTML = profiluri[profil].titlu;
+  document.getElementById("descriere").innerHTML = profiluri[profil].descriere;
 
-    if (profil == "vocational") {
-      titlu.innerHTML = "Profil Vocațional";
-      descriere.innerHTML =
-      "Ți se potrivesc domeniile creative și practice.";
-    }
-
-  </script>
+  document.getElementById("profilBtn").addEventListener("click", function() {
+    window.location.href = "specializari.html?profil=" + profil;
+  });
+</script>
 
 </body>
 </html>
