@@ -887,30 +887,50 @@
 
       <div>
         <h3>Legal</h3>
-        <a href="#">Termeni și condiții</a>
-        <a href="#">Cookies</a>
+        <a href="termeni.html">Termeni și condiții</a>
+        <a href="cookies.html">Cookies</a>
       </div>
     </div>
   </footer>
 
   <script>
-    const menuBtn = document.getElementById("menuBtn");
-    const sidebar = document.getElementById("sidebar");
-    const closeBtn = document.getElementById("closeBtn");
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const closeBtn = document.getElementById("closeBtn");
 
-    menuBtn.addEventListener("click", function() {
-      sidebar.classList.add("active");
-    });
+  menuBtn.addEventListener("click", function() {
+    sidebar.classList.add("active");
+  });
 
-    closeBtn.addEventListener("click", function() {
-      sidebar.classList.remove("active");
-    });
+  closeBtn.addEventListener("click", function() {
+    sidebar.classList.remove("active");
+  });
 
-    function toggleDetalii(id) {
-      const box = document.getElementById(id);
-      box.classList.toggle("active");
+  function toggleDetalii(id) {
+    const box = document.getElementById(id);
+    box.classList.toggle("active");
+  }
+
+  window.addEventListener("load", function() {
+    const params = new URLSearchParams(window.location.search);
+    const profil = params.get("profil");
+
+    if (profil) {
+      const detalii = document.getElementById(profil + "-detalii");
+
+      if (detalii) {
+        detalii.classList.add("active");
+
+        setTimeout(function() {
+          detalii.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+        }, 200);
+      }
     }
-  </script>
+  });
+</script>
 
 </body>
 </html>
