@@ -3,21 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eliceu</title>
+  <title>Quiz - Ǝliceu</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <style>
-	* {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-   body {
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
       font-family: 'Inter', sans-serif;
-      background: #ffffff;
+      background: #f6f0fb;
       color: #1f1f1f;
     }
 
@@ -35,15 +32,11 @@
       padding: 0 42px;
     }
 
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .logo-area { display: flex; align-items: center; gap: 16px; }
 
     .menu {
       font-size: 32px;
-      color: #ffffff;
+      color: white;
       font-weight: 900;
       background: transparent;
       border: 0;
@@ -54,88 +47,135 @@
       font-size: 34px;
       font-weight: 900;
       color: #ffe34d;
-      letter-spacing: -1px;
     }
 
-    nav {
-      display: flex;
-      gap: 38px;
-    }
+    nav { display: flex; gap: 38px; }
 
     nav a {
-      color: #ffffff;
+      color: white;
       text-decoration: none;
       font-size: 13px;
       font-weight: 900;
     }
 
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100vh;
+      background: linear-gradient(180deg, #8c63b3 0%, #6f4796 100%);
+      z-index: 2000;
+      padding: 110px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: 0.35s;
+      box-shadow: 6px 0 30px rgba(0,0,0,0.18);
+    }
+
+    .sidebar.active { left: 0; }
+
+    .sidebar a {
+      text-decoration: none;
+      color: white;
+      font-size: 22px;
+      font-weight: 900;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #ffe34d;
+      transform: translateX(8px);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: transparent;
+      border: none;
+      font-size: 34px;
+      cursor: pointer;
+      color: white;
+      font-weight: 900;
+    }
 
     .quiz {
-      width: 70%;
-      margin: 130px auto;
+      width: 75%;
+      max-width: 1050px;
+      margin: 125px auto 70px;
       background: white;
-      padding: 45px;
-      border-radius: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+      padding: 50px;
+      border-radius: 24px;
+      box-shadow: 0 18px 45px rgba(150, 97, 184, 0.14);
+    }
+
+    .quiz h1 {
+      font-size: 42px;
+      margin-bottom: 14px;
       text-align: center;
     }
 
-    h1 {
-      font-size: 36px;
-      margin-bottom: 15px;
-    }
-
-    p {
+    .quiz > p {
       font-size: 18px;
-      margin-bottom: 35px;
+      margin-bottom: 42px;
+      text-align: center;
+      color: #5d5368;
+      font-weight: 600;
     }
 
     .question {
-      text-align: left;
-      margin-bottom: 35px;
+      margin-bottom: 38px;
     }
 
     .question h2 {
-      font-size: 22px;
-      margin-bottom: 15px;
+      font-size: 23px;
+      margin-bottom: 16px;
     }
 
     label {
       display: block;
-      background: #eee3f4;
-      padding: 15px;
-      border-radius: 12px;
+      background: #f3e9fa;
+      padding: 15px 18px;
+      border-radius: 14px;
       margin-bottom: 10px;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
+      transition: 0.2s;
     }
 
     label:hover {
-      background: #dfcbea;
+      background: #e4cfef;
+      transform: translateX(5px);
     }
 
-    button {
+    input {
+      margin-right: 10px;
+    }
+
+    .submit-btn {
       background: #9661b8;
       color: white;
       border: none;
-      padding: 18px 35px;
+      padding: 18px 36px;
       border-radius: 14px;
       font-size: 20px;
-      font-weight: bold;
+      font-weight: 900;
       cursor: pointer;
+      display: block;
+      margin: 25px auto 0;
     }
 
-    #rezultat {
-      margin-top: 35px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #9661b8;
+    .submit-btn:hover {
+      background: #7b4d99;
     }
-	footer {
-  	background: #786286;
-  	padding: 80px 90px 90px;
-  	color: white;
-	}
+
+    footer {
+      background: #786286;
+      padding: 80px 90px 90px;
+      color: white;
+    }
 
     .footer-logo {
       font-size: 24px;
@@ -164,57 +204,17 @@
       font-weight: 700;
       margin-bottom: 8px;
     }
-	.sidebar {
-  	position: fixed;
-  	top: 0;
-  	left: -320px;
-  	width: 320px;
-  	height: 100vh;
-  	background: linear-gradient(
-  	180deg,
-  	#8c63b3 0%,
-  	#6f4796 100%
-	);
-  	z-index: 2000;
-  	padding: 110px 40px;
-  	display: flex;
-  	flex-direction: column;
-  	gap: 28px;
- 	transition: 0.35s;
-  	box-shadow: 6px 0 30px rgba(0,0,0,0.18);
-	}
-	.sidebar.active {
-  	left: 0;
-	}
-	.sidebar a {
-  	text-decoration: none;
-  	color: #ffffff;
-  	font-size: 22px;
-  	font-weight: 900;
-  	transition: 0.2s;
-	}
-	.sidebar a:hover {
-  	color: #ffe34d;
-  	transform: translateX(8px);
-	}
-	.close-btn {
-  	position: absolute;
-  	top: 28px;
-  	right: 28px;
-  	background: transparent;
-  	border: none;
-  	font-size: 34px;
-  	cursor: pointer;
-  	color: #ffffff;
-  	font-weight: 900;
-	}
+
     @media (max-width: 800px) {
-      .hero h1 {
-        font-size: 30px;
+      .quiz {
+        width: 90%;
+        padding: 32px;
       }
-      .cta {
-        width: 280px;
+
+      .quiz h1 {
+        font-size: 32px;
       }
+
       .footer-grid {
         grid-template-columns: 1fr;
         gap: 24px;
@@ -225,94 +225,135 @@
 
 <body>
 
-   <header>
-    <div class="logo-area">
-      <button class="menu" id="menuBtn">☰</button>
-      <div class="logo">Ǝliceu</div>
-    </div>
-    <nav>
-      <a href="login/index.php">Înregistrare</a>
-      <a href="login/index.php" >Autentificare</a>
-    </nav>
-  </header>
+<header>
+  <div class="logo-area">
+    <button class="menu" id="menuBtn">☰</button>
+    <div class="logo">Ǝliceu</div>
+  </div>
 
-  <div class="sidebar" id="sidebar">
+  <nav>
+    <a href="autentificare.html#register">Înregistrare</a>
+    <a href="autentificare.html">Autentificare</a>
+  </nav>
+</header>
+
+<div class="sidebar" id="sidebar">
   <button class="close-btn" id="closeBtn">✕</button>
   <a href="acasa.html">Acasă</a>
-  <a href="comp/liceu.php">Toate liceele</a>
+  <a href="licee.html">Toate liceele</a>
   <a href="specializari.html">Specializări</a>
   <a href="test.html">Test de orientare</a>
   <a href="evenimente.html">Evenimente și noutăți</a>
   <a href="chatbot.php">Chatbot</a>
   <a href="despre.html">Despre noi</a>
   <a href="contact.html">Contact</a>
+</div>
+
+<div class="quiz">
+  <h1>Ce profil ți se potrivește?</h1>
+  <p>Răspunde la cele 5 întrebări și află ce direcție se potrivește cel mai bine cu interesele tale.</p>
+
+  <div class="question">
+    <h2>1. Ce materii îți plac cel mai mult?</h2>
+    <label><input type="radio" name="q1" value="real"> Matematică, informatică și fizică</label>
+    <label><input type="radio" name="q1" value="uman"> Română, istorie și limbi străine</label>
+    <label><input type="radio" name="q1" value="tehnic"> Tehnologie, mecanică și electronică</label>
+    <label><input type="radio" name="q1" value="militar"> Sport, disciplină și matematică</label>
+    <label><input type="radio" name="q1" value="teologic"> Religie, istorie și cultură</label>
+    <label><input type="radio" name="q1" value="artistic"> Desen, muzică sau teatru</label>
+    <label><input type="radio" name="q1" value="servicii"> Economie, turism și comerț</label>
+    <label><input type="radio" name="q1" value="sport"> Educație fizică și biologie</label>
+    <label><input type="radio" name="q1" value="pedagogic"> Psihologie, pedagogie și română</label>
+    <label><input type="radio" name="q1" value="resurse"> Biologie, chimie și mediu</label>
   </div>
 
-  <div class="quiz">
-    <h1>Ce profil ți se potrivește?</h1>
-    <p>Răspunde la întrebări și vezi ce profil ți se potrivește cel mai bine.</p>
-
-    <div class="question">
-      <h2>1. Ce materii îți plac cel mai mult?</h2>
-
-      <label><input type="radio" name="q1" value="real"> Matematică și informatică</label>
-      <label><input type="radio" name="q1" value="uman"> Română și istorie</label>
-      <label><input type="radio" name="q1" value="economic"> Economie și antreprenoriat</label>
-      <label><input type="radio" name="q1" value="vocational"> Arte, sport sau muzică</label>
-    </div>
-
-    <div class="question">
-      <h2>2. Ce activitate preferi?</h2>
-
-      <label><input type="radio" name="q2" value="real"> Să rezolv probleme logice</label>
-      <label><input type="radio" name="q2" value="uman"> Să citesc și să scriu</label>
-      <label><input type="radio" name="q2" value="economic"> Să organizez proiecte</label>
-      <label><input type="radio" name="q2" value="vocational"> Să creez ceva practic</label>
-    </div>
-
-    <div class="question">
-      <h2>3. Ce carieră te atrage?</h2>
-
-      <label><input type="radio" name="q3" value="real"> Programator / inginer</label>
-      <label><input type="radio" name="q3" value="uman"> Profesor / avocat / jurnalist</label>
-      <label><input type="radio" name="q3" value="economic"> Manager / antreprenor</label>
-      <label><input type="radio" name="q3" value="vocational"> Artist / sportiv / designer</label>
-    </div>
-
-    <button onclick="calculeaza()">Vezi rezultatul</button>
-
-    <div id="rezultat"></div>
+  <div class="question">
+    <h2>2. Ce activitate preferi?</h2>
+    <label><input type="radio" name="q2" value="real"> Să rezolv probleme logice</label>
+    <label><input type="radio" name="q2" value="uman"> Să citesc, să scriu și să argumentez</label>
+    <label><input type="radio" name="q2" value="tehnic"> Să repar, să construiesc sau să testez lucruri</label>
+    <label><input type="radio" name="q2" value="militar"> Să lucrez într-un mediu organizat și disciplinat</label>
+    <label><input type="radio" name="q2" value="teologic"> Să discut despre valori, comunitate și spiritualitate</label>
+    <label><input type="radio" name="q2" value="artistic"> Să creez ceva vizual sau artistic</label>
+    <label><input type="radio" name="q2" value="servicii"> Să comunic cu oameni și să organizez activități</label>
+    <label><input type="radio" name="q2" value="sport"> Să fac sport și să particip la competiții</label>
+    <label><input type="radio" name="q2" value="pedagogic"> Să explic altora și să îi ajut să înțeleagă</label>
+    <label><input type="radio" name="q2" value="resurse"> Să lucrez cu natura, mediul sau resursele</label>
   </div>
 
-   <footer>
-    <div class="footer-logo">Ǝliceu</div>
+  <div class="question">
+    <h2>3. Ce carieră te atrage?</h2>
+    <label><input type="radio" name="q3" value="real"> Programator, inginer sau cercetător</label>
+    <label><input type="radio" name="q3" value="uman"> Avocat, jurnalist, traducător sau profesor</label>
+    <label><input type="radio" name="q3" value="tehnic"> Inginer, tehnician sau specialist IT</label>
+    <label><input type="radio" name="q3" value="militar"> Ofițer, polițist sau militar</label>
+    <label><input type="radio" name="q3" value="teologic"> Profesor, asistent social sau consilier</label>
+    <label><input type="radio" name="q3" value="artistic"> Artist, designer, actor sau muzician</label>
+    <label><input type="radio" name="q3" value="servicii"> Manager, specialist turism sau antreprenor</label>
+    <label><input type="radio" name="q3" value="sport"> Sportiv, antrenor sau kinetoterapeut</label>
+    <label><input type="radio" name="q3" value="pedagogic"> Învățător, educator sau psiholog</label>
+    <label><input type="radio" name="q3" value="resurse"> Biolog, ecolog sau inginer de mediu</label>
+  </div>
 
-    <div class="footer-grid">
-      <div>
-        <h3>Navigare</h3>
-        <a href="comp/liceu.php">Toate Liceele</a>
-	<a href="chatbot.php">Chatbot AI</a>
-        <a href="despre.html">Despre noi</a>
-        <a href="contact.html">Contact</a>
-        <a href="login/index.php">Înregistrare</a>
-        <a href="login/index.php">Autentificare</a>
+  <div class="question">
+    <h2>4. Cum preferi să lucrezi?</h2>
+    <label><input type="radio" name="q4" value="real"> Cu date, formule și algoritmi</label>
+    <label><input type="radio" name="q4" value="uman"> Cu texte, idei și oameni</label>
+    <label><input type="radio" name="q4" value="tehnic"> Cu instrumente, aparate și sisteme</label>
+    <label><input type="radio" name="q4" value="militar"> După reguli clare și obiective precise</label>
+    <label><input type="radio" name="q4" value="teologic"> În activități bazate pe ajutor și valori</label>
+    <label><input type="radio" name="q4" value="artistic"> Liber, creativ și expresiv</label>
+    <label><input type="radio" name="q4" value="servicii"> Cu clienți, proiecte și organizare</label>
+    <label><input type="radio" name="q4" value="sport"> Activ, în mișcare și în echipă</label>
+    <label><input type="radio" name="q4" value="pedagogic"> Cu copii, elevi sau grupuri de învățare</label>
+    <label><input type="radio" name="q4" value="resurse"> În natură, laborator sau proiecte de mediu</label>
+  </div>
 
-      </div>
+  <div class="question">
+    <h2>5. Ce descriere ți se potrivește cel mai bine?</h2>
+    <label><input type="radio" name="q5" value="real"> Analitic, logic și atent la detalii</label>
+    <label><input type="radio" name="q5" value="uman"> Comunicativ, curios și expresiv</label>
+    <label><input type="radio" name="q5" value="tehnic"> Practic, tehnic și orientat spre soluții</label>
+    <label><input type="radio" name="q5" value="militar"> Disciplinat, curajos și responsabil</label>
+    <label><input type="radio" name="q5" value="teologic"> Empatic, calm și preocupat de oameni</label>
+    <label><input type="radio" name="q5" value="artistic"> Creativ, original și sensibil la frumos</label>
+    <label><input type="radio" name="q5" value="servicii"> Sociabil, organizat și atent la nevoile altora</label>
+    <label><input type="radio" name="q5" value="sport"> Activ, competitiv și perseverent</label>
+    <label><input type="radio" name="q5" value="pedagogic"> Răbdător, explicativ și atent cu ceilalți</label>
+    <label><input type="radio" name="q5" value="resurse"> Responsabil, atent la natură și observator</label>
+  </div>
 
-      <div>
-        <h3>Resurse</h3>
-        <a href="#">Informații despre profiluri</a>
-        <a href="#">Test de îndrumare</a>
-        <a href="#">Evenimente</a>
-      </div>
+  <button class="submit-btn" onclick="calculeaza()">Vezi rezultatul</button>
+</div>
 
-      <div>
-        <h3>Legal</h3>
-        <a href="#">Termeni și condiții</a>
-        <a href="#">Cookies</a>
-      </div>
+<footer>
+  <div class="footer-logo">Ǝliceu</div>
+
+  <div class="footer-grid">
+    <div>
+      <h3>Navigare</h3>
+      <a href="licee.html">Toate Liceele</a>
+      <a href="chatbot.php">Chatbot AI</a>
+      <a href="despre.html">Despre noi</a>
+      <a href="contact.html">Contact</a>
+      <a href="autentificare.html#register">Înregistrare</a>
+      <a href="autentificare.html">Autentificare</a>
     </div>
-  </footer>
+
+    <div>
+      <h3>Resurse</h3>
+      <a href="specializari.html">Informații despre profiluri</a>
+      <a href="test.html">Test de îndrumare</a>
+      <a href="evenimente.html">Evenimente</a>
+    </div>
+
+    <div>
+      <h3>Legal</h3>
+      <a href="termeni.html">Termeni și condiții</a>
+      <a href="cookies.html">Cookies</a>
+    </div>
+  </div>
+</footer>
 
 <script>
   const menuBtn = document.getElementById("menuBtn");
@@ -320,52 +361,48 @@
   const closeBtn = document.getElementById("closeBtn");
 
   menuBtn.addEventListener("click", function() {
-  	sidebar.classList.add("active");
+    sidebar.classList.add("active");
   });
-  closeBtn.addEventListener("click", function() {
- 	sidebar.classList.remove("active");
-   });
 
+  closeBtn.addEventListener("click", function() {
+    sidebar.classList.remove("active");
+  });
 
   function calculeaza() {
+    const scoruri = {
+      real: 0,
+      uman: 0,
+      tehnic: 0,
+      militar: 0,
+      teologic: 0,
+      artistic: 0,
+      servicii: 0,
+      sport: 0,
+      pedagogic: 0,
+      resurse: 0
+    };
 
-    let real = 0;
-    let uman = 0;
-    let economic = 0;
-    let vocational = 0;
+    const raspunsuri = document.querySelectorAll("input[type='radio']:checked");
 
-    let raspunsuri = document.querySelectorAll("input[type='radio']:checked");
-
-    if (raspunsuri.length < 3) {
-      alert("Răspunde la toate întrebările.");
+    if (raspunsuri.length < 5) {
+      alert("Răspunde la toate cele 5 întrebări.");
       return;
     }
 
     for (let i = 0; i < raspunsuri.length; i++) {
-      if (raspunsuri[i].value == "real") {
-        real++;
-      }
-      if (raspunsuri[i].value == "uman") {
-        uman++;
-      }
-      if (raspunsuri[i].value == "economic") {
-        economic++;
-      }
-      if (raspunsuri[i].value == "vocational") {
-        vocational++;
-      }
+      scoruri[raspunsuri[i].value]++;
     }
 
     let rezultat = "real";
-    if (uman > real && uman > economic && uman > vocational) {
-      rezultat = "uman";
+    let scorMaxim = scoruri.real;
+
+    for (let profil in scoruri) {
+      if (scoruri[profil] > scorMaxim) {
+        scorMaxim = scoruri[profil];
+        rezultat = profil;
+      }
     }
-    if (economic > real && economic > uman && economic > vocational) {
-      rezultat = "economic";
-    }
-    if (vocational > real && vocational > uman && vocational > economic) {
-      rezultat = "vocational";
-    }
+
     window.location.href = "rezultat.html?profil=" + rezultat;
   }
 </script>
