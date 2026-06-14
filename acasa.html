@@ -113,91 +113,168 @@
       box-shadow: 0 3px 0 rgba(0,0,0,0.35);
     }
 
-    .profile-section {
-      min-height: 100vh;
-      padding: 220px 110px 160px;
-      background: #ffffff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 150px;
-    }
+.profile-section {
+  min-height: 100vh;
+  padding: 150px 110px 100px;
 
-    .profile-left h2 {
-      font-size: 42px;
-      font-weight: 900;
-      margin-bottom: 34px;
-    }
+background:
+radial-gradient(
+circle at top left,
+rgba(255,236,120,0.35) 0%,
+rgba(255,236,120,0.12) 20%,
+rgba(255,236,120,0) 35%
+),
 
-    .profile-left ul {
-      margin-left: 24px;
-      margin-bottom: 0;
-    }
+radial-gradient(
+circle at bottom right,
+rgba(255,236,120,0.35) 0%,
+rgba(255,236,120,0.12) 20%,
+rgba(255,236,120,0) 35%
+),
 
-    .profile-left li {
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
+radial-gradient(
+circle at 20% 25%,
+rgba(244,233,255,0.6) 0%,
+rgba(244,233,255,0) 35%
+),
 
-    .profile-btn {
-      width: 390px;
-      height: 70px;
-      margin-top: 35px;
-      background: #9661b8;
-      color: white;
-      border: none;
-      border-radius: 16px;
-      font-size: 24px;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: 0 3px 0 rgba(0,0,0,0.25);
-    }
+#ffffff;
 
-    .stats {
-      width: 620px;
-      height: 360px;
-      position: relative;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 90px;
+}
+.profile-left {
+  width: 560px;
+}
 
-    .triangle {
-      position: absolute;
-      left: 190px;
-      top: 70px;
-      width: 240px;
-      height: 180px;
-      background: #eee3f4;
-      clip-path: polygon(50% 100%, 0 0, 100% 0);
-    }
+.stats {
+  width: 470px;
+}
+.profile-left h2 {
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 18px;
+  letter-spacing: -1px;
+}
 
-    .circle {
-      position: absolute;
-      width: 170px;
-      height: 100px;
-      border-radius: 50%;
-      background: #eee3f4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 900;
-      line-height: 1.15;
-    }
+.profile-left p {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #4b4b4b;
+  margin-bottom: 34px;
+}
 
-    .c1 { left: 22px; top: 10px; }
-    .c2 { left: 428px; top: 10px; }
+.profile-tags {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-bottom: 38px;
+}
 
-    .c3 {
-      left: 225px;
-      top: 90px;
-      background: transparent;
-    }
+.profile-tag {
+  background: #f1e6f8;
+  border: 2px solid #d7bde8;
+  border-radius: 22px;
+  padding: 20px 22px;
+  box-shadow: 0 6px 0 rgba(150, 97, 184, 0.22);
+  transition: 0.2s;
+}
 
-    .c4 {
-      left: 225px;
-      top: 250px;
-    }
+.profile-tag:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 0 rgba(150, 97, 184, 0.22);
+}
+
+.profile-tag span {
+  display: block;
+  font-size: 22px;
+  font-weight: 900;
+  color: #9661b8;
+  margin-bottom: 6px;
+}
+
+.profile-tag small {
+  font-size: 15px;
+  font-weight: 800;
+  color: #252525;
+}
+
+.profile-btn {
+  padding: 19px 42px;
+  background: #9661b8;
+  color: white;
+  border: none;
+  border-radius: 18px;
+  font-size: 21px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #6f4796;
+  transition: 0.2s;
+}
+
+.profile-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 0 #6f4796;
+}
+
+.stats {
+  width: 470px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  position: relative;
+}
+
+.stat-card {
+  background: #eee3f4;
+  border-radius: 30px;
+  padding: 30px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border: 2px solid #e0caed;
+}
+
+.stat-card:nth-child(2) {
+  margin-left: 70px;
+  background: #fff3a8;
+  border-color: #ead768;
+}
+
+.stat-card:nth-child(3) {
+  margin-left: 25px;
+}
+
+.stat-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: 900;
+  line-height: 1;
+  color: #1f1f1f;
+}
+
+.stat-text {
+  font-size: 17px;
+  font-weight: 900;
+  color: #3a3a3a;
+}
 
     .events {
   position: relative;
@@ -379,26 +456,68 @@
 
   <section class="profile-section">
     <div class="profile-left">
-      <h2>Ce profil ți se potrivește?</h2>
 
-      <ul>
-        <li>Real → matematică, informatică</li>
-        <li>Uman → limbi, istorie</li>
-        <li>Economic → business, contabilitate</li>
-        <li>Vocațional → arte, sport, gătit</li>
-      </ul>
+    <h2>Ce profil ți se potrivește?</h2>
 
-      <button class="profile-btn" onclick="window.location.href='specializari.html'">Citește despre fiecare</button>
+    <p>
+      Descoperă specializările disponibile în liceele din București
+      și vezi mai ușor ce ți se potrivește. Acestea sunt printre cele mai populare:
+    </p>
+
+    <div class="profile-tags">
+      <div class="profile-tag">
+        <span>Real</span>
+        <small>matematică • informatică • științe</small>
+      </div>
+
+      <div class="profile-tag">
+        <span>Uman</span>
+        <small>limbi • istorie • geografie</small>
+      </div>
+
+      <div class="profile-tag">
+        <span>Economic</span>
+        <small>business • contabilitate</small>
+      </div>
+
+      <div class="profile-tag">
+        <span>Vocațional</span>
+        <small>arte • sport • gastronomie</small>
+      </div>
     </div>
 
-    <div class="stats">
-      <div class="triangle"></div>
-      <div class="circle c1">70+ licee<br>din București</div>
-      <div class="circle c2">450+<br>specializări</div>
-      <div class="circle c3">Alege<br>informat</div>
-      <div class="circle c4">200+<br>de clase</div>
+    <button class="profile-btn" onclick="window.location.href='specializari.html'">
+      Explorează profilurile 
+    </button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+
+      <div>
+        <div class="stat-number">70+</div>
+        <div class="stat-text">licee din București</div>
+      </div>
     </div>
-  </section>
+
+    <div class="stat-card">
+
+      <div>
+        <div class="stat-number">450+</div>
+        <div class="stat-text">specializări disponibile</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+
+      <div>
+        <div class="stat-number">200+</div>
+        <div class="stat-text">clase pentru viitorii elevi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
   <section class="events">
     <h2>EVENIMENTE ȘI NOUTĂȚI</h2>
