@@ -1,8 +1,8 @@
 <?php
-include "init1.php";
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header("Content-Type: application/json; charset=UTF-8");
+
+    $API_URL = "http://127.0.0.1:8000/predict";
 
     $data = json_decode(file_get_contents("php://input"), true);
     $message = $data["message"] ?? "";
@@ -18,52 +18,90 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         return strtr($text, $diacritice);
     }
+  function normalizeForSearch($text) {
+    $text = normalizeText($text);
+    $text = str_replace(['"', "'", '„', '”'], '', $text);
+    return trim($text);
+  }
+    function getPrediction($medieElev, $pozitieElev, $row, $API_URL) {
+    $pozitieMedieIntrare = intval($row["pozitie_medie_intrare"] ?? 0);
+    $diferentaPozitie = $pozitieMedieIntrare - intval($pozitieElev);
 
-    function getPrediction($medieElev, $row) {
-        $payload = [
-            "medie_elev" => floatval($medieElev),
-            "sector" => strval($row["sector"]),
-            "profil" => strval($row["profil"]),
-            "specializare" => strval($row["specializare"]),
-            "limba" => strval($row["limba"]),
-            "bilingv" => strval($row["bilingv"] ?? ""),
-            "medie_liceu" => floatval($row["medie_actuala"])
-        ];
+$stmtPoz = $GLOBALS["con"]->prepare("
+    SELECT pozitie_2025, pozitie_2024, pozitie_2023
+    FROM pozitii_admitere
+    WHERE cod_specializare = :cod
+    LIMIT 1
+");
 
-        $ch = curl_init("https://eliceu-ai.onrender.com/predict");
+$stmtPoz->execute([
+    ":cod" => $row["cod_specializare"]
+]);
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Content-Type: application/json"
-        ]);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+$pozitii = $stmtPoz->fetch(PDO::FETCH_ASSOC);
 
-        $response = curl_exec($ch);
+if (!$pozitii) {
+    return [
+        "probabilitate" => "N/A",
+        "nivel" => "poziții lipsă"
+    ];
+}
 
-        if (curl_errno($ch)) {
-            curl_close($ch);
+$pozitieMedieIntrare = round((
+    intval($pozitii["pozitie_2025"]) +
+    intval($pozitii["pozitie_2024"]) +
+    intval($pozitii["pozitie_2023"])
+) / 3);
 
-            return [
-                "probabilitate" => "N/A",
-                "nivel" => "AI indisponibil"
-            ];
-        }
+$diferentaPozitie = $pozitieMedieIntrare - intval($pozitieElev);
 
+    $payload = [
+        "medie_elev" => floatval($medieElev),
+        "pozitie_elev" => intval($pozitieElev),
+        "sector" => strval($row["sector"]),
+        "profil" => strval($row["profil"]),
+        "specializare" => strval($row["specializare"]),
+        "limba" => strval($row["limba"]),
+        "bilingv" => strval($row["bilingv"] ?? ""),
+        "medie_liceu" => floatval($row["medie_actuala"]),
+        "ultima_pozitie_2024" => intval($pozitii["pozitie_2024"]),
+        "ultima_pozitie_2023" => intval($pozitii["pozitie_2023"]),
+        "ultima_pozitie_2022" => intval($pozitii["pozitie_2023"]),
+        "pozitie_medie_intrare" => intval($pozitieMedieIntrare),
+        "diferenta_pozitie" => intval($diferentaPozitie)
+    ];
+
+    $ch = curl_init($API_URL);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+    $response = curl_exec($ch);
+
+    if (curl_errno($ch)) {
         curl_close($ch);
-
-        $prediction = json_decode($response, true);
-
-        if (!$prediction || !isset($prediction["nivel"])) {
-            return [
-                "probabilitate" => "N/A",
-                "nivel" => "AI indisponibil"
-            ];
-        }
-
-        return $prediction;
+        return [
+            "probabilitate" => "N/A",
+            "nivel" => "AI indisponibil"
+        ];
     }
+
+    curl_close($ch);
+
+    $prediction = json_decode($response, true);
+
+    if (!$prediction || !isset($prediction["nivel"])) {
+        return [
+            "probabilitate" => "N/A",
+            "nivel" => "AI indisponibil"
+        ];
+    }
+
+    return $prediction;
+}
 
     $text = normalizeText($message);
 
@@ -73,55 +111,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         str_contains($text, "hei")
     ) {
         echo json_encode([
-            "reply" => "Bună! Sunt asistentul AI Eliceu. Îți pot recomanda licee și pot estima șansele tale de admitere folosind un model de Machine Learning."
+            "reply" => "Bună! Spune-mi media ta, specializarea, sectorul și dacă vrei bilingv. Exemplu: «Am media 8.80 și vreau mate-info sau filologie, sector 1, 2 sau 3, bilingv engleză sau germană»."
         ]);
         exit;
     }
 
-    if (
-        str_contains($text, "ce este eliceu") ||
-        str_contains($text, "despre site") ||
-        str_contains($text, "ce face site")
-    ) {
-        echo json_encode([
-            "reply" => "Eliceu este o platformă care ajută elevii să aleagă liceul potrivit, folosind date despre licee, medii, profiluri, specializări și un model AI pentru estimarea șanselor de admitere."
-        ]);
-        exit;
-    }
-
-    $profil = "";
-    $sector = "";
-    $limba = "";
-    $bilingv = "";
-    $specializare = "";
+    $profiluri = [];
+    $specializari = [];
+    $sectoare = [];
+    $bilingvuri = [];
+    $limbi = [];
     $medieElev = 0;
+    $pozitieElev = 0;
     $faraExamen = false;
-
-    if (str_contains($text, "real")) {
-        $profil = "Real";
-    }
-
-    if (str_contains($text, "uman") || str_contains($text, "umanist")) {
-        $profil = "Umanist";
-    }
-
-    if (str_contains($text, "tehnic")) {
-        $profil = "Tehnic";
-    }
-
-    if (str_contains($text, "servicii")) {
-        $profil = "Servicii";
-    }
-
-    if (preg_match('/sector(?:ul)?\s*(\d)/', $text, $match)) {
-        $sector = $match[1];
-    }
 
     if (preg_match('/(?:media|am media|cu media|medie)\s*(\d+([.,]\d+)?)/', $text, $match)) {
         $medieElev = floatval(str_replace(",", ".", $match[1]));
     }
 
-    if ($medieElev == 0 && preg_match('/(\d+([.,]\d+)?)/', $text, $match)) {
+    if (preg_match('/(?:pozitie|pozitia|poziția|locul|loc)\s*(\d+)/', $text, $match)) {
+    $pozitieElev = intval($match[1]);
+}
+
+    if ($medieElev == 0 && preg_match('/\b([1-9](?:[.,]\d+)?)\b/', $text, $match)) {
         $possibleMedie = floatval(str_replace(",", ".", $match[1]));
 
         if ($possibleMedie >= 1 && $possibleMedie <= 10) {
@@ -129,60 +141,123 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    if (str_contains($text, "mate") || str_contains($text, "info") || str_contains($text, "informatica")) {
-        $specializare = "Matematică-Informatică";
+    if ($medieElev == 0) {
+        echo json_encode([
+            "reply" => "Pentru predicția AI am nevoie să îmi spui media ta. Exemplu: «Am media 8.80 și vreau mate-info sau filologie, sector 1, 2 sau 3, bilingv engleză sau germană»."
+        ]);
+        exit;
+    }
+    if ($pozitieElev == 0) {
+        echo json_encode([
+            "reply" => "Pentru predicția pe baza clasamentului, spune-mi și poziția ta. Exemplu: «Am media 9.20, poziția 2100 și vreau mate-info în sectorul 6»."
+        ]);
+        exit;
+    }
+
+    if (str_contains($text, "real")) {
+        $profiluri[] = "Real";
+    }
+
+    if (str_contains($text, "uman") || str_contains($text, "umanist")) {
+        $profiluri[] = "Umanist";
+    }
+
+    if (str_contains($text, "tehnic")) {
+        $profiluri[] = "Tehnic";
+    }
+
+    if (str_contains($text, "servicii")) {
+        $profiluri[] = "Servicii";
+    }
+
+    if (
+        str_contains($text, "mate") ||
+        str_contains($text, "info") ||
+        str_contains($text, "informatica")
+    ) {
+        $specializari[] = "Matematica-Informatica";
     }
 
     if (str_contains($text, "filologie")) {
-        $specializare = "Filologie";
+        $specializari[] = "Filologie";
     }
 
     if (str_contains($text, "stiinte ale naturii") || str_contains($text, "natura")) {
-        $specializare = "Științe ale Naturii";
+        $specializari[] = "Stiinte ale Naturii";
     }
 
     if (str_contains($text, "stiinte sociale") || str_contains($text, "sociale")) {
-        $specializare = "Științe Sociale";
+        $specializari[] = "Stiinte Sociale";
+    }
+
+    if (preg_match('/sector(?:ul)?\s*([1-6](?:\s*(?:,|sau|si|și)\s*[1-6])*)/i', $text, $match)) {
+        preg_match_all('/[1-6]/', $match[1], $sectoareGasite);
+        $sectoare = array_unique($sectoareGasite[0]);
     }
 
     if (str_contains($text, "romana")) {
-        $limba = "Limba română";
+        $limbi[] = "Limba romana";
     }
 
     if (str_contains($text, "maghiara")) {
-        $limba = "Limba maghiară";
+        $limbi[] = "Limba maghiara";
     }
 
     if (str_contains($text, "engleza")) {
-        $bilingv = "Limba engleză";
+        $bilingvuri[] = "Limba engleza";
     }
 
     if (str_contains($text, "germana")) {
-        $bilingv = "Limba germană";
+        $bilingvuri[] = "Limba germana";
     }
 
     if (str_contains($text, "italiana")) {
-        $bilingv = "Limba italiană";
+        $bilingvuri[] = "Limba italiana";
     }
 
     if (str_contains($text, "spaniola")) {
-        $bilingv = "Limba spaniolă";
+        $bilingvuri[] = "Limba spaniola";
     }
 
     if (str_contains($text, "portugheza")) {
-        $bilingv = "Limba portugheză";
+        $bilingvuri[] = "Limba portugheza";
     }
 
     if (str_contains($text, "fara examen")) {
         $faraExamen = true;
     }
 
-    if ($medieElev == 0) {
-        echo json_encode([
-            "reply" => "Pentru predicția AI am nevoie să îmi spui media ta. Exemplu: «Am media 9.20 și vreau mate-info în sectorul 6»."
-        ]);
-        exit;
+    $profiluri = array_unique($profiluri);
+    $specializari = array_unique($specializari);
+    $sectoare = array_unique($sectoare);
+    $bilingvuri = array_unique($bilingvuri);
+    $limbi = array_unique($limbi);
+
+    include "init1.php";
+    $liceuGasit = null;
+
+$stmtLicee = $con->query("SELECT id_liceu, nume, tip FROM licee");
+$toateLiceele = $stmtLicee->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($toateLiceele as $liceu) {
+    $numeNormalizat = normalizeForSearch($liceu["nume"]);
+    $tipNormalizat = normalizeForSearch($liceu["tip"]);
+    $textNormalizat = normalizeForSearch($text);
+
+    if (str_contains($textNormalizat, $numeNormalizat)) {
+        $liceuGasit = $liceu;
+        break;
     }
+
+    $cuvinte = explode(" ", $numeNormalizat);
+
+    foreach ($cuvinte as $cuvant) {
+        if (strlen($cuvant) >= 5 && str_contains($textNormalizat, $cuvant)) {
+            $liceuGasit = $liceu;
+            break 2;
+        }
+    }
+}
 
     $sql = "
         SELECT
@@ -195,6 +270,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             s.specializare,
             s.limba,
             s.bilingv,
+            s.cod_specializare,
             s.medie_actuala
         FROM licee l
         JOIN specializari s ON l.id_liceu = s.id_liceu
@@ -203,38 +279,78 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $params = [];
 
-    if ($profil !== "") {
-        $sql .= " AND s.profil = :profil";
-        $params[":profil"] = $profil;
+    if (!empty($profiluri)) {
+        $conditions = [];
+        foreach ($profiluri as $i => $profil) {
+            $key = ":profil" . $i;
+            $conditions[] = "s.profil = $key";
+            $params[$key] = $profil;
+        }
+        $sql .= " AND (" . implode(" OR ", $conditions) . ")";
     }
 
-    if ($sector !== "") {
-        $sql .= " AND l.sector = :sector";
-        $params[":sector"] = $sector;
+    if (!empty($specializari)) {
+        $conditions = [];
+        foreach ($specializari as $i => $specializare) {
+            $key = ":specializare" . $i;
+            $conditions[] = "s.specializare = $key";
+            $params[$key] = $specializare;
+        }
+        $sql .= " AND (" . implode(" OR ", $conditions) . ")";
     }
 
-    if ($specializare !== "") {
-        $sql .= " AND s.specializare = :specializare";
-        $params[":specializare"] = $specializare;
+    if (!empty($sectoare)) {
+        $conditions = [];
+        foreach ($sectoare as $i => $sector) {
+            $key = ":sector" . $i;
+            $conditions[] = "l.sector = $key";
+            $params[$key] = $sector;
+        }
+        $sql .= " AND (" . implode(" OR ", $conditions) . ")";
+    }
+    if ($liceuGasit !== null) {
+    $sql .= " AND l.id_liceu = :idLiceuCautat";
+    $params[":idLiceuCautat"] = $liceuGasit["id_liceu"];
     }
 
-    if ($limba !== "") {
-        $sql .= " AND s.limba = :limba";
-        $params[":limba"] = $limba;
+    if (!empty($limbi)) {
+        $conditions = [];
+        foreach ($limbi as $i => $limba) {
+            $key = ":limba" . $i;
+            $conditions[] = "s.limba = $key";
+            $params[$key] = $limba;
+        }
+        $sql .= " AND (" . implode(" OR ", $conditions) . ")";
     }
 
-    if ($bilingv !== "") {
-        $sql .= " AND s.bilingv LIKE :bilingv";
-        $params[":bilingv"] = "%$bilingv%";
+    if (!empty($bilingvuri)) {
+        $conditions = [];
+        foreach ($bilingvuri as $i => $bilingv) {
+            $key = ":bilingv" . $i;
+            $conditions[] = "s.bilingv LIKE $key";
+            $params[$key] = "%$bilingv%";
+        }
+        $sql .= " AND (" . implode(" OR ", $conditions) . ")";
     }
 
     if ($faraExamen) {
-        $sql .= " AND s.bilingv LIKE :fara";
-        $params[":fara"] = "%fără examen%";
+        $sql .= " AND s.bilingv LIKE :faraExamen";
+        $params[":faraExamen"] = "%fără examen%";
     }
 
-    $sql .= " ORDER BY ABS(s.medie_actuala - :medieElev) ASC LIMIT 8";
-    $params[":medieElev"] = $medieElev;
+    $sql .= "
+        ORDER BY
+            CASE
+                WHEN s.medie_actuala <= :medieElevOrder THEN 0
+                ELSE 1
+            END,
+            ABS(s.medie_actuala - :medieElevOrder2) ASC,
+            l.sector ASC
+        LIMIT 20
+    ";
+
+    $params[":medieElevOrder"] = $medieElev;
+    $params[":medieElevOrder2"] = $medieElev;
 
     $stmt = $con->prepare($sql);
     $stmt->execute($params);
@@ -242,26 +358,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (count($results) === 0) {
         echo json_encode([
-            "reply" => "Nu am găsit licee potrivite pentru criteriile introduse. Încearcă un profil mai general sau alt sector."
+            "reply" => "Nu am găsit licee pentru combinația cerută. Încearcă să elimini un filtru, de exemplu bilingvul sau sectorul."
         ]);
         exit;
     }
 
-    $reply = "Am găsit " . count($results) . " rezultate analizate cu AI:<br><br>";
-
+    if ($liceuGasit !== null) {
+    $reply = "Am calculat șansele pentru " . htmlspecialchars($liceuGasit["tip"] . " " . $liceuGasit["nume"]) . ":<br><br>";
+} else {
+    $reply = "Am găsit " . count($results) . " rezultate potrivite:<br><br>";
+}
+    
     foreach ($results as $index => $row) {
-        $prediction = getPrediction($medieElev, $row);
+        $prediction = getPrediction($medieElev, $pozitieElev, $row, $API_URL);
 
         $reply .= "<div class='result-card'>";
         $reply .= "<strong>" . ($index + 1) . ". " . htmlspecialchars($row["tip"] . " " . $row["nume"]) . "</strong><br>";
         $reply .= "Sector: " . htmlspecialchars($row["sector"]) . "<br>";
         $reply .= "Profil: " . htmlspecialchars($row["profil"]) . "<br>";
         $reply .= "Specializare: " . htmlspecialchars($row["specializare"]) . "<br>";
+        $reply .= "Cod specializare: " . htmlspecialchars($row["cod_specializare"]) . "<br>";
         $reply .= "Limba: " . htmlspecialchars($row["limba"]) . "<br>";
         $reply .= "Medie liceu: " . htmlspecialchars($row["medie_actuala"]) . "<br>";
 
         if ($row["bilingv"] !== null && $row["bilingv"] !== "") {
             $reply .= "Bilingv: " . htmlspecialchars($row["bilingv"]) . "<br>";
+        } else {
+            $reply .= "Bilingv: Nu<br>";
         }
 
         $reply .= "<strong>Predicție AI: " . htmlspecialchars($prediction["nivel"]) . "</strong><br>";
@@ -277,7 +400,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ro">
 <head>
