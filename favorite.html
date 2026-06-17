@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorite - Eliceu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #1f1f1f;
+    }
+
+    header {
+      width: 100%;
+      height: 72px;
+      background: #9661b8;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .menu {
+      font-size: 32px;
+      color: #ffffff;
+      font-weight: 900;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 900;
+      color: #ffe34d;
+      letter-spacing: -1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100vh;
+      background: linear-gradient(180deg, #8c63b3 0%, #6f4796 100%);
+      z-index: 2000;
+      padding: 110px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: 0.35s;
+      box-shadow: 6px 0 30px rgba(0,0,0,0.18);
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 900;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #ffe34d;
+      transform: translateX(8px);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      background: transparent;
+      border: none;
+      font-size: 34px;
+      cursor: pointer;
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .favorites-section {
+      min-height: 100vh;
+      padding: 145px 110px 100px;
+      background:
+        radial-gradient(circle at top left, rgba(255,236,120,0.35) 0%, rgba(255,236,120,0.12) 20%, rgba(255,236,120,0) 35%),
+        radial-gradient(circle at bottom right, rgba(255,236,120,0.35) 0%, rgba(255,236,120,0.12) 20%, rgba(255,236,120,0) 35%),
+        radial-gradient(circle at 20% 25%, rgba(244,233,255,0.6) 0%, rgba(244,233,255,0) 35%),
+        #ffffff;
+    }
+
+    .favorites-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+      margin-bottom: 45px;
+    }
+
+    .favorites-top h1 {
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1.05;
+      color: #1f1f1f;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+
+    .favorites-top p {
+      max-width: 650px;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.5;
+      color: #4b4b4b;
+    }
+
+    .top-action {
+      padding: 18px 34px;
+      background: #9661b8;
+      color: white;
+      border: none;
+      border-radius: 18px;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #6f4796;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .top-action:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 0 #6f4796;
+    }
+
+    .favorites-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    .favorite-card {
+      background: #eee3f4;
+      border-radius: 24px;
+      padding: 26px;
+      min-height: 230px;
+      border: 2px solid #e0caed;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: 0.2s;
+    }
+
+    .favorite-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+    }
+
+
+
+    .favorite-card h2 {
+      font-size: 21px;
+      font-weight: 900;
+      color: #3c2448;
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+
+    .favorite-details {
+      display: grid;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #333;
+      line-height: 1.35;
+      margin-bottom: 22px;
+    }
+
+    .favorite-details b {
+      color: #9661b8;
+      font-weight: 900;
+    }
+
+    .favorite-card:nth-child(even) .favorite-details b {
+      color: #6f4796;
+    }
+
+    .favorite-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .favorite-buttons button {
+      border: none;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .details-btn {
+      background: #9661b8;
+      color: white;
+      box-shadow: 0 4px 0 #6f4796;
+    }
+
+    .remove-btn {
+      background: white;
+      color: #3c2448;
+      box-shadow: 0 4px 0 rgba(0,0,0,0.14);
+    }
+
+    .favorite-buttons button:hover {
+      transform: translateY(-3px);
+    }
+
+    .empty-box {
+      background: #eee3f4;
+      border: 2px solid #e0caed;
+      border-radius: 30px;
+      padding: 46px;
+      max-width: 780px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .empty-box h2 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #3c2448;
+      margin-bottom: 14px;
+    }
+
+    .empty-box p {
+      font-size: 18px;
+      font-weight: 700;
+      color: #4b4b4b;
+      line-height: 1.55;
+      margin-bottom: 28px;
+    }
+
+    .empty-box button {
+      padding: 18px 36px;
+      background: #9661b8;
+      color: white;
+      border: none;
+      border-radius: 18px;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #6f4796;
+    }
+
+    footer {
+      background: #786286;
+      padding: 80px 90px 90px;
+      color: white;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffe34d;
+      margin-bottom: 22px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+    }
+
+    footer h3 {
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    footer a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .favorites-section {
+        padding: 120px 28px 80px;
+      }
+
+      .favorites-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .favorites-top h1 {
+        font-size: 38px;
+      }
+
+      .favorites-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo-area">
+    <button class="menu" id="menuBtn">☰</button>
+    <div class="logo">Ǝliceu</div>
+  </div>
+
+  <nav>
+    <a href="autentificare.html#register">Înregistrare</a>
+    <a href="autentificare.html">Autentificare</a>
+  </nav>
+</header>
+
+<div class="sidebar" id="sidebar">
+  <button class="close-btn" id="closeBtn">✕</button>
+
+  <a href="acasa.html">Acasă</a>
+  <a href="licee.html">Toate liceele</a>
+  <a href="favourites.html">Favorite</a>
+  <a href="specializari.html">Specializări</a>
+  <a href="test.html">Test de orientare</a>
+  <a href="evenimente.html">Evenimente și noutăți</a>
+  <a href="chatbot.php">Chatbot AI</a>
+  <a href="despre.html">Despre noi</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<section class="favorites-section">
+  <div class="favorites-top">
+    <div>
+      <h1>Liceele salvate de tine</h1>
+      <p>Ține aproape liceele care te interesează și revino rapid la ele când îți construiești lista finală.</p>
+    </div>
+
+    <button class="top-action" onclick="window.location.href='licee.html'">
+      Adaugă licee
+    </button>
+  </div>
+
+  <div id="favoritesContainer"></div>
+</section>
+
+<footer>
+  <div class="footer-logo">Ǝliceu</div>
+
+  <div class="footer-grid">
+    <div>
+      <h3>Navigare</h3>
+      <a href="licee.html">Toate Liceele</a>
+      <a href="favourites.html">Favorite</a>
+      <a href="chatbot.php">Chatbot AI</a>
+      <a href="despre.html">Despre noi</a>
+      <a href="contact.html">Contact</a>
+      <a href="autentificare.html#register">Înregistrare</a>
+      <a href="autentificare.html">Autentificare</a>
+    </div>
+
+    <div>
+      <h3>Resurse</h3>
+      <a href="specializari.html">Informații despre profiluri</a>
+      <a href="test.html">Test de îndrumare</a>
+      <a href="evenimente.html">Evenimente</a>
+    </div>
+
+    <div>
+      <h3>Legal</h3>
+      <a href="termeni.html">Termeni și condiții</a>
+      <a href="cookies.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const sidebar = document.getElementById("sidebar");
+  const closeBtn = document.getElementById("closeBtn");
+
+  menuBtn.addEventListener("click", () => {
+    sidebar.classList.add("active");
+  });
+
+  closeBtn.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+  });
+
+  const container = document.getElementById("favoritesContainer");
+  let favoriteLicee = JSON.parse(localStorage.getItem("favoriteLicee")) || [];
+
+  function afiseazaFavorite() {
+    if (favoriteLicee.length === 0) {
+      container.innerHTML = `
+        <div class="empty-box">
+          <h2>Nu ai salvat încă niciun liceu</h2>
+          <p>Intră în pagina cu toate liceele și adaugă la favorite liceele care ți se par potrivite.</p>
+          <button onclick="window.location.href='licee.html'">Vezi liceele</button>
+        </div>
+      `;
+      return;
+    }
+
+    let html = `<div class="favorites-grid">`;
+
+    favoriteLicee.forEach((liceu, index) => {
+      html += `
+        <div class="favorite-card">
+          <div>
+            <h2>${liceu.nume || "Liceu salvat"}</h2>
+
+            <div class="favorite-details">
+              <div><b>Sector:</b> ${liceu.sector || "-"}</div>
+              <div><b>Profil:</b> ${liceu.profil || "-"}</div>
+              <div><b>Specializare:</b> ${liceu.specializare || "-"}</div>
+              <div><b>Medie:</b> ${liceu.medie || liceu.medie_actuala || "-"}</div>
+            </div>
+          </div>
+
+          <div class="favorite-buttons">
+            <button class="details-btn" onclick="veziDetalii('${liceu.id_liceu || ""}')">Vezi detalii</button>
+            <button class="remove-btn" onclick="stergeFavorit(${index})">Șterge</button>
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div>`;
+    container.innerHTML = html;
+  }
+
+  function stergeFavorit(index) {
+    favoriteLicee.splice(index, 1);
+    localStorage.setItem("favoriteLicee", JSON.stringify(favoriteLicee));
+    afiseazaFavorite();
+  }
+
+  function veziDetalii(idLiceu) {
+    if (idLiceu) {
+      window.location.href = `licee.html?id=${idLiceu}`;
+    } else {
+      window.location.href = "licee.html";
+    }
+  }
+
+  afiseazaFavorite();
+</script>
+
+</body>
+</html>
