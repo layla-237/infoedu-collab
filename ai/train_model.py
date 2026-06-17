@@ -8,19 +8,24 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 
-df = pd.read_csv("date_admitere.csv")
-
+df = pd.read_csv("date_admitere_ai.csv")
 df = df.fillna("")
 
 X = df[
     [
         "medie_elev",
+        "pozitie_elev",
         "sector",
         "profil",
         "specializare",
         "limba",
         "bilingv",
-        "medie_liceu"
+        "medie_liceu",
+        "ultima_pozitie_2024",
+        "ultima_pozitie_2023",
+        "ultima_pozitie_2022",
+        "pozitie_medie_intrare",
+        "diferenta_pozitie"
     ]
 ]
 
@@ -36,7 +41,13 @@ categorical_features = [
 
 numeric_features = [
     "medie_elev",
-    "medie_liceu"
+    "pozitie_elev",
+    "medie_liceu",
+    "ultima_pozitie_2024",
+    "ultima_pozitie_2023",
+    "ultima_pozitie_2022",
+    "pozitie_medie_intrare",
+    "diferenta_pozitie"
 ]
 
 preprocessor = ColumnTransformer(
