@@ -764,8 +764,8 @@ foreach ($toateLiceele as $liceu) {
 
       <div class="examples">
         <div class="example">„Am media 9.20 și vreau mate-info în sectorul 6”</div>
-        <div class="example">„Am media 8.80 și caut filologie”</div>
-        <div class="example">„Am media 9.50 și vreau bilingv engleză”</div>
+        <div class="example">„Am media 8.80 și caut filologie la Moisil”</div>
+        <div class="example">„Am media 9.50 și vreau Elena Cuza”</div>
         <div class="example">„Am media 8.70 și vreau licee reale”</div>
       </div>
     </section>
